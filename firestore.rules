@@ -1,0 +1,117 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- PHASE 3: Primitives ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isServerTimestamp(field) {
+      // For creation, we expect exact time or close to it
+      // For simplicity in these rules, we'll check if it's a timestamp
+      return field is timestamp || field is int;
+    }
+
+    // --- PHASE 4: Entity Validators ---
+
+    function isValidDashboardCard(data) {
+      return data.keys().hasAll(['id', 'title', 'value', 'type', 'lastUpdated']) &&
+             data.keys().size() <= 7 &&
+             data.id is string && isValidId(data.id) &&
+             data.title is string && data.title.size() <= 100 &&
+             (data.value is string || data.value is int || data.value is float) &&
+             data.type in ['number', 'currency', 'text', 'status'] &&
+             (data.lastUpdated is int || data.lastUpdated is timestamp);
+    }
+
+    function isValidStudent(student) {
+      return student.id is int &&
+             student.name is string && student.name.size() <= 100 &&
+             student.attendance is map;
+    }
+
+    function isValidClass(data) {
+      return data.keys().hasAll(['id', 'name', 'grade', 'students']) &&
+             data.id is string && isValidId(data.id) &&
+             data.name is string && data.name.size() <= 100 &&
+             data.grade is string && data.grade.size() <= 10 &&
+             data.students is list && data.students.size() <= 100;
+    }
+
+    function isValidActivityLog(data) {
+      return data.keys().hasAll(['title', 'header', 'log']) &&
+             data.title is string &&
+             data.header is map &&
+             data.log is list && data.log.size() <= 500;
+    }
+
+    function isValidTournament(data) {
+      return data.stage in ['setup', 'groups', 'finals', 'finished'] &&
+             data.players is list &&
+             data.matches is list;
+    }
+
+    function isValidGallery(data) {
+      return data.images is list && data.images.size() <= 200;
+    }
+
+    // --- Collection Rules ---
+
+    match /dashboard/{cardId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(cardId) && cardId == incoming().id && isValidDashboardCard(incoming());
+      allow update: if isSignedIn() && isValidId(cardId) && cardId == incoming().id && isValidDashboardCard(incoming()) && (
+        // Action: Update value/lastUpdated
+        incoming().diff(existing()).affectedKeys().hasOnly(['value', 'lastUpdated']) ||
+        // Action: Update full card (admin-like)
+        incoming().diff(existing()).affectedKeys().hasAny(['title', 'type', 'trend', 'icon'])
+      );
+      allow delete: if isSignedIn();
+    }
+
+    match /classes/{classId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(classId) && classId == incoming().id && isValidClass(incoming());
+      allow update: if isSignedIn() && isValidId(classId) && classId == incoming().id && isValidClass(incoming());
+      allow delete: if isSignedIn();
+    }
+
+    match /activities/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && docId == 'log' && isValidActivityLog(incoming());
+    }
+
+    match /tournaments/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && docId == 'active' && isValidTournament(incoming());
+    }
+
+    match /gallery/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && docId == 'main' && isValidGallery(incoming());
+    }
+
+    // System connection test collection
+    match /_connection_test_/{docId} {
+      allow read, write: if isSignedIn();
+    }
+  }
+}

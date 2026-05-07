@@ -1,0 +1,137 @@
+{
+  "entities": {
+    "GalleryImage": {
+      "title": "Gallery Image",
+      "description": "An image in the application gallery",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "url": { "type": "string", "description": "URL or base64 data of the image" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "title", "url", "createdAt"]
+    },
+    "GalleryData": {
+      "title": "Gallery Data",
+      "description": "Collection of gallery images",
+      "type": "object",
+      "properties": {
+        "images": {
+          "type": "array",
+          "items": { "$ref": "GalleryImage" }
+        }
+      }
+    },
+    "DashboardCard": {
+      "title": "Dashboard Card",
+      "description": "Statistics card for the dashboard",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "value": { "type": "string" },
+        "type": { "type": "string", "enum": ["number", "currency", "text", "status"] },
+        "trend": { "type": "string" },
+        "icon": { "type": "string" },
+        "lastUpdated": { "type": "number" }
+      },
+      "required": ["id", "title", "value", "type", "lastUpdated"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Student record with attendance",
+      "type": "object",
+      "properties": {
+        "id": { "type": "number" },
+        "name": { "type": "string" },
+        "attendance": { 
+          "type": "object",
+          "additionalProperties": { "type": "string", "enum": ["P", "F", null] }
+        }
+      },
+      "required": ["id", "name", "attendance"]
+    },
+    "Class": {
+      "title": "Class",
+      "description": "School class description and students",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "grade": { "type": "string" },
+        "students": { "type": "array", "items": { "$ref": "Student" } },
+        "schedule": { "type": "string" },
+        "days": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["id", "name", "grade", "students"]
+    },
+    "ActivityLogEntry": {
+      "title": "Activity Log Entry",
+      "description": "A single lesson or event entry",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "classes": { "type": "array", "items": { "type": "string" } },
+        "activities": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["date", "activities"]
+    },
+    "ActivityLog": {
+      "title": "Activity Log",
+      "description": "Full activity log document",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "header": {
+          "type": "object",
+          "properties": {
+            "government": { "type": "string" },
+            "city": { "type": "string" },
+            "department": { "type": "string" },
+            "school": { "type": "string" },
+            "professor": { "type": "string" },
+            "project": { "type": "string" }
+          }
+        },
+        "log": { "type": "array", "items": { "$ref": "ActivityLogEntry" } }
+      }
+    },
+    "Tournament": {
+      "title": "Tournament",
+      "description": "Active tournament data",
+      "type": "object",
+      "properties": {
+        "stage": { "type": "string", "enum": ["setup", "groups", "finals", "finished"] },
+        "players": { "type": "array", "items": { "type": "object" } },
+        "groups": { "type": "array", "items": { "type": "object" } },
+        "matches": { "type": "array", "items": { "type": "object" } },
+        "finalMatches": { "type": "array", "items": { "type": "object" } },
+        "finalPlayers": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "firestore": {
+    "/gallery/main": {
+      "schema": "GalleryData",
+      "description": "Main gallery storage"
+    },
+    "/dashboard/{cardId}": {
+      "schema": "DashboardCard",
+      "description": "Dashboard statistics cards"
+    },
+    "/classes/{classId}": {
+      "schema": "Class",
+      "description": "Class records and attendance"
+    },
+    "/activities/log": {
+      "schema": "ActivityLog",
+      "description": "Activity log data"
+    },
+    "/tournaments/active": {
+      "schema": "Tournament",
+      "description": "Active tournament state"
+    }
+  }
+}
