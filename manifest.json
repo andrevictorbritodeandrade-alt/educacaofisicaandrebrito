@@ -1,11 +1,11 @@
 {
-  "name": "CLUBE DO XADREZ",
-  "short_name": "CLUBE DO XADREZ",
+  "name": "EDUCAÇÃO FÍSICA - Prof. André Brito",
+  "short_name": "Ed. Física André",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#2563eb",
-  "description": "Sistema de gestão de clube de xadrez escolar com chamadas, torneios e atividades.",
+  "description": "Calendário, planos de aula e acompanhamento escolar para Educação Física - Prof. André Brito.",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/3001/3001787.png",
