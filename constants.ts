@@ -314,7 +314,22 @@ export const initialClassData: ClassDataMap = {
     name: "AP 101", 
     grade: "1", 
     school: "CIEP 320",
-    students: [],
+    students: [
+      { id: 10101, name: "Ana Clara", attendance: { "08/05": "P" } },
+      { id: 10102, name: "Benjamin Luccas", attendance: { "08/05": "P" } },
+      { id: 10103, name: "Diego Rafael", attendance: { "08/05": "P" } },
+      { id: 10104, name: "Ester Silis", attendance: { "08/05": "P" } },
+      { id: 10105, name: "Everson Lima", attendance: { "08/05": "P" } },
+      { id: 10106, name: "Gabriel Lima", attendance: { "08/05": "P" } },
+      { id: 10107, name: "Ícaro Martins", attendance: { "08/05": "P" } },
+      { id: 10108, name: "Lucas Gabriel", attendance: { "08/05": "P" } },
+      { id: 10109, name: "Lucas Rodrigues", attendance: { "08/05": "P" } },
+      { id: 10110, name: "Miguel Ângelo", attendance: { "08/05": "P" } },
+      { id: 10111, name: "Milena Vitória", attendance: { "08/05": "P" } },
+      { id: 10112, name: "Natan Galvão", attendance: { "08/05": "P" } },
+      { id: 10113, name: "Pedro Henrique", attendance: { "08/05": "P" } },
+      { id: 10114, name: "Walbert Leonardo", attendance: { "08/05": "P" } }
+    ],
     schedule: "07:00 – 08:40",
     days: ["Sexta"]
   },

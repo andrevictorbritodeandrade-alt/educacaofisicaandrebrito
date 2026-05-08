@@ -230,10 +230,15 @@ const App: React.FC = () => {
                 classChanged = true;
               }
 
-              // Keep existing students if they exist, otherwise use initial
-              if (!migratedClasses[id].students) {
-                migratedClasses[id].students = initialClassData[id].students || [];
-                classChanged = true;
+              // Merge students: keep existing, add new if missing (by name)
+              if (initialClassData[id].students) {
+                const existingStudentNames = migratedClasses[id].students.map(s => s.name);
+                initialClassData[id].students.forEach(newStudent => {
+                  if (!existingStudentNames.includes(newStudent.name)) {
+                    migratedClasses[id].students.push(newStudent);
+                    classChanged = true;
+                  }
+                });
               }
 
               if (classChanged) needsSave = true;
