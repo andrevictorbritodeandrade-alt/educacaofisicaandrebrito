@@ -174,6 +174,41 @@ const aulasMedio2Trimestre = [
     ]
   },
   {
+    id: 'm2-debate-corpo',
+    titulo: 'Debate: Corpo e Mídia',
+    subtitulo: 'Desconstruindo estereótipos com Frantz Fanon e Cida Bento',
+    imagem: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1280&q=80',
+    creditos: 'Educação Física - Prof. André Brito',
+    conteudo: `Slide 1: Debate: Corpo e Mídia - Desconstruindo estereótipos com Frantz Fanon e Cida Bento.
+    
+    Slide 2: O Ponto de Partida - Uma reflexão sociológica sobre como a televisão e a internet afetam, representam e limitam as narrativas sobre corpos negros e periféricos.
+
+    Slide 3: Nossos Guias Teóricos:
+    - Frantz Fanon: Psiquiatra e filósofo. Em "Pele Negra, Máscaras Brancas", ele explica como o corpo negro é objetificado pelo olhar racista. A mídia, muitas vezes, reproduz esse olhar, causando um impacto psicológico de alienação.
+    - Cida Bento: Psicóloga e pesquisadora brasileira. Em "O Pacto da Branquitude", expõe como grupos dominantes protegem seus privilégios e espaços (como a mídia), determinando quem é protagonista e quem é estereotipado.
+
+    Slide 4: A Mídia como "Espelho" - A mídia não é neutra; ela não apenas reflete a sociedade, mas constrói realidades e valores ativamente. Historicamente, a televisão e a internet reservam aos corpos negros e periféricos narrativas limitadas, negando-lhes a complexidade, a intelectualidade e a humanidade plena que lhes é de direito. Isso gera uma "história única" que precisamos aprender a identificar e questionar.
+
+    Slide 5: Como o Estereótipo Atua?
+    - Hipersexualização: Redução do indivíduo puramente aos seus atributos físicos. O corpo é transformado em um objeto de desejo ou entretenimento, esvaziando sua capacidade intelectual.
+    - Marginalização: A frequente associação de pessoas periféricas e negras a papéis de violência, criminalidade ou perigo, alimentando o medo e o preconceito social.
+    - Subserviência: A limitação a papéis de serviço e subordinação. O "pacto da branquitude" garante que os papéis de liderança, sucesso e chefia fiquem restritos ao padrão branco.
+
+    Slide 6: Frantz Fanon: "Eu sou dado a mim mesmo pelo outro. O olhar do outro me fixa, assim como um corante fixa uma preparação química."
+
+    Slide 7: Contrapondo com a Realidade:
+    - Pluralidade e Potência: A periferia é o maior polo de inovação, arte, cultura e intelectualidade do país. Não somos apenas carência.
+    - Consumo Crítico: O primeiro passo para romper o ciclo é não consumir passivamente. É preciso questionar: "Quem está contando essa história?"
+    - Novas Narrativas: Apoiar criadores de conteúdo independentes e exigir representatividade real nos espaços de poder midiático.
+
+    Slide 8: Roda de Conversa: "A palavra agora é de vocês." Como vocês percebem a hipersexualização e os estereótipos no seu feed do Instagram, TikTok ou nas novelas hoje?`,
+    boxes: [
+      { tipo: 'critica', titulo: 'O papel da mídia', texto: 'A mídia constrói realidades ativamente. Precisamos identificar a "história única".' },
+      { tipo: 'sabia', titulo: 'Contexto teórico', texto: 'Fanon e Cida Bento nos dão as ferramentas para analisar o racismo na mídia.' },
+      { tipo: 'reflexao', titulo: 'Roda de conversa', texto: 'Como você enxerga esses estereótipos no seu dia a dia?' }
+    ]
+  },
+  {
     id: 'm2-2',
     titulo: 'Primeiros Socorros: Saber que Salva',
     subtitulo: 'SAMU, Engasgo e Desmaio',
@@ -357,6 +392,11 @@ function ImagemComFallback({ src, alt, id }: { src: string, alt: string, id: str
   );
 }
 
+import { PdfViewer } from './PdfViewer';
+
+// ... (inside the Slide component, add this mapping for PDF)
+// ...
+
 function Slide({ aula, onClose }: { aula: any, onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200" onClick={onClose}>
@@ -372,30 +412,36 @@ function Slide({ aula, onClose }: { aula: any, onClose: () => void }) {
         </div>
 
         <div className="p-6 md:p-8">
-          <div className="prose max-w-none text-gray-800 text-lg leading-relaxed whitespace-pre-line mb-8">
-            {aula.conteudo}
-          </div>
+          {aula.pdf ? (
+            <PdfViewer file={aula.pdf} />
+          ) : (
+            <div className="prose max-w-none text-gray-800 text-lg leading-relaxed whitespace-pre-line mb-8">
+              {aula.conteudo}
+            </div>
+          )}
+          
+          {!aula.pdf && (
+            <div className="space-y-4">
+              {aula.boxes.map((box: any, idx: number) => {
+                let bgColor = 'bg-blue-50 border-blue-400 text-blue-900';
+                let icon = '💡';
+                
+                if (box.tipo === 'reflexao') { bgColor = 'bg-amber-50 border-amber-400 text-amber-900'; icon = '🤔'; }
+                if (box.tipo === 'sabia') { bgColor = 'bg-purple-50 border-purple-400 text-purple-900'; icon = '🌟'; }
+                if (box.tipo === 'atividade') { bgColor = 'bg-green-50 border-green-400 text-green-900'; icon = '🏃'; }
+                if (box.tipo === 'critica') { bgColor = 'bg-red-50 border-red-400 text-red-900'; icon = '✊🏿'; }
+                if (box.tipo === 'historia') { bgColor = 'bg-stone-50 border-stone-400 text-stone-900'; icon = '📜'; }
+                if (box.tipo === 'geografia') { bgColor = 'bg-emerald-50 border-emerald-400 text-emerald-900'; icon = '🗺️'; }
 
-          <div className="space-y-4">
-            {aula.boxes.map((box: any, idx: number) => {
-              let bgColor = 'bg-blue-50 border-blue-400 text-blue-900';
-              let icon = '💡';
-              
-              if (box.tipo === 'reflexao') { bgColor = 'bg-amber-50 border-amber-400 text-amber-900'; icon = '🤔'; }
-              if (box.tipo === 'sabia') { bgColor = 'bg-purple-50 border-purple-400 text-purple-900'; icon = '🌟'; }
-              if (box.tipo === 'atividade') { bgColor = 'bg-green-50 border-green-400 text-green-900'; icon = '🏃'; }
-              if (box.tipo === 'critica') { bgColor = 'bg-red-50 border-red-400 text-red-900'; icon = '✊🏿'; }
-              if (box.tipo === 'historia') { bgColor = 'bg-stone-50 border-stone-400 text-stone-900'; icon = '📜'; }
-              if (box.tipo === 'geografia') { bgColor = 'bg-emerald-50 border-emerald-400 text-emerald-900'; icon = '🗺️'; }
-
-              return (
-                <div key={idx} className={`p-5 rounded-xl border-l-4 ${bgColor}`}>
-                  <h3 className="text-lg font-bold mb-2 flex items-center gap-2">{icon} {box.titulo}</h3>
-                  <p className="leading-relaxed font-medium">{box.texto}</p>
-                </div>
-              );
-            })}
-          </div>
+                return (
+                  <div key={idx} className={`p-5 rounded-xl border-l-4 ${bgColor}`}>
+                    <h3 className="text-lg font-bold mb-2 flex items-center gap-2">{icon} {box.titulo}</h3>
+                    <p className="leading-relaxed font-medium">{box.texto}</p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         <div className="p-4 bg-gray-50 border-t flex justify-between items-center sticky bottom-0">

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { UserProfile, ClassDataMap, ActivityLogData } from '../types';
-import { performAttendanceBackfill } from '../services/backfillService';
+import { UserProfile, ClassDataMap } from '../types';
 
 interface ProfileProps {
   user: UserProfile;

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debate: Corpo e Mídia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #1a1c22;
+            --text-color: #e2e8f0;
+            --accent-color: #ff8833;
+            --card-bg: #2d3748;
+        }
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .slide-container {
+            width: 90%;
+            max-width: 1000px;
+            min-height: 80vh;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 2px solid #555;
+        }
+        h1, h2 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--accent-color);
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .icon-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .icon {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide-container">
+        <h1>Debate: Corpo e Mídia</h1>
+        <p>Desconstruindo estereótipos com Frantz Fanon e Cida Bento.</p>
+    </div>
+
+    <div class="slide-container">
+        <h2>O Ponto de Partida</h2>
+        <p>Uma reflexão sociológica sobre como a TV e a internet limitam as narrativas sobre corpos negros e periféricos.</p>
+    </div>
+
+    <div class="slide-container">
+        <h2>Nossos Guias Teóricos</h2>
+        <div class="grid-layout">
+            <div class="card">
+                <h3><i class="fas fa-book"></i> Frantz Fanon</h3>
+                <p>Psiquiatra e filósofo. Explica como o corpo negro é objetificado pelo olhar racista, muitas vezes reproduzindo o olhar do colonizador.</p>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-user-friends"></i> Cida Bento</h3>
+                <p>Psicóloga e pesquisadora. Criadora do conceito de "Pacto Narcísico da Branquitude", que mantém privilégios através do silenciamento.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <h2>Como o Estereótipo Atua?</h2>
+        <div class="grid-layout">
+            <div class="card icon-box">
+                <i class="fas fa-venus-mars icon"></i>
+                <div>
+                    <h3>Hipersexualização</h3>
+                    <p>Redução do indivíduo puramente aos seus atributos físicos. O corpo é transformado em um objeto de desejo ou entretenimento.</p>
+                </div>
+            </div>
+            <div class="card icon-box">
+                <i class="fas fa-handcuffs icon"></i>
+                <div>
+                    <h3>Marginalização</h3>
+                    <p>A associação frequente de pessoas negras a papéis de violência ou perigo, alimentando o medo e o preconceito social.</p>
+                </div>
+            </div>
+            <div class="card icon-box">
+                <i class="fas fa-concierge-bell icon"></i>
+                <div>
+                    <h3>Subserviência</h3>
+                    <p>A limitação a papéis de serviço e subordinação, garantindo que o comando permaneça nos padrões da branquitude.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <h2>Conclusão e Debate</h2>
+        <p>Como podemos descolonizar o nosso olhar midiático?</p>
+        <p class="card" style="text-align: center; font-style: italic;">O debate sobre corpo e mídia é, acima de tudo, um debate sobre humanidade e o direito de ser visto em toda a sua complexidade.</p>
+    </div>
+
+</body>
+</html>

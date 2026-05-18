@@ -620,7 +620,10 @@ export const StatisticsView: React.FC<StatisticsViewProps> = ({ classData, onBac
             }
 
             return (
-              <div key={card.id} className="glass-panel p-6 rounded-xl shadow-lg border border-white/50 relative">
+              <div key={card.id} className="glass-panel p-6 rounded-xl shadow-lg border border-white/50 relative hover:bg-slate-50 transition-all cursor-pointer" onClick={() => {
+                if (card.id === 'total_students') setViewMode('full_report');
+                if (card.id === 'active_classes') setViewMode('school_select');
+              }}>
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-slate-500 text-xs font-bold uppercase tracking-wider">{card.title}</h3>
                   {getIcon(card.icon)}

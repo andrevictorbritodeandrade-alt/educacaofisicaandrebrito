@@ -607,7 +607,7 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
           const isCorrectDay = currentClass.days ? currentClass.days.includes(dayOfWeek) : true;
           
           return (
-            <div key={student.id} className={`bg-white p-4 rounded-xl shadow-sm border flex flex-col gap-3 transition-opacity ${!isCorrectDay ? 'opacity-75 grayscale-[0.5]' : 'border-slate-200'}`}>
+            <div key={`${student.id}-${index}`} className={`bg-white p-4 rounded-xl shadow-sm border flex flex-col gap-3 transition-opacity ${!isCorrectDay ? 'opacity-75 grayscale-[0.5]' : 'border-slate-200'}`}>
               {/* Row 1: Number, Name, Actions */}
               <div className="flex justify-between items-center border-b border-slate-100 pb-2">
                  <div className="flex items-center gap-3 overflow-hidden">

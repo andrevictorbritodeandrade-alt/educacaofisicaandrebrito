@@ -73,7 +73,23 @@ service cloud.firestore {
       return data.images is list && data.images.size() <= 200;
     }
 
+    function isValidArquivo(data) {
+      return data.keys().hasAll(['title', 'category', 'type', 'dataUrl', 'createdAt']) &&
+             data.title is string && data.title.size() <= 255 &&
+             data.category is string && data.category.size() <= 100 &&
+             (data.type == 'pdf' || data.type == 'ppt') &&
+             data.dataUrl is string && data.dataUrl.size() <= 1000000 &&
+             data.createdAt is int;
+    }
+
     // --- Collection Rules ---
+
+    match /artifacts/{appId}/users/{userId}/arquivos/{arquivoId} {
+      allow read: if isSignedIn() && request.auth.uid == userId;
+      allow create: if isSignedIn() && request.auth.uid == userId && isValidId(arquivoId) && isValidArquivo(incoming());
+      allow update: if isSignedIn() && request.auth.uid == userId && isValidId(arquivoId) && isValidArquivo(incoming());
+      allow delete: if isSignedIn() && request.auth.uid == userId;
+    }
 
     match /dashboard/{cardId} {
       allow read: if isSignedIn();

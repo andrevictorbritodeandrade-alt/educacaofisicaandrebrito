@@ -1,4 +1,14 @@
 
+export interface Assignment {
+  id: string;
+  title: string;
+  discipline: string;
+  description: string;
+  totalPoints: number;
+  format: string;
+  dueDate: string;
+}
+
 export interface Student {
   id: number;
   name: string;
@@ -11,6 +21,7 @@ export interface ClassData {
   grade: string; 
   school: string; // New field for school grouping
   students: Student[];
+  assignments?: Assignment[];
   schedule?: string;
   days?: string[];
 }
@@ -64,6 +75,9 @@ export interface UserProfile {
   wins: number;
   losses: number;
   draws: number;
+  joinedAt: string;
+  recentGames: GameRecord[];
+  achievements: Achievement[];
 }
 
 export interface DashboardCardData {
@@ -86,7 +100,7 @@ export interface FirebaseConfig {
   measurementId?: string;
 }
 
-export type ViewState = 'home' | 'statistics' | 'classes' | 'tournaments' | 'play' | 'profile' | 'ementa' | 'plano' | 'lesson-content' | 'central-aulas' | 'exercises' | 'notation' | 'schedule' | 'gallery';
+export type ViewState = 'home' | 'statistics' | 'classes' | 'tournaments' | 'play' | 'profile' | 'ementa' | 'plano' | 'lesson-content' | 'central-aulas' | 'exercises' | 'notation' | 'schedule' | 'gallery' | 'assignments' | 'biblioteca' | 'register-activities';
 
 // --- TOURNAMENT TYPES ---
 export interface Player {

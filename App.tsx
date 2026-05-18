@@ -15,6 +15,9 @@ import { NotationView } from './components/NotationView';
 import { ScheduleView } from './components/ScheduleView';
 import { GalleryView } from './components/GalleryView';
 import { LessonContentView } from './components/LessonContentView';
+import { BibliotecaEscolarView } from './components/BibliotecaEscolarView';
+import { RegisterActivitiesView } from './components/RegisterActivitiesView';
+import { AssignmentsView } from './components/AssignmentsView';
 import { WeatherWidget } from './components/WeatherWidget'; // Import Widget
 import { BottomNav } from './components/BottomNav';
 import { ViewState, ClassDataMap, ClassData, GalleryData } from './types';
@@ -372,6 +375,7 @@ const App: React.FC = () => {
           setData={setGalleryData} 
         />
       );
+      case 'biblioteca': return <BibliotecaEscolarView onBack={goBack} />;
       case 'profile': return (
         <Profile 
           user={mockUserProfile} 
@@ -380,7 +384,8 @@ const App: React.FC = () => {
           setClassData={setClassData}
         />
       );
-      default: return <DashboardView setView={setViewWithHistory} />;
+          case 'assignments': return <AssignmentsView classData={classData} onBack={goBack} />;
+      case 'register-activities': return <RegisterActivitiesView classData={classData} onBack={goBack} />;
     }
   };
 
@@ -401,6 +406,9 @@ const App: React.FC = () => {
       case 'notation': return 'Notação Algébrica';
       case 'schedule': return 'Quadro de Horários';
       case 'gallery': return 'Galeria';
+      case 'biblioteca': return 'Biblioteca Escolar';
+      case 'assignments': return 'Trabalhos';
+      case 'register-activities': return 'Registro de Atividades';
       case 'profile': return 'Perfil';
       default: return 'Painel';
     }

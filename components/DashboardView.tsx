@@ -57,6 +57,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
       action: () => setView('central-aulas')
     },
     {
+      id: 'biblioteca',
+      title: 'Biblioteca Escolar',
+      description: 'Gestão de arquivos e materiais.',
+      icon: '📚',
+      bgGradient: 'from-pink-500 to-rose-600',
+      action: () => setView('biblioteca')
+    },
+    {
       id: 'lesson-content',
       title: 'Conteúdo das Aulas',
       description: 'O que ensinar em cada bimestre.',
