@@ -1,15 +1,20 @@
 export const CORPO_MIDIA_SLIDES = [
-  { title: "Debate: Corpo e Mídia", subtitle: "Desconstruindo estereótipos com Frantz Fanon e Cida Bento.", type: "text", theme: "hero" },
-  { title: "O Ponto de Partida", content: "Uma reflexão sociológica sobre como a TV e a internet limitam as narrativas sobre corpos negros e periféricos.", type: "text", theme: "quote" },
-  { title: "Nossos Guias Teóricos", points: ["**Frantz Fanon:** O corpo negro objetificado", "**Cida Bento:** O Pacto Narcísico da Branquitude"], type: "list", theme: "theory" },
-  { title: "Fanon: Sociogenia", content: "A experiência vivida do negro é marcada pela epidermização da inferioridade.", type: "text", hasImage: true },
-  { title: "Cida Bento: O Pacto", content: "Mecanismo de autopreservação de grupos brancos que privilegia 'seus pares' em detrimento da meritocracia racial real.", type: "text", hasImage: true },
-  { title: "Como o Estereótipo Atua?", points: ["**Hipersexualização**", "**Marginalização**", "**Subserviência**"], type: "list", theme: "cards" },
-  { title: "Dados da Realidade", content: "Fonte: Agência Brasil / Perfil Racial da Imprensa Brasileira.", type: "chart" },
-  { title: "Citação", content: '"Oh, meu corpo, faça de mim sempre um homem que questiona!" - Frantz Fanon', type: "text", theme: "hero" },
-  { title: "Evolução da Representação", points: ["Décadas 70-80: Papéis caricatos", "Anos 90-2000: Primeiros protagonistas", "Atualmente: Narrativas diversas"], type: "list", theme: "timeline" },
-  { title: "Um Novo Olhar: Resistência", content: "Criadores de conteúdo e jornalistas independentes estão quebrando o pacto narcísico.", type: "text", hasImage: true },
-  { title: "Conclusão e Debate", content: "Como podemos descolonizar o nosso olhar midiático?", type: "text", theme: "hero" }
+  { title: "DEBATE: CORPO E MÍDIA", subtitle: "Desconstruindo estereótipos com Frantz Fanon e Cida Bento.", type: "text", theme: "hero" },
+  { title: "O PONTO DE PARTIDA", content: "Uma reflexão sociológica sobre como a TV e a internet limitam as narrativas sobre corpos negros e periféricos.", type: "text", theme: "quote" },
+  { title: "NOSSOS GUIAS TEÓRICOS", points: [
+    "**FRANTZ FANON (Sociogenia):** A experiência vivida do negro é marcada pela marcação histórica e social de inferioridade.",
+    "**FRANTZ FANON (Epidermização):** A internalização da inferioridade baseada na cor da pele como constructo social.",
+    "**CIDA BENTO (Pacto Narcísico):** Mecanismo de autopreservação branca que privilegia seus pares em detrimento da meritocracia real.",
+    "**CIDA BENTO (Branquitude):** O poder de definir o que é o 'normal' ou 'humano' universal, excluindo o outro."
+  ], type: "list", theme: "theory" },
+  { title: "FANON: A SOCIOGENIA", content: "A experiência vivida do negro é marcada pela epidermização da inferioridade – uma construção social que domina o psiquismo.", type: "text", hasImage: true },
+  { title: "CIDA BENTO: O PACTO", content: "O Pacto Narcísico da branquitude atua como um sistema que garante privilégios e a manutenção da estrutura de poder, invisibilizando o racismo.", type: "text", hasImage: true },
+  { title: "COMO O ESTEREÓTIPO ATUA?", points: ["**HIPERSEXUALIZAÇÃO:** Redução do corpo apenas ao desejo.", "**MARGINALIZAÇÃO:** O corpo negro fora do centro da narrativa.", "**SUBSERVIÊNCIA:** Papéis subalternos reforçados."], type: "list", theme: "cards" },
+  { title: "DADOS DA REALIDADE", content: "Fonte: Agência Brasil / Perfil Racial da Imprensa Brasileira.", type: "chart" },
+  { title: "CITAÇÃO", content: '"Oh, meu corpo, faça de mim sempre um homem que questiona!" - Frantz Fanon', type: "text", theme: "hero" },
+  { title: "EVOLUÇÃO DA REPRESENTAÇÃO", points: ["**DÉCADAS 70-80:** Papéis predominantemente caricatos.", "**ANOS 90-2000:** Primeiros avanços com protagonistas.", "**ATUALMENTE:** Narrativas diversas e combate ao pacto."], type: "list", theme: "timeline" },
+  { title: "UM NOVO OLHAR: RESISTÊNCIA", content: "Criadores de conteúdo e jornalistas independentes estão quebrando o pacto narcísico e produzindo novos significados.", type: "text", hasImage: true },
+  { title: "CONCLUSÃO E DEBATE", content: "Como podemos descolonizar o nosso olhar midiático e construir novas representações para corpos negros?", type: "text", theme: "hero" }
 ];
 
 export const ALTINHA_FUTVOLEI_SLIDES = [

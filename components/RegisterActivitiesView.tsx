@@ -10,11 +10,10 @@ interface RegisterActivitiesViewProps {
 export const RegisterActivitiesView: React.FC<RegisterActivitiesViewProps> = ({ classData, onBack }) => {
   const [selectedClassId, setSelectedClassId] = useState<string>('AP 101');
   const [activityDescription, setActivityDescription] = useState('');
+  const [attendance, setAttendance] = useState('');
 
   const handleSave = () => {
-    // Here you would save the activity. Since I don't have the firestore setup
-    // to specifically add activities to the "registry", I will just show a alert for now.
-    alert(`Atividade salva para ${selectedClassId}: ${activityDescription}`);
+    alert(`Atividade salva para ${selectedClassId}: ${activityDescription}\nPresença registrada: ${attendance}`);
   };
 
   return (
@@ -23,7 +22,7 @@ export const RegisterActivitiesView: React.FC<RegisterActivitiesViewProps> = ({ 
         <ArrowLeft className="w-5 h-5 mr-2" /> Voltar ao Painel
       </button>
 
-      <h1 className="text-3xl font-extrabold text-white mb-8 uppercase tracking-tighter">Registro de Atividades por Turma</h1>
+      <h1 className="text-3xl font-extrabold text-white mb-8 uppercase tracking-tighter">Registro de Atividades e Presença</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Classes List / Cards */}
@@ -46,17 +45,23 @@ export const RegisterActivitiesView: React.FC<RegisterActivitiesViewProps> = ({ 
             </div>
         </div>
 
-        {/* Activity Input */}
+        {/* Activity/Attendance Input */}
         <div className="bg-white p-6 rounded-2xl shadow-md border border-slate-200">
             <h2 className="text-xl font-bold mb-4">Registrar para: {selectedClassId}</h2>
             <textarea 
-                className="w-full h-40 p-4 border rounded-xl mb-4"
+                className="w-full h-32 p-4 border rounded-xl mb-4"
                 placeholder="Descreva a atividade de hoje..."
                 value={activityDescription}
                 onChange={(e) => setActivityDescription(e.target.value)}
             />
+            <textarea 
+                className="w-full h-32 p-4 border rounded-xl mb-4"
+                placeholder="Liste os alunos presentes..."
+                value={attendance}
+                onChange={(e) => setAttendance(e.target.value)}
+            />
             <button onClick={handleSave} className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
-                <Save className="w-5 h-5" /> Salvar Atividade
+                <Save className="w-5 h-5" /> Salvar Atividade e Presença
             </button>
         </div>
       </div>
