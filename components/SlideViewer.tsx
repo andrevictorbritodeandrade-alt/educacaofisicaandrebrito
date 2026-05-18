@@ -44,14 +44,29 @@ export const SlideViewer: React.FC<{ onClose: () => void, slideType?: 'corpo-mid
             className="h-full flex items-center justify-center"
           >
             <div className="w-full h-full bg-white p-12 rounded-xl shadow-lg border border-slate-200 overflow-y-auto">
-              <h2 className="text-5xl font-bold mb-8 text-[#006064]">{slide.title}</h2>
+              <h2 className="text-5xl font-bold mb-8 text-[#006064] uppercase">{slide.title}</h2>
               {slide.subtitle && <p className="text-3xl mb-8 text-[#00838f]">{slide.subtitle}</p>}
               {slide.content && <p className="text-2xl leading-relaxed text-slate-800">{slide.content}</p>}
               {slide.points && (
                 <ul className="space-y-6">
-                  {slide.points.map((p, i) => (
-                    <li key={i} className="text-2xl text-slate-800 list-disc ml-8">{p}</li>
-                  ))}
+                  {slide.points.map((p, i) => {
+                    // Splits on the first colon, bolding the part before it
+                    const firstColonIndex = p.indexOf(':');
+                    if (firstColonIndex !== -1) {
+                         const boldPart = p.substring(0, firstColonIndex).replace(/\*\*/g, '');
+                         const rest = p.substring(firstColonIndex + 1);
+                         return (
+                            <li key={i} className="text-2xl text-slate-800 list-disc ml-8">
+                                <strong className="font-bold">{boldPart}:</strong>{rest}
+                            </li>
+                         );
+                    }
+                    return (
+                        <li key={i} className="text-2xl text-slate-800 list-disc ml-8">
+                          {p}
+                        </li>
+                    )
+                  })}
                 </ul>
               )}
             </div>
@@ -59,11 +74,9 @@ export const SlideViewer: React.FC<{ onClose: () => void, slideType?: 'corpo-mid
         </AnimatePresence>
       </div>
 
-      {/* Navigation Footer */}
-      <div className="shrink-0 bg-[#b3e5fc] p-4 flex justify-center gap-4">
-        <button onClick={prev} disabled={currentSlide === 0} className="bg-[#0277bd] text-white px-8 py-3 rounded-lg font-bold disabled:opacity-50">Anterior</button>
-        <button onClick={next} disabled={currentSlide === slides.length - 1} className="bg-[#0277bd] text-white px-8 py-3 rounded-lg font-bold disabled:opacity-50">Próximo</button>
-      </div>
+      {/* Navigation Arrows */}
+      <button onClick={prev} disabled={currentSlide === 0} className="absolute left-4 top-1/2 transform -translate-y-1/2 p-4 bg-white/50 rounded-full hover:bg-white disabled:opacity-30 z-10"><ArrowLeft size={48}/></button>
+      <button onClick={next} disabled={currentSlide === slides.length - 1} className="absolute right-4 top-1/2 transform -translate-y-1/2 p-4 bg-white/50 rounded-full hover:bg-white disabled:opacity-30 z-10"><ArrowRight size={48}/></button>
     </div>
   );
 };

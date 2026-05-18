@@ -19,11 +19,11 @@ export const RegisterActivitiesView: React.FC<RegisterActivitiesViewProps> = ({ 
 
   return (
     <div className="p-6 font-sans">
-      <button onClick={onBack} className="text-slate-600 mb-6 flex items-center">
+      <button onClick={onBack} className="text-white mb-6 flex items-center hover:text-orange-400 transition-colors">
         <ArrowLeft className="w-5 h-5 mr-2" /> Voltar ao Painel
       </button>
 
-      <h1 className="text-3xl font-bold text-slate-800 mb-8">Registro de Atividades por Turma</h1>
+      <h1 className="text-3xl font-extrabold text-white mb-8 uppercase tracking-tighter">Registro de Atividades por Turma</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Classes List / Cards */}

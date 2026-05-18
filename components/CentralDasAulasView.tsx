@@ -444,10 +444,6 @@ function Slide({ aula, onClose }: { aula: any, onClose: () => void }) {
           )}
         </div>
 
-        <div className="p-4 bg-gray-50 border-t flex justify-between items-center sticky bottom-0">
-          <span className="text-sm text-gray-500">Material didático - Prof. André Brito</span>
-          <button onClick={onClose} className="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors">Fechar Aula</button>
-        </div>
       </div>
     </div>
   );
@@ -474,20 +470,20 @@ export const CentralDasAulasView: React.FC<CentralDasAulasViewProps> = ({ onBack
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
-      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm">
+      <header className="bg-[#002b36] border-b border-indigo-900 px-6 py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm">
         <div className="flex items-center gap-4">
           <button
             onClick={() => onBack('home')}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-600"
+            className="p-2 hover:bg-indigo-900 rounded-full transition-colors text-white"
             aria-label="Voltar"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+            <h1 className="text-2xl font-extrabold text-white uppercase tracking-tighter flex items-center gap-2">
               <span className="text-2xl">📚</span> Central de Aulas
             </h1>
-            <p className="text-sm text-gray-500 hidden sm:block">
+            <p className="text-sm text-indigo-300 font-bold uppercase tracking-widest hidden sm:block">
               Educação Física • Prof. André Brito
             </p>
           </div>

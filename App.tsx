@@ -16,6 +16,7 @@ import { ScheduleView } from './components/ScheduleView';
 import { GalleryView } from './components/GalleryView';
 import { LessonContentView } from './components/LessonContentView';
 import { BibliotecaEscolarView } from './components/BibliotecaEscolarView';
+import { SlideViewer } from './components/SlideViewer';
 import { RegisterActivitiesView } from './components/RegisterActivitiesView';
 import { AssignmentsView } from './components/AssignmentsView';
 import { WeatherWidget } from './components/WeatherWidget'; // Import Widget
@@ -414,8 +415,22 @@ const App: React.FC = () => {
     }
   };
 
+  // Slide Viewer State
+  const [slideViewerOpen, setSlideViewerOpen] = useState<{ type: 'corpo-midia' | 'altinha-futvolei' } | null>(null);
+
+  useEffect(() => {
+    (window as any).openSlideViewer = (type: 'corpo-midia' | 'altinha-futvolei') => setSlideViewerOpen({ type });
+  }, []);
+
+  // ... (existing code for App)
+
   return (
     <div className="flex flex-col min-h-screen relative font-sans">
+      {/* Slide Viewer Global Overlay */}
+      {slideViewerOpen && (
+        <SlideViewer slideType={slideViewerOpen.type} onClose={() => setSlideViewerOpen(null)} />
+      )}
+
       {/* Global Background */}
       <BackgroundSlider />
       
@@ -479,7 +494,7 @@ const App: React.FC = () => {
       </div>
 
       {/* Global Footer (Always visible) */}
-      <GlobalFooter />
+      {!slideViewerOpen && <GlobalFooter />}
     </div>
   );
 };
