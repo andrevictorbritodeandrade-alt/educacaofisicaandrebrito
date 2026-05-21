@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Save, BookOpen, ClipboardList } from 'lucide-react';
-import { ClassDataMap } from '../types';
+import { ClassDataMap, ClassData } from '../types';
 
 interface RegisterActivitiesViewProps {
   classData: ClassDataMap;
@@ -29,7 +29,7 @@ export const RegisterActivitiesView: React.FC<RegisterActivitiesViewProps> = ({ 
         <div className="bg-white p-6 rounded-2xl shadow-md border border-slate-200">
             <h2 className="text-xl font-bold mb-4">Escolha a Turma</h2>
             <div className="space-y-4">
-                {Object.values(classData).map(cls => (
+                {(Object.values(classData) as ClassData[]).map(cls => (
                     <button 
                         key={cls.id}
                         onClick={() => setSelectedClassId(cls.id)}

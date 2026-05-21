@@ -41,59 +41,65 @@ export const InteractiveCalendar: React.FC = () => {
 
   // Função para determinar o tipo do dia baseado no mês e dia (1-indexed)
   const getDayType = (mIdx: number, d: number): DayInfo | null => {
-    // Feriados Fixos
+    // Datas SEEDUC Específicas / Recessos / Feriados / Projetos
+    // JAN
     if (mIdx === 0 && d === 1) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Confraternização Universal' };
+    if (mIdx === 0 && ((d >= 5 && d <= 9) || (d >= 12 && d <= 16) || (d >= 19 && d <= 23) || (d >= 26 && d <= 30))) return { type: 'PEM', sigla: 'PEM', color: legendColors['PEM'], label: 'Projeto Educação em Movimento' };
+    
+    // FEV
+    if (mIdx === 1 && (d >= 2 && d <= 4)) return { type: 'PP', sigla: 'PP', color: legendColors['PP'], label: 'Planejamento Pedagógico' };
+    if (mIdx === 1 && d === 5) return { type: 'I', sigla: 'I', color: legendColors['I'], label: 'Início do Período Letivo' };
+    if (mIdx === 1 && (d >= 25 && d <= 27)) return { type: 'AVALIA', sigla: 'AVALIA RJ', color: legendColors['AVALIA'], label: 'Avalia RJ' };
+
+    // MAR 
+    if (mIdx === 2 && d === 15) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Carnaval' };
+    if (mIdx === 2 && (d >= 2 && d <= 6)) return { type: 'SRR', sigla: 'SRR', color: legendColors['SRR'], label: 'Semana de Reunião de Responsáveis' };
+    if (mIdx === 2 && (d >= 9 && d <= 13)) return { type: 'SVM', sigla: 'SVM', color: legendColors['SVM'], label: 'Semana de Valorização das Mulheres' };
+
+    // ABR
+    if (mIdx === 3 && d === 2) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Paixão de Cristo' };
+    if (mIdx === 3 && d === 21) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Tiradentes' };
+    if (mIdx === 3 && (d >= 6 && d <= 10)) return { type: 'PVE', sigla: 'PVE', color: legendColors['PVE'], label: 'Semana de Combate ao Bullying' };
+    if (mIdx === 3 && (d >= 13 && d <= 17)) return { type: 'ENEM', sigla: 'ENEM RJ', color: legendColors['ENEM'], label: 'Simulado ENEM RJ' };
+
+    // MAI
     if (mIdx === 4 && d === 1) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Dia do Trabalho' };
-    if (mIdx === 8 && d === 7) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Independência do Brasil' };
+    if (mIdx === 4 && (d >= 19 && d <= 21)) return { type: 'COC', sigla: 'COC', color: legendColors['COC'], label: 'Conselho de Classe (1º)' };
+    if (mIdx === 4 && d === 28) return { type: 'C', sigla: 'C', color: legendColors['C'], label: 'Censo Escolar' };
+
+    // JUN
+    if (mIdx === 5 && (d >= 1 && d <= 3)) return { type: 'ENEM', sigla: 'ENEM RJ', color: legendColors['ENEM'], label: 'Simulado ENEM RJ' };
+
+    // JUL
+    if (mIdx === 6 && (d >= 13 && d <= 24)) return { type: 'PEM', sigla: 'PEM', color: legendColors['PEM'], label: 'Projeto Educação em Movimento' };
+    
+    // AGO
+    if (mIdx === 7 && (d >= 10 && d <= 15)) return { type: 'SRR', sigla: 'SRR', color: legendColors['SRR'], label: 'Reunião de Responsáveis' };
+    if (mIdx === 7 && (d >= 17 && d <= 19)) return { type: 'ENEM', sigla: 'ENEM RJ', color: legendColors['ENEM'], label: 'Simulado ENEM RJ' };
+
+    // SET
+    if (mIdx === 8 && d === 7) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Independência' };
+    if (mIdx === 8 && (d >= 8 && d <= 10)) return { type: 'COC', sigla: 'COC', color: legendColors['COC'], label: 'Conselho de Classe (2º)' };
+    if (mIdx === 8 && (d >= 21 && d <= 25)) return { type: 'SEP', sigla: 'SEP', color: legendColors['SEP'], label: 'Semana Educação Paralímpica' };
+    if (mIdx === 8 && (d >= 28 && d <= 30)) return { type: 'ENEM', sigla: 'ENEM RJ', color: legendColors['ENEM'], label: 'Simulado ENEM RJ' };
+
+    // OUT
+    if (mIdx === 9 && (d >= 1 && d <= 3)) return { type: 'ENEM', sigla: 'ENEM RJ', color: legendColors['ENEM'], label: 'Simulado ENEM RJ' };
     if (mIdx === 9 && d === 12) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Nossa Sra Aparecida' };
+    if (mIdx === 9 && d === 15) return { type: 'DM', sigla: 'DM', color: legendColors['DM'], label: 'Dia do Mestre' };
+    if (mIdx === 9 && (d >= 19 && d <= 23)) return { type: 'SCI', sigla: 'SCI', color: legendColors['SCI'], label: 'Semana Cultural' };
+    if (mIdx === 9 && (d >= 26 && d <= 30)) return { type: 'AVALIA', sigla: 'AVALIA RJ', color: legendColors['AVALIA'], label: 'Avalia RJ' };
+
+    // NOV
     if (mIdx === 10 && d === 2) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Finados' };
     if (mIdx === 10 && d === 15) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Proclamação da República' };
-    if (mIdx === 10 && d === 20) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Zumbi/Consciência Negra' };
-    if (mIdx === 11 && d === 25) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Natal' };
+    if (mIdx === 10 && d === 20) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Consciência Negra' };
 
-    // Datas SEEDUC Específicas
-    if (mIdx === 1 && d === 5) return { type: 'I', sigla: 'I', color: legendColors['I'], label: 'Início do Período Letivo' };
+    // DEZ
+    if (mIdx === 11 && (d >= 9 && d <= 11)) return { type: 'COC', sigla: 'COC', color: legendColors['COC'], label: 'Conselho de Classe (3º)' };
     if (mIdx === 11 && d === 22) return { type: 'T', sigla: 'T', color: legendColors['T'], label: 'Término do Período Letivo' };
-    
-    // Planejamento (PP)
-    if (mIdx === 1 && (d >= 2 && d <= 4)) return { type: 'PP', sigla: 'PP', color: legendColors['PP'], label: 'Planejamento Pedagógico' };
-
-    // Projeto PEM
-    if (mIdx === 0 && ((d >= 5 && d <= 9) || (d >= 12 && d <= 16) || (d >= 19 && d <= 23) || (d >= 26 && d <= 30))) 
-      return { type: 'PEM', sigla: 'PEM', color: legendColors['PEM'], label: 'Projeto Educação em Movimento' };
-    
-    // Recesso Janeiro
-    if (mIdx === 0 && d >= 2 && d <= 31) {
-       const date = new Date(2026, 0, d);
-       if (date.getDay() !== 0 && date.getDay() !== 6) {
-          return { type: 'R', sigla: 'R', color: legendColors['R'], label: 'Recesso Escolar' };
-       }
-    }
-
-    // SVM
-    if (mIdx === 2 && d >= 9 && d <= 13) return { type: 'SVM', sigla: 'SVM', color: legendColors['SVM'], label: 'Semana de Valorização das Mulheres' };
-
-    // PVE/CBL
-    if (mIdx === 3 && d >= 6 && d <= 10) return { type: 'PVE', sigla: 'PVE', color: legendColors['PVE'], label: 'Semana de Combate ao Bullying' };
-
-    // Recesso Julho
-    if (mIdx === 6 && d >= 13 && d <= 26) {
-       const date = new Date(2026, 6, d);
-       if (date.getDay() !== 0 && date.getDay() !== 6) {
-          return { type: 'R', sigla: 'R', color: legendColors['R'], label: 'Recesso Escolar (Férias)' };
-       }
-    }
-
-    // SEP
-    if (mIdx === 8 && d >= 21 && d <= 25) return { type: 'SEP', sigla: 'SEP', color: legendColors['SEP'], label: 'Semana Estadual da Educação Paralímpica' };
-
-    // SCI / SRR
-    if (mIdx === 9 && d >= 19 && d <= 23) return { type: 'SCI', sigla: 'SCI', color: legendColors['SCI'], label: 'Semana Cultural Interescolar / SRR' };
-
-    // COC
-    if (mIdx === 4 && d >= 19 && d <= 21) return { type: 'COC', sigla: 'COC', color: legendColors['COC'], label: 'Conselho de Classe (1º Trimestre)' };
-    if (mIdx === 8 && d >= 8 && d <= 10) return { type: 'COC', sigla: 'COC', color: legendColors['COC'], label: 'Conselho de Classe (2º Trimestre)' };
-    if (mIdx === 11 && d >= 9 && d <= 11) return { type: 'COC', sigla: 'COC', color: legendColors['COC'], label: 'Conselho de Classe (3º Trimestre)' };
+    if (mIdx === 11 && d === 25) return { type: 'F', sigla: 'F', color: legendColors['F'], label: 'Natal' };
+    if (mIdx === 11 && (d >= 23 && d <= 31)) return { type: 'R', sigla: 'R', color: legendColors['R'], label: 'Recesso' };
 
     // Domingos e Sábados
     const date = new Date(2026, mIdx, d);

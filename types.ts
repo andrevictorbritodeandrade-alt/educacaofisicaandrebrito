@@ -100,7 +100,7 @@ export interface FirebaseConfig {
   measurementId?: string;
 }
 
-export type ViewState = 'home' | 'statistics' | 'classes' | 'tournaments' | 'play' | 'profile' | 'ementa' | 'plano' | 'lesson-content' | 'central-aulas' | 'exercises' | 'notation' | 'schedule' | 'gallery' | 'assignments' | 'biblioteca' | 'register-activities';
+export type ViewState = 'home' | 'statistics' | 'classes' | 'tournaments' | 'play' | 'profile' | 'ementa' | 'plano' | 'lesson-content' | 'central-aulas' | 'exercises' | 'notation' | 'schedule' | 'gallery' | 'assignments' | 'biblioteca' | 'register-activities' | 'decolonial' | 'calendar';
 
 // --- TOURNAMENT TYPES ---
 export interface Player {

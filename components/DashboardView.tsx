@@ -10,7 +10,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
   const menuCards = [
     {
       id: 'classes',
-      title: 'Escolas & Turmas',
+      title: 'FREQUÊNCIAS',
       description: 'Gestão de turmas e chamadas diárias.',
       icon: '🏫',
       bgGradient: 'from-blue-600 to-cyan-500',
@@ -18,7 +18,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
     },
     {
       id: 'schedule',
-      title: 'Grade de Horários',
+      title: 'GRADE DE HORÁRIOS',
       description: 'Cronograma semanal das aulas.',
       icon: '📅',
       bgGradient: 'from-cyan-600 to-blue-700',
@@ -26,7 +26,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
     },
     {
       id: 'statistics',
-      title: 'Estatísticas',
+      title: 'ESTATÍSTICAS',
       description: 'Métricas de assiduidade e progresso.',
       icon: '📊',
       bgGradient: 'from-purple-600 to-blue-600',
@@ -34,7 +34,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
     },
     {
       id: 'plano',
-      title: 'Plano de Curso',
+      title: 'PLANO DE CURSO',
       description: 'Cronograma trimestral dos conteúdos.',
       icon: '📊',
       bgGradient: 'from-blue-500 to-indigo-600',
@@ -42,42 +42,34 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
     },
     {
       id: 'ementa',
-      title: 'Ementa',
+      title: 'EMENTA',
       description: 'Fundamentos, objetivos e referências.',
       icon: '📄',
       bgGradient: 'from-emerald-500 to-teal-600',
       action: () => setView('ementa')
     },
     {
-      id: 'central-aulas',
-      title: 'Central das Aulas',
-      description: 'Slides, ilustrações e conteúdos interativos.',
-      icon: '🏫',
-      bgGradient: 'from-orange-500 to-amber-600',
-      action: () => setView('central-aulas')
+      id: 'decolonial',
+      title: 'DECOLONIAL APP',
+      description: 'Decolonização de corpos, identidades e mídias.',
+      icon: '✊🏾',
+      bgGradient: 'from-emerald-600 to-teal-500',
+      action: () => setView('decolonial')
     },
     {
-      id: 'biblioteca',
-      title: 'Biblioteca Escolar',
-      description: 'Gestão de arquivos e materiais.',
-      icon: '📚',
-      bgGradient: 'from-pink-500 to-rose-600',
-      action: () => setView('biblioteca')
-    },
-    {
-      id: 'lesson-content',
-      title: 'Conteúdo das Aulas',
-      description: 'O que ensinar em cada bimestre.',
-      icon: '📚',
-      bgGradient: 'from-emerald-700 to-emerald-900',
-      action: () => setView('lesson-content')
+      id: 'calendar',
+      title: 'CALENDÁRIO ESCOLAR 2026',
+      description: 'Calendário letivo oficial da Rede SEEDUC/RJ.',
+      icon: '🗓️',
+      bgGradient: 'from-amber-500 to-orange-600',
+      action: () => setView('calendar')
     }
   ];
 
   return (
     <div className="animate-fade-in space-y-4 md:space-y-8 pb-20 mt-1 md:mt-2">
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {menuCards.map((card) => (
           <div 
             key={card.id}

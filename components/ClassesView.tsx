@@ -348,6 +348,16 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
         </div>
 
         <div className="bg-slate-50 p-6 rounded-b-2xl shadow-xl min-h-[500px]">
+          <button 
+            onClick={onBack}
+            className="mb-6 px-4 py-2 border border-slate-200 text-slate-700 bg-white rounded-lg hover:bg-slate-100 hover:text-blue-600 transition-colors flex items-center gap-2 text-sm font-bold shadow-sm"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Voltar ao Menu
+          </button>
+
           <h2 className="text-lg font-bold text-slate-700 text-center mb-8">Selecione a Escola para Chamada</h2>
           
           <div className="space-y-4">
@@ -407,7 +417,7 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
         <div className="bg-slate-50 p-6 rounded-b-2xl shadow-xl min-h-[500px]">
           <button 
             onClick={() => setSelectedGrade(null)}
-            className="mb-6 px-4 py-2 border border-blue-200 text-blue-600 bg-blue-50/50 rounded-lg hover:bg-blue-100 transition-colors flex items-center gap-2 text-sm font-bold"
+            className="mb-6 px-4 py-2 border border-slate-200 text-slate-700 bg-white rounded-lg hover:bg-slate-100 hover:text-blue-600 transition-colors flex items-center gap-2 text-sm font-bold shadow-sm"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             Voltar para Escolas

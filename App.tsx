@@ -19,6 +19,8 @@ import { BibliotecaEscolarView } from './components/BibliotecaEscolarView';
 import { SlideViewer } from './components/SlideViewer';
 import { RegisterActivitiesView } from './components/RegisterActivitiesView';
 import { AssignmentsView } from './components/AssignmentsView';
+import { DecolonialApp } from './components/DecolonialApp';
+import { CalendarView } from './components/CalendarView';
 import { WeatherWidget } from './components/WeatherWidget'; // Import Widget
 import { BottomNav } from './components/BottomNav';
 import { ViewState, ClassDataMap, ClassData, GalleryData } from './types';
@@ -81,7 +83,7 @@ const App: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [currentView, setView] = useState<ViewState>(() => {
     const hash = window.location.hash.replace('#', '');
-    if (hash && ['home', 'statistics', 'classes', 'tournaments', 'play', 'ementa', 'plano', 'central-aulas', 'exercises', 'notation', 'profile'].includes(hash)) {
+    if (hash && ['home', 'statistics', 'classes', 'tournaments', 'play', 'ementa', 'plano', 'central-aulas', 'exercises', 'notation', 'profile', 'decolonial'].includes(hash)) {
       return hash as ViewState;
     }
     return (localStorage.getItem('app_currentView') as ViewState) || 'home';
@@ -387,6 +389,8 @@ const App: React.FC = () => {
       );
           case 'assignments': return <AssignmentsView classData={classData} onBack={goBack} />;
       case 'register-activities': return <RegisterActivitiesView classData={classData} onBack={goBack} />;
+      case 'decolonial': return <DecolonialApp onBack={goBack} />;
+      case 'calendar': return <CalendarView onBack={goBack} />;
     }
   };
 
@@ -411,6 +415,7 @@ const App: React.FC = () => {
       case 'assignments': return 'Trabalhos';
       case 'register-activities': return 'Registro de Atividades';
       case 'profile': return 'Perfil';
+      case 'decolonial': return 'Decolonial App';
       default: return 'Painel';
     }
   };
