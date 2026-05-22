@@ -142,14 +142,16 @@ const slidesData: Record<string, Slide[]> = {
     },
     {
       tipo: 'texto_simples',
-      titulo: 'Afinal, o que é ILGCH (Itinerário de Linguagens e Ciências Humanas)?',
+      titulo: 'ILGCH: Itinerário de Linguagens e Ciências Humanas',
       topicos: [
-        'Linguagens + Ciências Humanas',
-        'O nosso corpo é um MAPA',
-        'Onde vivemos dita como nos expressamos',
-        'Vamos estudar o Brasil real'
+        'ILGCH: Itinerário de Linguagens e Ciências Humanas',
+        'Cultura Corporal: Tudo o que move e expressa o humano',
+        'Todo corpo é um Marcador, todo corpo é um Mapa',
+        'Corpos falam: no andar, no vestir, no expressar',
+        'Descobrindo culturas, locais e etnias através dos corpos',
+        'Corpos múltiplos: pretos, brancos, amarelos...'
       ],
-      dicaProfessor: 'Desmistificar a sigla chata do estado e mostrar que a aula vai ser profunda.'
+      dicaProfessor: 'Dica: Explique que o corpo é o primeiro território que ocupamos. Desenhe um mapa mental no quadro ligando: Corpo, Cultura, Território e Identidade.'
     },
     {
       tipo: 'destaque_centro',
@@ -158,14 +160,26 @@ const slidesData: Record<string, Slide[]> = {
     },
     {
       tipo: 'texto_simples',
-      titulo: 'A Ponta do Iceberg',
+      titulo: 'Explorando o Iceberg: O que sustenta o padrão?',
       topicos: [
-        'O que vemos: Revistas e Redes Sociais',
-        'O que está oculto: Racismo Estrutural',
-        'A estética como ferramenta de controle',
-        'Filtros não são neutros'
+        'Ponta (Visível): Redes Sociais, Padrões, Filtros',
+        'Base (Oculta): Racismo Estrutural, Apagamento histórico',
+        'Gatilho: Como a publicidade lucra com nossa insegurança?',
+        'Link: A estética como ferramenta de controle do consumo',
+        'Debate: Quem define o belo?'
       ],
-      dicaProfessor: 'O padrão de beleza eurocêntrico (a ponta) só se sustenta porque existe racismo escondido.'
+      dicaProfessor: 'O padrão de beleza eurocêntrico só existe porque invisibiliza o corpo negro como sujeito. Questione o lucro dessa indústria.'
+    },
+    {
+      tipo: 'texto_simples',
+      titulo: 'Gatilhos para Debate (Mapa Mental)',
+      topicos: [
+          'Violência Simbólica nas Redes',
+          'História contada pelo "Dominador"',
+          'Nossa resistência: Corpos que ocupam',
+          'Afinal, somos o que postamos?'
+      ],
+      dicaProfessor: 'Use estes tópicos para desenhar o mapa mental final no quadro.'
     },
     {
        tipo: 'destaque_centro',
@@ -205,7 +219,7 @@ interface DecolonialAppProps {
 export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
   const [currentView, setCurrentView] = useState('menu');
   const [selectedAulaData, setSelectedAulaData] = useState<string | null>(null);
-  const [planningSubView, setPlanningSubView] = useState<null | '8ano' | 'ejanem' | 'ilgch'>(null);
+  const [planningSubView, setPlanningSubView] = useState<null | '8ano' | 'ap' | 'ejanem' | 'gestao'>(null);
   const [selectedAulaPlan, setSelectedAulaPlan] = useState<typeof cronograma[0] | null>(null);
 
   // --- TELA DE MENU ---
@@ -275,11 +289,11 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
           {id: '8ano', label: '8º Ano'},
           {id: 'ap', label: 'AP'},
           {id: 'ejanem', label: 'EJANEM'},
-          {id: 'ilgch', label: 'ILGCH'}
+          {id: 'gestao', label: 'Gestão do Professor'}
         ].map((turma) => (
           <button 
             key={turma.id}
-            onClick={() => setPlanningSubView(turma.id as '8ano' | 'ap' | 'ejanem' | 'ilgch')}
+            onClick={() => setPlanningSubView(turma.id as '8ano' | 'ap' | 'ejanem' | 'gestao')}
             className="p-8 bg-slate-800 rounded-2xl border border-slate-700 hover:border-emerald-400 transition-all text-white font-black text-xl"
           >
             {turma.label}
@@ -496,7 +510,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
       <div className="relative">
         {renderAulaModal()}
         {!planningSubView && renderPlanejamentoMenu()}
-        {planningSubView === 'ilgch' && renderPlanejamentoILGCH()}
+        {planningSubView === 'gestao' && renderPlanejamentoGestao()}
         {(planningSubView === '8ano' || planningSubView === 'ap' || planningSubView === 'ejanem') && renderPlanejamentoClasses(planningSubView)}
       </div>
     );
@@ -504,7 +518,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
 
 
   // --- TELA DE PLANEJAMENTO ---
-  const renderPlanejamentoILGCH = () => {
+  const renderPlanejamentoGestao = () => {
     const tri2 = cronograma.filter(aula => aula.tri === '2º Tri');
     const tri3 = cronograma.filter(aula => aula.tri === '3º Tri');
 
@@ -535,7 +549,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
                 </p>
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider rounded border border-slate-200 shadow-sm">
                   <span className="w-2 h-2 rounded-full bg-slate-400"></span> 
-                  Disciplina SEEDUC: ILGCH (Itinerário de Linguagens e Ciências Humanas)
+                  Disciplina SEEDUC: Gestão do Professor (Itinerário de Linguagens e Ciências Humanas)
                 </div>
               </div>
             </div>
@@ -585,11 +599,11 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
           {id: '8ano', label: '8º Ano'},
           {id: 'ap', label: 'AP'},
           {id: 'ejanem', label: 'EJANEM'},
-          {id: 'ilgch', label: 'ILGCH'}
+          {id: 'gestao', label: 'Gestão do Professor'}
         ].map((turma) => (
           <button 
             key={turma.id}
-            onClick={() => { setPlanningSubView(turma.id as '8ano' | 'ap' | 'ejanem' | 'ilgch'); setCurrentView('repositorio_aulas_lista'); }}
+            onClick={() => { setPlanningSubView(turma.id as '8ano' | 'ap' | 'ejanem' | 'gestao'); setCurrentView('repositorio_aulas_lista'); }}
             className="p-8 bg-slate-800 rounded-2xl border border-slate-700 hover:border-blue-400 transition-all text-white font-black text-xl"
           >
             {turma.label}

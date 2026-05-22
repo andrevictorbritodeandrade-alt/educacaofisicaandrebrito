@@ -20,27 +20,23 @@ export const WeatherWidget: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
+  const fetchWeather = async () => {
+    setLoading(true);
+    setError(null);
     if (!navigator.geolocation) {
       setError('GPS n/a');
       setLoading(false);
       return;
     }
-
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
           const { latitude, longitude } = position.coords;
-          
-          // Using Open-Meteo API (Free, no key required)
           const response = await fetch(
             `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=1`
           );
-          
           if (!response.ok) throw new Error('Erro API');
-
           const data = await response.json();
-          
           setWeather({
             temp: Math.round(data.current.temperature_2m),
             code: data.current.weather_code,
@@ -50,19 +46,20 @@ export const WeatherWidget: React.FC = () => {
           });
           setLoading(false);
         } catch (err) {
-          console.error(err);
           setError('S/ Sinal');
           setLoading(false);
         }
       },
       (err) => {
-        // console.error("GPS Error: ", err); 
-        // Silently fail or show simple msg
         setError('GPS Off');
         setLoading(false);
       },
       { timeout: 10000 }
     );
+  };
+
+  useEffect(() => {
+    fetchWeather();
   }, []);
 
   // WMO Weather interpretation code
@@ -96,7 +93,7 @@ export const WeatherWidget: React.FC = () => {
       {loading ? (
         <div className="text-[10px] text-slate-400 animate-pulse">Carregando...</div>
       ) : error ? (
-        <div className="text-[10px] text-red-400 font-bold cursor-pointer hover:underline" onClick={() => window.location.reload()}>{error}</div>
+        <div className="text-[10px] text-red-400 font-bold cursor-pointer hover:underline" onClick={fetchWeather}>{error}</div>
       ) : weather ? (
         <div className="flex items-center bg-white/10 backdrop-blur-md rounded-full px-3 py-1 border border-white/20 shadow-sm">
            <span className="text-base mr-2 filter drop-shadow-sm">{getWeatherIcon(weather.code)}</span>

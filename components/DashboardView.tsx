@@ -83,7 +83,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
               <div className={`w-12 h-12 md:w-16 md:h-16 flex-shrink-0 rounded-lg md:rounded-xl bg-gradient-to-br ${card.bgGradient} flex items-center justify-center text-xl md:text-3xl text-white shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
                 {card.icon}
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="flex-1">
                 <h3 className="text-lg md:text-2xl font-black text-white mb-0.5 md:mb-2 group-hover:text-blue-200 transition-colors drop-shadow-md">{card.title}</h3>
                 <p className="text-xs md:text-sm text-slate-200 font-medium leading-tight md:leading-relaxed drop-shadow-sm">
                   {card.description}

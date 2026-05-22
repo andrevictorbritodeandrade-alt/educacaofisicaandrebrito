@@ -62,7 +62,7 @@ export const PE_PLAN: Record<string, AulaPlan[]> = {
         { data: '15/05', tri: '2º Tri', modulo: 'Esportes de Rede', titulo: 'Teoria: Futevôlei', desc: 'Introdução ao futevôlei e dinâmica sem quadra.', resumo: COMMON_RESUMOS['Futevôlei'] },
         { data: '22/05', tri: '2º Tri', modulo: 'Esportes de Rede', titulo: 'Prática: Futepátio', desc: 'Adaptação técnica no pátio.', resumo: COMMON_RESUMOS['Futepátio'] },
         { data: '29/05', tri: '2º Tri', modulo: 'Matrizes Africanas', titulo: 'Jogos: Mancala', desc: 'Lógica e semeadura africana.', resumo: COMMON_RESUMOS['Mancala'] },
-        { data: '05/06', tri: '2º Tri', modulo: 'Matrizes Africanas', titulo: 'Futebol e Várzea', desc: 'A resistência negra no futebol.', resumo: COMMON_RESUMOS['Várzea'] },
+        { data: '05/06', tri: '2º Tri', modulo: 'Matrizes Africanas', titulo: 'Futebol e Várzea', desc: 'A resistência negra no futebol.', trabalho: 'passar', resumo: COMMON_RESUMOS['Várzea'] },
         { data: '12/06', tri: '2º Tri', modulo: 'Cultura Digital', titulo: 'E-Sports e o Corpo', desc: 'Sedentarismo e games.', resumo: COMMON_RESUMOS['E-Sports'] },
         { data: '19/06', tri: '2º Tri', modulo: 'Matrizes Indígenas', titulo: 'Jogo da Onça', desc: 'Estratégia dos povos originários.', resumo: COMMON_RESUMOS['Onça'] },
         { data: '26/06', tri: '2º Tri', modulo: 'Jogos de Salão', titulo: 'Festival de Tabuleiros', desc: 'Xadrez e Damas tático.', resumo: COMMON_RESUMOS['Tabuleiros'] },
