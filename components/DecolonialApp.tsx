@@ -289,7 +289,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
           {id: '8ano', label: '8º Ano'},
           {id: 'ap', label: 'AP'},
           {id: 'ejanem', label: 'EJANEM'},
-          {id: 'gestao', label: 'Gestão do Professor'}
+          {id: 'gestao', label: 'Gestão do Professor - ILGCH'}
         ].map((turma) => (
           <button 
             key={turma.id}
@@ -599,7 +599,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
           {id: '8ano', label: '8º Ano'},
           {id: 'ap', label: 'AP'},
           {id: 'ejanem', label: 'EJANEM'},
-          {id: 'gestao', label: 'Gestão do Professor'}
+          {id: 'gestao', label: 'Gestão do Professor - ILGCH'}
         ].map((turma) => (
           <button 
             key={turma.id}

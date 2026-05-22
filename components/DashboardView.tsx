@@ -80,12 +80,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
             <div className={`absolute -right-6 -top-6 w-24 h-24 md:w-40 md:h-40 bg-gradient-to-br ${card.bgGradient} rounded-full opacity-20 blur-2xl group-hover:opacity-40 transition-opacity`}></div>
             
             <div className="relative z-10 flex items-center space-x-4 md:space-x-6">
-              <div className={`w-12 h-12 md:w-16 md:h-16 flex-shrink-0 rounded-lg md:rounded-xl bg-gradient-to-br ${card.bgGradient} flex items-center justify-center text-xl md:text-3xl text-white shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
+              <div className={`w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-xl md:rounded-2xl bg-gradient-to-br ${card.bgGradient} flex items-center justify-center text-3xl md:text-5xl text-white shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
                 {card.icon}
               </div>
               <div className="flex-1">
-                <h3 className="text-lg md:text-2xl font-black text-white mb-0.5 md:mb-2 group-hover:text-blue-200 transition-colors drop-shadow-md">{card.title}</h3>
-                <p className="text-xs md:text-sm text-slate-200 font-medium leading-tight md:leading-relaxed drop-shadow-sm">
+                <h3 className="text-4xl md:text-6xl font-black text-white mb-1 group-hover:text-amber-300 transition-colors drop-shadow-md">{card.title}</h3>
+                <p className="text-sm md:text-base text-slate-100 font-medium leading-relaxed drop-shadow-sm">
                   {card.description}
                 </p>
               </div>
@@ -105,7 +105,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
       <div className="mt-4 md:mt-8 bg-white/10 backdrop-blur-xl border border-white/20 p-4 md:p-6 rounded-lg md:rounded-xl flex flex-col md:flex-row justify-between items-center text-xs md:text-sm font-bold text-slate-200 space-y-2 md:space-y-0 shadow-lg">
         <div className="flex items-center space-x-2">
           <span className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(74,222,128,0.5)]"></span>
-          <span className="text-white tracking-wider">SISTEMA ONLINE</span>
+          <span className="text-white tracking-wider">SISTEMA ATIVO</span>
         </div>
         <div className="text-slate-300">
           Sincronizado: {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
