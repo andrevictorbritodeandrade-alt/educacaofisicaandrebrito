@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { BookOpen, Presentation, ChevronLeft, ChevronRight, Home, Info, Printer, LayoutGrid } from 'lucide-react';
+import { BookOpen, Presentation, ChevronLeft, ChevronRight, Home, Info, Printer, LayoutGrid, Calendar } from 'lucide-react';
 import { PE_PLAN } from '../data/planosPE';
+import { PlanoAnualPE } from './PlanoAnualPE';
 
 // ================= DADOS DO CRONOGRAMA =================
 const cronograma = [
@@ -223,7 +224,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
         </h1>
         <p className="text-lg md:text-xl text-slate-300 mb-12 font-medium">Prof. André Brito</p>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           <button 
             onClick={() => setCurrentView('planejamento')}
             className="flex flex-col items-center justify-center p-8 bg-slate-800/80 backdrop-blur-lg rounded-2xl border border-slate-700 hover:border-emerald-400 hover:-translate-y-1 transition-all shadow-xl group"
@@ -232,7 +233,18 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
               <BookOpen size={30} />
             </div>
             <h2 className="text-2xl font-black mb-1">Planejamento</h2>
-            <p className="text-slate-400 text-sm text-center">O cronograma oficial e resumos de aulas.</p>
+            <p className="text-slate-400 text-sm text-center">Cronograma oficial e resumos.</p>
+          </button>
+
+          <button 
+            onClick={() => setCurrentView('plano_anual_pe')}
+            className="flex flex-col items-center justify-center p-8 bg-slate-800/80 backdrop-blur-lg rounded-2xl border border-slate-700 hover:border-indigo-400 hover:-translate-y-1 transition-all shadow-xl group"
+          >
+            <div className="w-16 h-16 bg-slate-900 text-indigo-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <Calendar size={30} />
+            </div>
+            <h2 className="text-2xl font-black mb-1">Plano Anual</h2>
+            <p className="text-slate-400 text-sm text-center">Gestão completa das aulas de PE.</p>
           </button>
 
           <button 
@@ -243,7 +255,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
               <Presentation size={30} />
             </div>
             <h2 className="text-2xl font-black mb-1">Aulas (Datashow)</h2>
-            <p className="text-slate-400 text-sm text-center">Slides para apresentação no telão.</p>
+            <p className="text-slate-400 text-sm text-center">Slides para apresentação.</p>
           </button>
         </div>
       </div>
@@ -332,59 +344,164 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
     );
   };
 
+
+  const renderAulaModal = () => {
+    if (!selectedAulaPlan) return null;
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm transition-opacity" onClick={() => setSelectedAulaPlan(null)}>
+        <div 
+          className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+          style={{ maxHeight: '90vh' }}
+          onClick={e => e.stopPropagation()}
+        >
+          <div className={`px-6 py-4 flex justify-between items-center ${selectedAulaPlan.tri === '2º Tri' ? 'bg-blue-600' : 'bg-green-600'} text-white`}>
+            <div>
+              <h3 className="text-xl font-extrabold">{selectedAulaPlan.titulo}</h3>
+              <p className="text-sm opacity-90">{selectedAulaPlan.tri} • Aula {selectedAulaPlan.data}</p>
+            </div>
+            <button 
+              onClick={() => setSelectedAulaPlan(null)} 
+              className="text-white hover:bg-white/20 rounded-full w-10 h-10 flex items-center justify-center text-2xl transition-colors"
+              aria-label="Fechar"
+            >
+              &times;
+            </button>
+          </div>
+          
+          <div className="p-6 overflow-y-auto flex-grow bg-slate-50">
+            <div className="inline-block px-3 py-1 mb-4 rounded-md text-xs font-bold uppercase tracking-wider bg-slate-200 text-slate-700">
+              {selectedAulaPlan.modulo}
+            </div>
+            
+            {selectedAulaPlan.status === 'eja_concluido' && (
+              <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg shadow-sm">
+                <p className="text-sm font-bold text-blue-900 flex items-center gap-2">
+                  ✅ Status da Semana:
+                </p>
+                <p className="text-sm text-blue-800 mt-1">
+                  Você já deu esta introdução no EJANEM (falando de mídia e padrões). O planejamento agora é aplicar a mesma estrutura amanhã para as turmas regulares.
+                </p>
+              </div>
+            )}
+
+            <div className="text-slate-700 text-[15px] leading-relaxed space-y-4">
+              {selectedAulaPlan.resumo.split('\n').map((paragraph: string, idx: number) => {
+                if (!paragraph.trim()) return null;
+                
+                const isAmparoLegal = paragraph.includes('📜 **Amparo Legal');
+                const isDinamica = paragraph.includes('🗣️ **O que falar/Dinâmica');
+                const isDinamicaAlt = paragraph.includes('🗣️ **Dinâmica');
+                const isObjetivo = paragraph.includes('🎯 **Objetivo da Aula');
+                const isLembrete = paragraph.includes('⚠️ **LEMBRETE');
+                const isTrabalho = paragraph.includes('⚠️ **TRABALHO');
+                const isRecolher = paragraph.includes('📥 **TRABALHO');
+                const isReflexão = paragraph.includes('📜 **Reflexão');
+                
+                const formattedText = paragraph.split('**').map((part, i) => 
+                  i % 2 === 1 ? <strong key={i} className="text-slate-900">{part}</strong> : part
+                );
+
+                if (isAmparoLegal || isReflexão) {
+                  return (
+                    <div key={idx} className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg shadow-sm text-amber-900">
+                      {formattedText}
+                    </div>
+                  );
+                }
+
+                if (isDinamica || isDinamicaAlt || isObjetivo) {
+                   return (
+                      <div key={idx} className={`mt-4 p-4 border rounded-lg shadow-sm ${isObjetivo ? 'bg-slate-100 border-slate-200 text-slate-900 font-medium' : 'bg-blue-50/50 border-blue-100 text-slate-800'}`}>
+                         {formattedText}
+                      </div>
+                   );
+                }
+
+                if (isLembrete || isTrabalho || isRecolher) {
+                   return (
+                      <div key={idx} className={`mt-4 p-4 border rounded-lg shadow-sm ${isRecolher ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-red-50 border-red-200 text-red-900 font-bold'}`}>
+                         {formattedText}
+                      </div>
+                   );
+                }
+
+                return <p key={idx}>{formattedText}</p>;
+              })}
+            </div>
+          </div>
+          
+          <div className="px-6 py-4 bg-white border-t border-slate-100 flex justify-end">
+            <button 
+              onClick={() => setSelectedAulaPlan(null)} 
+              className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg font-bold transition-colors shadow-sm"
+            >
+              Entendido, fechar
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const renderPlanejamentoClasses = (turma: '8ano' | 'ap' | 'ejanem') => {
     const planos = PE_PLAN[turma] || [];
-    // Divide simplificado em 2 e 3 trimestres based on date logic
-    const tri2 = planos.filter(a => parseInt(a.data.split('/')[1]) < 9);
-    const tri3 = planos.filter(a => parseInt(a.data.split('/')[1]) >= 9);
+    const tri2 = planos.filter(aula => aula.tri === '2º Tri');
+    const tri3 = planos.filter(aula => aula.tri === '3º Tri');
     
     return (
       <div className="p-4 md:p-8 font-sans text-slate-800 relative bg-slate-50 rounded-2xl shadow-2xl">
         <button onClick={() => setPlanningSubView(null)} className="mb-6 flex items-center gap-2 text-slate-600 hover:text-slate-900 font-bold bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200">
            <ChevronLeft size={20} /> Voltar para Seleção de Turma
         </button>
-        <h2 className="text-3xl font-black text-slate-900 mb-8 uppercase tracking-tighter">Planejamento: {turma === '8ano' ? '8º Ano' : turma === 'ap' ? 'AP' : 'EJANEM'}</h2>
+        <h2 className="text-4xl font-black text-slate-900 mb-2 uppercase tracking-tighter">Planejamento: {turma === '8ano' ? '8º Ano' : turma === 'ap' ? 'AP' : 'EJANEM'}</h2>
+        <p className="text-slate-500 mb-12 font-medium">Cronograma de Educação Física e Cultura Corporal</p>
         
-        <section>
-          <div className="flex items-center gap-3 mb-6 mt-8">
-            <div className="h-8 w-3 bg-blue-600 rounded-full shadow-sm"></div>
-            <h2 className="text-2xl font-black text-slate-800 tracking-tight">2º Trimestre</h2>
+        <div className={`space-y-12 ${selectedAulaPlan ? 'blur-sm pointer-events-none' : ''} transition-all duration-300`}>
+          <section>
+            <div className="flex items-center gap-4 mb-8">
+              <div className="h-10 w-3 bg-blue-600 rounded-full shadow-lg"></div>
+              <h2 className="text-3xl font-black text-slate-800 tracking-tight">2º Trimestre</h2>
+              <div className="flex-grow border-t-2 border-slate-200 border-dashed ml-4"></div>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {tri2.map((aula, idx) => renderCard(aula, idx, 'bg-blue-600', 'bg-blue-50 text-blue-800 border border-blue-200', turma))}
+            </div>
+          </section>
+          
+          <div className="relative py-8 flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-300"></div></div>
+            <span className="relative px-6 bg-slate-50 text-slate-400 text-sm font-black uppercase tracking-[0.3em]">Mudança de Trimestre</span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {tri2.map((aula, idx) => renderCard(aula, idx, 'bg-blue-600', 'bg-blue-50 text-blue-800 border border-blue-200', turma))}
-          </div>
-        </section>
-        
-        <div className="flex items-center my-12 opacity-50">
-          <div className="flex-grow border-t border-slate-300"></div>
-          <span className="mx-4 text-slate-400 text-xs font-black uppercase tracking-widest">Avanço de Trimestre</span>
-          <div className="flex-grow border-t border-slate-300"></div>
-        </div>
 
-        <section>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-8 w-3 bg-green-600 rounded-full shadow-sm"></div>
-            <h2 className="text-2xl font-black text-slate-800 tracking-tight">3º Trimestre</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {tri3.map((aula, idx) => renderCard(aula, idx, 'bg-green-600', 'bg-green-50 text-green-800 border border-green-200', turma))}
-          </div>
-        </section>
+          <section>
+            <div className="flex items-center gap-4 mb-8">
+              <div className="h-10 w-3 bg-green-600 rounded-full shadow-lg"></div>
+              <h2 className="text-3xl font-black text-slate-800 tracking-tight">3º Trimestre</h2>
+              <div className="flex-grow border-t-2 border-slate-200 border-dashed ml-4"></div>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {tri3.map((aula, idx) => renderCard(aula, idx, 'bg-green-600', 'bg-green-50 text-green-800 border border-green-200', turma))}
+            </div>
+          </section>
+        </div>
       </div>
     );
   };
+
 
   const renderPlanejamento = () => {
-    if (!planningSubView) return renderPlanejamentoMenu();
-    if (planningSubView === 'ilgch') return renderPlanejamentoILGCH();
-    if (planningSubView === '8ano' || planningSubView === 'ap' || planningSubView === 'ejanem') return renderPlanejamentoClasses(planningSubView);
     return (
-      <div className="p-12 text-center text-white min-h-[400px] flex flex-col items-center justify-center">
-        <h2 className="text-2xl font-bold mb-4">Em construção: {planningSubView}</h2>
-        <button onClick={() => setPlanningSubView(null)} className="bg-white/10 px-6 py-2 rounded-lg font-bold hover:bg-white/20 transition-all">Voltar</button>
+      <div className="relative">
+        {renderAulaModal()}
+        {!planningSubView && renderPlanejamentoMenu()}
+        {planningSubView === 'ilgch' && renderPlanejamentoILGCH()}
+        {(planningSubView === '8ano' || planningSubView === 'ap' || planningSubView === 'ejanem') && renderPlanejamentoClasses(planningSubView)}
       </div>
     );
   };
+
 
   // --- TELA DE PLANEJAMENTO ---
   const renderPlanejamentoILGCH = () => {
@@ -396,87 +513,6 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
         <button onClick={() => setPlanningSubView(null)} className="mb-6 flex items-center gap-2 text-slate-600 hover:text-slate-900 font-bold bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200">
           <ChevronLeft size={20} /> Voltar para Seleção de Turma
         </button>
-
-        {/* Modal de Resumo do Planejamento */}
-        {selectedAulaPlan && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm transition-opacity">
-            <div 
-              className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
-              style={{ maxHeight: '90vh' }}
-            >
-              <div className={`px-6 py-4 flex justify-between items-center ${selectedAulaPlan.tri === '2º Tri' ? 'bg-blue-600' : 'bg-green-600'} text-white`}>
-                <div>
-                  <h3 className="text-xl font-extrabold">{selectedAulaPlan.titulo}</h3>
-                  <p className="text-sm opacity-90">{selectedAulaPlan.tri} • Aula {selectedAulaPlan.data}</p>
-                </div>
-                <button 
-                  onClick={() => setSelectedAulaPlan(null)} 
-                  className="text-white hover:bg-white/20 rounded-full w-10 h-10 flex items-center justify-center text-2xl transition-colors"
-                  aria-label="Fechar"
-                >
-                  &times;
-                </button>
-              </div>
-              
-              <div className="p-6 overflow-y-auto flex-grow bg-slate-50">
-                <div className="inline-block px-3 py-1 mb-4 rounded-md text-xs font-bold uppercase tracking-wider bg-slate-200 text-slate-700">
-                  {selectedAulaPlan.modulo}
-                </div>
-                
-                {selectedAulaPlan.status === 'eja_concluido' && (
-                  <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg shadow-sm">
-                    <p className="text-sm font-bold text-blue-900 flex items-center gap-2">
-                      ✅ Status da Semana:
-                    </p>
-                    <p className="text-sm text-blue-800 mt-1">
-                      Você já deu esta introdução no EJANEM (falando de mídia e padrões). O planejamento agora é aplicar a mesma estrutura amanhã para as turmas regulares.
-                    </p>
-                  </div>
-                )}
-
-                <div className="text-slate-700 text-[15px] leading-relaxed space-y-4">
-                  {selectedAulaPlan.resumo.split('\n').map((paragraph: string, idx: number) => {
-                    if (!paragraph.trim()) return null;
-                    
-                    const isAmparoLegal = paragraph.includes('📜 **Amparo Legal');
-                    const isDinamica = paragraph.includes('🗣️ **O que falar/Dinâmica');
-                    
-                    const formattedText = paragraph.split('**').map((part, i) => 
-                      i % 2 === 1 ? <strong key={i} className="text-slate-900">{part}</strong> : part
-                    );
-
-                    if (isAmparoLegal) {
-                      return (
-                        <div key={idx} className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg shadow-sm text-amber-900">
-                          {formattedText}
-                        </div>
-                      );
-                    }
-
-                    if (isDinamica) {
-                       return (
-                          <div key={idx} className="mt-4 p-4 bg-blue-50/50 border border-blue-100 rounded-lg shadow-sm text-slate-800">
-                             {formattedText}
-                          </div>
-                       );
-                    }
-
-                    return <p key={idx}>{formattedText}</p>;
-                  })}
-                </div>
-              </div>
-              
-              <div className="px-6 py-4 bg-white border-t border-slate-100 flex justify-end">
-                <button 
-                  onClick={() => setSelectedAulaPlan(null)} 
-                  className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg font-bold transition-colors shadow-sm"
-                >
-                  Entendido, fechar
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Conteúdo do Planejamento */}
         <div className={`max-w-7xl mx-auto space-y-8 ${selectedAulaPlan ? 'blur-sm pointer-events-none' : ''} transition-all duration-200`}>
@@ -756,6 +792,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
     <div className="w-full">
       {currentView === 'menu' && renderMenu()}
       {currentView === 'planejamento' && renderPlanejamento()}
+      {currentView === 'plano_anual_pe' && <PlanoAnualPE onBack={() => setCurrentView('menu')} />}
       {currentView === 'repositorio_aulas' && renderAulasMenu()}
       {currentView === 'repositorio_aulas_lista' && renderRepositorioAulas()}
       {currentView === 'player' && <SlidePlayer />}
