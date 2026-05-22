@@ -50,7 +50,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
     },
     {
       id: 'decolonial',
-      title: 'DECOLONIAL APP',
+      title: 'GESTÃO DO PROFESSOR',
       description: 'Decolonização de corpos, identidades e mídias.',
       icon: '✊🏾',
       bgGradient: 'from-emerald-600 to-teal-500',
@@ -84,8 +84,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
                 {card.icon}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg md:text-2xl font-black text-white mb-0.5 md:mb-2 group-hover:text-blue-200 transition-colors truncate drop-shadow-md">{card.title}</h3>
-                <p className="text-xs md:text-sm text-slate-200 font-medium leading-tight md:leading-relaxed truncate md:whitespace-normal drop-shadow-sm">
+                <h3 className="text-lg md:text-2xl font-black text-white mb-0.5 md:mb-2 group-hover:text-blue-200 transition-colors drop-shadow-md">{card.title}</h3>
+                <p className="text-xs md:text-sm text-slate-200 font-medium leading-tight md:leading-relaxed drop-shadow-sm">
                   {card.description}
                 </p>
               </div>

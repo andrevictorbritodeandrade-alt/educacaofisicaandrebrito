@@ -96,7 +96,7 @@ export const WeatherWidget: React.FC = () => {
       {loading ? (
         <div className="text-[10px] text-slate-400 animate-pulse">Carregando...</div>
       ) : error ? (
-        <div className="text-[10px] text-red-400 font-bold">{error}</div>
+        <div className="text-[10px] text-red-400 font-bold cursor-pointer hover:underline" onClick={() => window.location.reload()}>{error}</div>
       ) : weather ? (
         <div className="flex items-center bg-white/10 backdrop-blur-md rounded-full px-3 py-1 border border-white/20 shadow-sm">
            <span className="text-base mr-2 filter drop-shadow-sm">{getWeatherIcon(weather.code)}</span>
