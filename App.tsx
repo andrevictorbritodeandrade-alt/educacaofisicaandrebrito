@@ -236,15 +236,51 @@ const App: React.FC = () => {
                 classChanged = true;
               }
 
-              // Merge students: keep existing, add new if missing (by name)
-              if (initialClassData[id].students) {
-                const existingStudentNames = migratedClasses[id].students.map(s => s.name);
-                initialClassData[id].students.forEach(newStudent => {
-                  if (!existingStudentNames.includes(newStudent.name)) {
-                    migratedClasses[id].students.push(newStudent);
-                    classChanged = true;
-                  }
-                });
+              // Merge students: prefer initialClassData as truth for names, but merge attendance.
+              // This also cleans up duplicates and mock names.
+              if (initialClassData[id].students && initialClassData[id].students.length > 0) {
+                const mockNamesList = ["Ana Silva", "Beatriz Costa", "Carlos Oliveira", "Davi Souza", "Eduardo Lima", "Fernanda Rocha", "Gabriel Alves", "Helena Dias", "Igor Martins", "Julia Pereira", "Kaique Santos", "Larissa Gomes", "Miguel Ferreira", "Nicole Ribeiro", "Otávio Castro"];
+                const mockNamesSet = new Set(mockNamesList);
+                
+                const serverStudents = migratedClasses[id].students || [];
+                const localStudents = initialClassData[id].students;
+
+                // Identify if current server list has mock names to be removed or is significantly different
+                const hasMockNames = serverStudents.some(s => mockNamesSet.has(s.name) || /\s\d+$/.test(s.name));
+                
+                if (hasMockNames) {
+                  const newStudentList: any[] = [];
+                  
+                  // 1. Reconstruct using initial students as base, preserving any remote attendance
+                  localStudents.forEach(ls => {
+                    const serverMatch = serverStudents.find(ss => ss.name === ls.name);
+                    newStudentList.push({
+                      ...ls,
+                      attendance: { ...ls.attendance, ...(serverMatch ? serverMatch.attendance : {}) }
+                    });
+                  });
+
+                  // 2. Add manual students (not in initial and NOT mock)
+                  serverStudents.forEach(ss => {
+                    const isInInitial = localStudents.some(ls => ls.name === ss.name);
+                    const isMock = mockNamesSet.has(ss.name) || /\s\d+$/.test(ss.name);
+                    if (!isInInitial && !isMock) {
+                      newStudentList.push(ss);
+                    }
+                  });
+
+                  migratedClasses[id].students = newStudentList;
+                  classChanged = true;
+                } else {
+                  // Standard merge if no mock names suspected
+                  const existingNames = new Set(serverStudents.map(s => s.name));
+                  localStudents.forEach(ls => {
+                    if (!existingNames.has(ls.name)) {
+                      serverStudents.push(ls);
+                      classChanged = true;
+                    }
+                  });
+                }
               }
 
               if (classChanged) needsSave = true;
@@ -453,10 +489,10 @@ const App: React.FC = () => {
              />
 
              {/* Header */}
-             <header className="bg-[#1a233b] border-b border-white/10 h-16 flex items-center px-4 sticky top-0 z-30 shadow-2xl shrink-0 transition-all duration-300 text-white">
+             <header className="bg-neutral-950 border-b border-white/5 h-16 flex items-center px-4 sticky top-0 z-30 shadow-2xl shrink-0 transition-all duration-300 text-white">
                <button 
                  onClick={() => setSidebarOpen(true)}
-                 className="p-2 rounded-xl hover:bg-white/10 text-white focus:outline-none transition-all active:scale-90 mr-3"
+                 className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white focus:outline-none transition-all active:scale-90 mr-3 border border-white/10 shadow-lg"
                >
                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />

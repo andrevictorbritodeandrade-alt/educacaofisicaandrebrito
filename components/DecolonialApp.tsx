@@ -9,7 +9,7 @@ const cronograma = [
   // ================= 2º TRIMESTRE =================
   { 
     data: '22/05', tri: '2º Tri', modulo: 'Módulo 1: Mídia e Racismo Invisível', titulo: 'Intro / Cultura Corporal', desc: 'O corpo na sociedade. Introdução à Decolonialidade.', trabalho: null, status: 'eja_concluido',
-    resumo: `🎯 **Objetivo da Aula:** Apresentar a disciplina e introduzir a base legal (Leis 10.639/03 e 11.645/08).\n\n🗣️ **O que falar/Dinâmica:**\n• Fazer a introdução que funcionou no EJANEM.\n• Apresentar o conceito de "Decolonização": explicar que vamos aprender a questionar a história contada apenas pelo ponto de vista do colonizador europeu.\n• Chegar na "ponta do iceberg" do racismo invisível nas mídias e no dia a dia.\n\n📜 **Amparo Legal:** Cumprimento do estudo da matriz formadora da sociedade brasileira (Art. 26-A, Lei 10.639/03).` 
+    resumo: `🎯 **Objetivo da Aula:** Apresentar a disciplina e introduzir a base legal (Leis 10.639/03 e 11.645/08).\n\n🗣️ **O que falar/Dinâmica:**\n• Fazer a introdução da disciplina.\n• Apresentar o conceito de "Decolonização": explicar que vamos aprender a questionar a história contada apenas pelo ponto de vista do colonizador europeu.\n• Chegar na "ponta do iceberg" do racismo invisível nas mídias e no dia a dia.\n\n📜 **Amparo Legal:** Cumprimento do estudo da matriz formadora da sociedade brasileira (Art. 26-A, Lei 10.639/03).` 
   },
   { 
     data: '29/05', tri: '2º Tri', modulo: 'Módulo 1: Mídia e Racismo Invisível', titulo: 'O Racismo Invisível', desc: 'O Padrão Estético e o apagamento. (Leitura de Artigo)', trabalho: null, status: 'pendente',
@@ -220,7 +220,7 @@ interface DecolonialAppProps {
 export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
   const [currentView, setCurrentView] = useState('menu');
   const [selectedAulaData, setSelectedAulaData] = useState<string | null>(null);
-  const [planningSubView, setPlanningSubView] = useState<null | '8ano' | 'ap' | 'ejanem' | 'gestao'>(null);
+  const [planningSubView, setPlanningSubView] = useState<null | '8ano' | 'ap' | 'gestao'>(null);
   const [selectedAulaPlan, setSelectedAulaPlan] = useState<typeof cronograma[0] | null>(null);
 
   // --- TELA DE MENU ---
@@ -289,12 +289,11 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
         {[
           {id: '8ano', label: '8º Ano'},
           {id: 'ap', label: 'AP'},
-          {id: 'ejanem', label: 'EJANEM'},
           {id: 'gestao', label: 'Gestão do Professor - ILGCH'}
         ].map((turma) => (
           <button 
             key={turma.id}
-            onClick={() => setPlanningSubView(turma.id as '8ano' | 'ap' | 'ejanem' | 'gestao')}
+            onClick={() => setPlanningSubView(turma.id as '8ano' | 'ap' | 'gestao')}
             className="p-8 bg-slate-800 rounded-2xl border border-slate-700 hover:border-emerald-400 transition-all text-white font-black text-xl"
           >
             {turma.label}
@@ -394,7 +393,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
                   ✅ Status da Semana:
                 </p>
                 <p className="text-sm text-blue-800 mt-1">
-                  Você já deu esta introdução no EJANEM (falando de mídia e padrões). O planejamento agora é aplicar a mesma estrutura amanhã para as turmas regulares.
+                  O planejamento agora é aplicar a estrutura de mídia e padrões para as turmas regulares.
                 </p>
               </div>
             )}
@@ -458,7 +457,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
     );
   };
 
-  const renderPlanejamentoClasses = (turma: '8ano' | 'ap' | 'ejanem') => {
+  const renderPlanejamentoClasses = (turma: '8ano' | 'ap') => {
     const planos = PE_PLAN[turma] || [];
     const tri2 = planos.filter(aula => aula.tri === '2º Tri');
     const tri3 = planos.filter(aula => aula.tri === '3º Tri');
@@ -468,7 +467,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
         <button onClick={() => setPlanningSubView(null)} className="mb-6 flex items-center gap-2 text-slate-600 hover:text-slate-900 font-bold bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200">
            <ChevronLeft size={20} /> Voltar para Seleção de Turma
         </button>
-        <h2 className="text-4xl font-black text-slate-900 mb-2 uppercase tracking-tighter">Planejamento: {turma === '8ano' ? '8º Ano' : turma === 'ap' ? 'AP' : 'EJANEM'}</h2>
+        <h2 className="text-4xl font-black text-slate-900 mb-2 uppercase tracking-tighter">Planejamento: {turma === '8ano' ? '8º Ano' : 'AP'}</h2>
         <p className="text-slate-500 mb-12 font-medium">Cronograma de Educação Física e Cultura Corporal</p>
         
         <div className={`space-y-12 ${selectedAulaPlan ? 'blur-sm pointer-events-none' : ''} transition-all duration-300`}>
@@ -512,7 +511,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
         {renderAulaModal()}
         {!planningSubView && renderPlanejamentoMenu()}
         {planningSubView === 'gestao' && renderPlanejamentoGestao()}
-        {(planningSubView === '8ano' || planningSubView === 'ap' || planningSubView === 'ejanem') && renderPlanejamentoClasses(planningSubView)}
+        {(planningSubView === '8ano' || planningSubView === 'ap') && renderPlanejamentoClasses(planningSubView)}
       </div>
     );
   };
@@ -599,12 +598,11 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
         {[
           {id: '8ano', label: '8º Ano'},
           {id: 'ap', label: 'AP'},
-          {id: 'ejanem', label: 'EJANEM'},
           {id: 'gestao', label: 'Gestão do Professor - ILGCH'}
         ].map((turma) => (
           <button 
             key={turma.id}
-            onClick={() => { setPlanningSubView(turma.id as '8ano' | 'ap' | 'ejanem' | 'gestao'); setCurrentView('repositorio_aulas_lista'); }}
+            onClick={() => { setPlanningSubView(turma.id as '8ano' | 'ap' | 'gestao'); setCurrentView('repositorio_aulas_lista'); }}
             className="p-8 bg-slate-800 rounded-2xl border border-slate-700 hover:border-blue-400 transition-all text-white font-black text-xl"
           >
             {turma.label}

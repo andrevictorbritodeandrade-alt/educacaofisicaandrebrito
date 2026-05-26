@@ -67,23 +67,25 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, currentView, setView
 
       {/* Sidebar Drawer */}
       <aside 
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white shadow-xl transform transition-transform duration-300 ease-in-out flex flex-col ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 bg-black text-white shadow-[10px_0_40px_rgba(0,0,0,0.8)] transform transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) flex flex-col border-r border-white/10 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between p-4 border-b border-slate-700 h-16">
+        <div className="flex items-center justify-between p-6 border-b border-white/10 h-20">
           <div className="flex items-center space-x-3">
-             <span className="text-2xl">🏃‍♂️</span>
-             <span className="text-xl font-bold tracking-wider uppercase">Educação Física</span>
+             <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+                <span className="text-xl">🏃</span>
+             </div>
+             <span className="text-lg font-black tracking-tighter uppercase whitespace-nowrap">Educação Física</span>
           </div>
-          <button onClick={onClose} className="p-1 rounded-md hover:bg-slate-700 focus:outline-none">
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-white/5 text-slate-500 hover:text-white transition-colors">
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        <nav className="mt-6 px-4 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
+        <nav className="mt-8 px-4 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
           {menuItems.map((item) => (
             <button
               key={item.id}
@@ -91,30 +93,39 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, currentView, setView
                 setView(item.id);
                 onClose();
               }}
-              className={`flex items-center w-full px-4 py-3 rounded-lg transition-colors ${
+              className={`flex items-center w-full px-5 py-3.5 rounded-xl transition-all duration-200 group ${
                 currentView === item.id 
-                  ? 'bg-blue-600 text-white shadow-md' 
-                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                  ? 'bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.3)] ring-1 ring-white/20' 
+                  : 'text-slate-500 hover:bg-white/5 hover:text-white'
               }`}
             >
-              {item.icon}
-              <span className="ml-3 font-medium">{item.label}</span>
+              <div className={`${currentView === item.id ? 'text-white' : 'text-blue-500 group-hover:scale-110 transition-transform'}`}>
+                {item.icon}
+              </div>
+              <span className={`ml-4 font-black uppercase text-[11px] tracking-widest ${currentView === item.id ? 'opacity-100' : 'opacity-60 group-hover:opacity-100'}`}>{item.label}</span>
             </button>
           ))}
         </nav>
         
-        <div className="p-4 border-t border-slate-700">
+        <div className="p-6 border-t border-white/10">
           <button 
             onClick={() => setConfigOpen(true)}
-            className="flex items-center w-full px-4 py-2 text-blue-400 hover:bg-slate-800 hover:text-blue-300 rounded-lg transition-colors"
+            className="flex items-center w-full px-5 py-3 bg-white/5 hover:bg-white/10 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all border border-white/5"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-5 h-5 text-blue-500 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span className="ml-3 font-medium">Configurar Nuvem</span>
+             Configurar Nuvem
           </button>
-          <p className="text-xs text-slate-500 text-center mt-4">Educação Física v1.0</p>
+          <div className="mt-6 flex flex-col items-center gap-1">
+             <p className="text-[9px] font-black text-slate-600 uppercase tracking-tighter">Powered by André Brito</p>
+             <div className="flex gap-1.5 grayscale opacity-30">
+               <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+               <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
+               <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+             </div>
+          </div>
         </div>
       </aside>
       

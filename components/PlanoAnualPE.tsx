@@ -18,7 +18,6 @@ const CLASSES = {
     { id: '803', name: 'Turma 803 (EE Cordelia Paiva)', segment: SEGMENTS.FUNDAMENTAL },
     { id: '801', name: 'Turma 801 (EE Cordelia Paiva)', segment: SEGMENTS.FUNDAMENTAL },
     { id: 'AP198', name: 'AP 101 (CIEP 198)', segment: SEGMENTS.ACELERACAO },
-    { id: 'EJANEM', name: 'EJANEM 101 (CE Euclides da Cunha)', segment: SEGMENTS.EJA },
   ],
   FRIDAY: [
     { id: 'AP320', name: 'AP 101 (CIEP 320)', segment: SEGMENTS.ACELERACAO },
@@ -76,56 +75,48 @@ const SCHEDULE_MONDAY = [
     '803': { title: 'Apresentação e Provas', description: 'Conhecendo a turma.\\n\\nAplicação de provas de recuperação de outros professores.' }, 
     '801': { title: 'Apresentação e Provas', description: 'Conhecendo a turma.\\n\\nAplicação de provas de recuperação de outros professores.' }, 
     'AP198': { title: 'Apresentação + Jogo Virtual', description: 'Conhecendo a turma.\\n\\nDinâmica utilizando jogo virtual do aplicativo "Sala de Jogos" do professor.' }, 
-    'EJANEM': { title: 'Sem Aula', description: 'Não houve aula neste dia.' } 
   }},
   { date: '18/05', type: 'class', activities: { 
     '802': AULA_FUTEVOLEI, 
     '803': AULA_FUTEVOLEI, 
     '801': AULA_FUTEVOLEI, 
     'AP198': AULA_FUTEVOLEI, 
-    'EJANEM': { title: 'Debate "Corpo e Mídia"', description: 'Primeira aula com a turma.\\n\\nRoda de conversa pautada em Frantz Fanon e Cida Bento. Debater a hipersexualização e os estereótipos associados aos corpos negros e periféricos na televisão e na internet, contrapondo com a realidade.' } 
   }},
   { date: '25/05', type: 'class', activities: { 
     '802': AULA_FUTEPATIO, 
     '803': AULA_FUTEPATIO, 
     '801': AULA_FUTEPATIO, 
     'AP198': AULA_FUTEPATIO, 
-    'EJANEM': { title: 'Saúde (LER/DORT)', description: DEFAULT_DESC } 
   }},
   { date: '08/06', type: 'class', activities: { 
     '802': AULA_MANCALA, 
     '803': AULA_MANCALA, 
     '801': AULA_MANCALA, 
     'AP198': AULA_MANCALA, 
-    'EJANEM': { title: 'Ginástica laboral mãos', description: DEFAULT_DESC } 
   }},
   { date: '15/06', type: 'class', activities: { 
     '802': AULA_VARZEA, 
     '803': AULA_VARZEA, 
     '801': AULA_VARZEA, 
     'AP198': AULA_VARZEA, 
-    'EJANEM': { title: 'Postura levantar peso', description: DEFAULT_DESC } 
   }},
   { date: '22/06', type: 'class', activities: { 
     '802': AULA_ESPORTS, 
     '803': AULA_ESPORTS, 
     '801': AULA_ESPORTS, 
     'AP198': AULA_ESPORTS, 
-    'EJANEM': { title: 'Automassagem', description: DEFAULT_DESC } 
   }},
   { date: '29/06', type: 'class', activities: { 
     '802': AULA_ONCA, 
     '803': AULA_ONCA, 
     '801': AULA_ONCA, 
     'AP198': AULA_ONCA, 
-    'EJANEM': { title: 'Roda "Meu corpo"', description: DEFAULT_DESC } 
   }},
   { date: '06/07', subtitle: 'Encerramento 2º Trim.', type: 'class', activities: { 
     '802': AULA_TABULEIROS, 
     '803': AULA_TABULEIROS, 
     '801': AULA_TABULEIROS, 
     'AP198': AULA_TABULEIROS, 
-    'EJANEM': { title: 'Simulação SAMU', description: DEFAULT_DESC } 
   }},
   { date: '13/07', type: 'event', title: 'RECESSO ESCOLAR' },
   { date: '20/07', type: 'event', title: 'RECESSO ESCOLAR' },
@@ -134,14 +125,12 @@ const SCHEDULE_MONDAY = [
     '803': AULA_PARALIMPICO, 
     '801': AULA_PARALIMPICO, 
     'AP198': AULA_PARALIMPICO, 
-    'EJANEM': { title: '1ºs Socorros: AVC', description: DEFAULT_DESC } 
   }},
   { date: '03/08', type: 'class', activities: { 
     '802': AULA_PADROES, 
     '803': AULA_PADROES, 
     '801': AULA_PADROES, 
     'AP198': AULA_PADROES, 
-    'EJANEM': { title: 'Manobra Heimlich', description: DEFAULT_DESC } 
   }},
   { date: '10/08', type: 'event', title: 'REUNIÃO DE RESPONSÁVEIS' },
   { date: '17/08', type: 'class', activities: { 
@@ -149,21 +138,18 @@ const SCHEDULE_MONDAY = [
     '803': { ...AULA_LUTAS_BASE(), assignment: { type: 'passar', points: 3, deadline: '14/09', title: 'Construção de Jogos Africanos', text: 'Trazer um tabuleiro de Shisima ou Mancala construído em casa com material reciclável.'} }, 
     '801': { ...AULA_LUTAS_BASE(), assignment: { type: 'passar', points: 3, deadline: '14/09', title: 'Construção de Jogos Africanos', text: 'Trazer um tabuleiro de Shisima ou Mancala construído em casa com material reciclável.'} }, 
     'AP198': { ...AULA_LUTAS_BASE(), assignment: { type: 'passar', points: 3, deadline: '14/09', title: 'Construção de Jogos Africanos', text: 'Trazer um tabuleiro de Shisima ou Mancala construído em casa com material reciclável.'} }, 
-    'EJANEM': { title: '1ºs Socorros: queimaduras', description: DEFAULT_DESC, assignment: { type: 'passar', points: 3, deadline: '14/09', title: 'Cartilha de Sobrevivência', text: 'Criar um mini-guia dobrável com 3 dicas de primeiros socorros para acidentes no trabalho.'} } 
   }},
   { date: '24/08', type: 'class', activities: { 
     '802': AULA_PRECISAO, 
     '803': AULA_PRECISAO, 
     '801': AULA_PRECISAO, 
     'AP198': AULA_PRECISAO, 
-    'EJANEM': { title: '1ºs Socorros: desmaio', description: DEFAULT_DESC } 
   }},
   { date: '31/08', type: 'class', activities: { 
     '802': AULA_ILHA, 
     '803': AULA_ILHA, 
     '801': AULA_ILHA, 
     'AP198': AULA_ILHA, 
-    'EJANEM': { title: 'Mapa afetivo', description: DEFAULT_DESC } 
   }},
   { date: '07/09', type: 'event', title: 'FERIADO DA INDEPENDÊNCIA' },
   { date: '14/09', type: 'class', activities: { 
@@ -171,14 +157,12 @@ const SCHEDULE_MONDAY = [
     '803': { ...AULA_SHISIMA_BASE(), assignment: { type: 'receber', points: 3, title: 'Receber: Tabuleiros Africanos'} }, 
     '801': { ...AULA_SHISIMA_BASE(), assignment: { type: 'receber', points: 3, title: 'Receber: Tabuleiros Africanos'} }, 
     'AP198': { ...AULA_SHISIMA_BASE(), assignment: { type: 'receber', points: 3, title: 'Receber: Tabuleiros Africanos'} }, 
-    'EJANEM': { title: 'Projeto Vida Ativa', description: DEFAULT_DESC, assignment: { type: 'receber', points: 3, title: 'Receber: Cartilha Primeiros Socorros'} } 
   }},
   { date: '21/09', type: 'class', activities: { 
     '802': AULA_POSTURA, 
     '803': AULA_POSTURA, 
     '801': AULA_POSTURA, 
     'AP198': AULA_POSTURA, 
-    'EJANEM': { title: 'Relaxamento muscular', description: DEFAULT_DESC } 
   }},
   { date: '28/09', type: 'event', title: 'ENEM' },
   { date: '05/10', type: 'class', activities: { 
@@ -186,7 +170,6 @@ const SCHEDULE_MONDAY = [
     '803': AULA_OLIMPIADAS, 
     '801': AULA_OLIMPIADAS, 
     'AP198': AULA_OLIMPIADAS, 
-    'EJANEM': { title: '1ºs Socorros: convulsão', description: DEFAULT_DESC } 
   }},
   { date: '12/10', type: 'event', title: 'FERIADO NOSSA SRª APARECIDA' },
   { date: '19/10', type: 'class', activities: { 
@@ -194,14 +177,12 @@ const SCHEDULE_MONDAY = [
     '803': AULA_DOMINO, 
     '801': AULA_DOMINO, 
     'AP198': AULA_DOMINO, 
-    'EJANEM': { title: 'Simulado socorros', description: DEFAULT_DESC } 
   }},
   { date: '26/10', subtitle: 'Novembro Negro', type: 'class', activities: { 
     '802': { ...AULA_APARTHEID_BASE(), assignment: { type: 'passar', points: 3, deadline: '30/11', title: 'Atletas contra o Racismo', text: 'Buscar a história de um atleta negro ou indígena que lutou contra o racismo.'} }, 
     '803': { ...AULA_APARTHEID_BASE(), assignment: { type: 'passar', points: 3, deadline: '30/11', title: 'Atletas contra o Racismo', text: 'Buscar a história de um atleta negro ou indígena que lutou contra o racismo.'} }, 
     '801': { ...AULA_APARTHEID_BASE(), assignment: { type: 'passar', points: 3, deadline: '30/11', title: 'Atletas contra o Racismo', text: 'Buscar a história de um atleta negro ou indígena que lutou contra o racismo.'} }, 
     'AP198': { ...AULA_APARTHEID_BASE(), assignment: { type: 'passar', points: 3, deadline: '30/11', title: 'Atletas contra o Racismo', text: 'Buscar a história de um atleta negro ou indígena que lutou contra o racismo.'} }, 
-    'EJANEM': { title: 'Luiz Gama e várzea', description: 'Debate: Luiz Gama, abolicionista, e o futebol de várzea contra a elitização.', assignment: { type: 'passar', points: 3, deadline: '30/11', title: 'Resgate da Várzea', text: 'Pesquisar a história do futebol de várzea na sua comunidade.'} } 
   }},
   { date: '16/11', type: 'event', title: 'AVALIAÇÃO DIAGNÓSTICA' },
   { date: '23/11', subtitle: 'Consciência Negra', type: 'class', activities: { 
@@ -209,28 +190,24 @@ const SCHEDULE_MONDAY = [
     '803': AULA_MUSICA, 
     '801': AULA_MUSICA, 
     'AP198': AULA_MUSICA, 
-    'EJANEM': { title: 'Jongo: improviso', description: DEFAULT_DESC } 
   }},
   { date: '30/11', type: 'class', activities: { 
     '802': { ...AULA_DIREITO_BASE(), assignment: { type: 'receber', points: 3, title: 'Receber: Atletas vs Racismo'} }, 
     '803': { ...AULA_DIREITO_BASE(), assignment: { type: 'receber', points: 3, title: 'Receber: Atletas vs Racismo'} }, 
     '801': { ...AULA_DIREITO_BASE(), assignment: { type: 'receber', points: 3, title: 'Receber: Atletas vs Racismo'} }, 
     'AP198': { ...AULA_DIREITO_BASE(), assignment: { type: 'receber', points: 3, title: 'Receber: Atletas vs Racismo'} }, 
-    'EJANEM': { title: '"Feijoada Imaterial"', description: DEFAULT_DESC, assignment: { type: 'receber', points: 3, title: 'Receber: Trabalho Várzea'} } 
   }},
   { date: '07/12', type: 'class', activities: { 
     '802': AULA_AVALIACAO, 
     '803': AULA_AVALIACAO, 
     '801': AULA_AVALIACAO, 
     'AP198': AULA_AVALIACAO, 
-    'EJANEM': { title: 'Confraternização', description: DEFAULT_DESC } 
   }},
   { date: '14/12', subtitle: 'Encerramento', type: 'class', activities: { 
     '802': AULA_AUTOAVALIACAO, 
     '803': AULA_AUTOAVALIACAO, 
     '801': AULA_AUTOAVALIACAO, 
     'AP198': AULA_AUTOAVALIACAO, 
-    'EJANEM': { title: 'Roda de encerramento', description: DEFAULT_DESC } 
   }}
 ];
 

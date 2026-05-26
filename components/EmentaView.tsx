@@ -67,7 +67,7 @@ export const EmentaView: React.FC<EmentaViewProps> = ({ onBack }) => {
               <li>Analisar criticamente os padrões de corpo, saúde e beleza difundidos pela mídia, contrapondo-os à realidade periférica.</li>
               <li>Reconhecer as lutas, danças e jogos de matriz africana, afro-brasileira e dos povos originários como patrimônio imaterial do povo brasileiro, combatendo o racismo estrutural e religioso.</li>
               <li>Desenvolver a capacidade de cooperação, respeito às regras e resolução pacífica de conflitos.</li>
-              <li>Refletir sobre as relações entre lazer, trabalho e saúde, com especial atenção às juventudes trabalhadoras (EJA).</li>
+              <li>Refletir sobre as relações entre lazer, trabalho e saúde, com especial atenção às juventudes trabalhadoras.</li>
               <li>Estimular a autonomia na criação e na gestão de práticas corporais nos territórios de vida dos estudantes.</li>
             </ul>
           </section>
@@ -103,7 +103,7 @@ export const EmentaView: React.FC<EmentaViewProps> = ({ onBack }) => {
             <div className="space-y-4 pl-4 border-l-2 border-slate-100">
               <h4 className="font-black text-emerald-700 uppercase tracking-widest text-sm flex items-center gap-2">
                 <span className="w-2 h-2 bg-emerald-600 rounded-full"></span>
-                Ensino Médio e EJANEM
+                Ensino Médio
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100">

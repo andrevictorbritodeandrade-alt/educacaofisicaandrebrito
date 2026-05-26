@@ -46,7 +46,6 @@ export const PlanoDeCursoView: React.FC<PlanoDeCursoViewProps> = ({ onBack }) =>
 
           {[
             { title: '8º Ano & AP', color: 'indigo' },
-            { title: 'EJANEM', color: 'emerald' },
             { title: 'ILGCH', color: 'purple' }
           ].map((turma) => (
             <section key={turma.title} className="space-y-8 pt-8 border-t border-slate-100">

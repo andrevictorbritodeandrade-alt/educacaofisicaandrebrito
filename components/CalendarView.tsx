@@ -35,9 +35,9 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ onBack }) => {
             <p className="text-xs text-slate-500 font-bold tracking-wide uppercase mt-0.5">Resolução SEEDUC Nº 6392/2025 • Total: 206 Dias Letivos</p>
           </div>
           <div className="flex gap-2">
-            <div className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-lg">
-              <div className="w-3 h-3 bg-slate-300 rounded-sm"></div>
-              <span className="text-[10px] font-bold text-slate-500 uppercase">Recesso</span>
+            <div className="flex items-center gap-2 bg-lime-50 px-3 py-1 rounded-lg border border-lime-100">
+              <div className="w-3 h-3 bg-lime-400 rounded-sm shadow-[0_0_8px_rgba(163,230,53,0.4)]"></div>
+              <span className="text-[10px] font-bold text-lime-700 uppercase">Recesso</span>
             </div>
             <div className="flex items-center gap-2 bg-red-50 px-3 py-1 rounded-lg border border-red-100">
               <div className="w-3 h-3 bg-red-600 rounded-sm"></div>
@@ -70,7 +70,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ onBack }) => {
             { label: 'Início do Período', color: 'bg-blue-600', icon: 'I', desc: '05/02' },
             { label: 'Término do Período', color: 'bg-black', icon: 'T', desc: '22/12' },
             { label: 'Planejamento Pedagógico', color: 'bg-purple-600', icon: 'PP' },
-            { label: 'Recesso Escolar', color: 'bg-slate-300 text-slate-800', icon: 'R' },
+            { label: 'Recesso Escolar', color: 'bg-lime-400 text-lime-950 shadow-[0_0_15px_rgba(163,230,53,0.3)]', icon: 'R' },
             { label: 'Feriado Nacional/Estadual', color: 'bg-red-600', icon: 'F' },
             { label: 'Dia do Mestre', color: 'bg-emerald-900', icon: 'DM', desc: '15/10' },
             { label: 'Censo Escolar', color: 'bg-amber-900', icon: 'C', desc: '28/05' },

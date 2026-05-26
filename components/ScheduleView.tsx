@@ -120,7 +120,6 @@ export const ScheduleView: React.FC<ScheduleViewProps> = ({ onBack }) => {
                 { time: '12:45 – 14:25', mon: null, fri: { school: 'CIEP 320', class: 'AP 301' } },
                 { time: '13:35 – 15:15', mon: { school: 'CIEP 198', class: 'AP 101' }, fri: null },
                 { time: '19:40 – 21:20', mon: null, fri: { school: 'CIEP 476', class: 'Turma 1007' } },
-                { time: '20:45 – 22:25', mon: { school: 'Euclides da Cunha', class: 'EJANEM I01' }, fri: null },
               ].map((row, i) => (
                 <tr key={i} className="hover:bg-slate-50 transition-colors">
                   <td className="border border-slate-200 p-4 font-bold text-center bg-slate-50 text-slate-700 whitespace-nowrap">{row.time}</td>
@@ -166,7 +165,7 @@ export const ScheduleView: React.FC<ScheduleViewProps> = ({ onBack }) => {
               <span className="text-2xl">📅</span> Carga Horária
             </h4>
             <p className="text-slate-600 font-medium text-sm leading-relaxed">
-              Aulas distribuídas entre as escolas Cordelia Paiva, CIEP 198, Euclides da Cunha, CIEP 320 e CIEP 476.
+              Aulas distribuídas entre as escolas Cordelia Paiva, CIEP 198, CIEP 320 e CIEP 476.
             </p>
           </div>
         </div>

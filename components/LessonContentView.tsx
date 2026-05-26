@@ -18,7 +18,6 @@ const CLASSES = {
     { id: '803', name: 'Turma 803 (EE Cordelia Paiva)', segment: SEGMENTS.FUNDAMENTAL },
     { id: '801', name: 'Turma 801 (EE Cordelia Paiva)', segment: SEGMENTS.FUNDAMENTAL },
     { id: 'AP198', name: 'AP 101 (CIEP 198)', segment: SEGMENTS.ACELERACAO },
-    { id: 'EJANEM', name: 'EJANEM 101 (CE Euclides da Cunha)', segment: SEGMENTS.EJA },
   ],
   FRIDAY: [
     { id: 'AP320', name: 'AP 101 (CIEP 320)', segment: SEGMENTS.ACELERACAO },
@@ -57,154 +56,132 @@ const SCHEDULE_MONDAY = [
     '803': QUEIMADO_INICIAL, 
     '801': QUEIMADO_INICIAL, 
     'AP198': QUEIMADO_INICIAL, 
-    'EJANEM': QUEIMADO_INICIAL 
   }},
   { date: '18/05', type: 'class', activities: { 
     '802': { title: 'Jogo Gato e Rato', description: 'Baixo esforço do professor.\n\nAlunos formam um círculo de mãos dadas. Um é o gato (fora) e outro o rato (dentro). O professor apenas apita os inícios e tempos de troca.' }, 
     '803': { title: 'Jogo Gato e Rato', description: 'Baixo esforço do professor.\n\nAlunos formam um círculo de mãos dadas. Um é o gato (fora) e outro o rato (dentro). O professor apenas apita os inícios e tempos de troca.' }, 
     '801': { title: 'Jogo Gato e Rato', description: 'Baixo esforço do professor.\n\nAlunos formam um círculo de mãos dadas. Um é o gato (fora) e outro o rato (dentro). O professor apenas apita os inícios e tempos de troca.' }, 
     'AP198': { title: 'Jogo da Velha Humano', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Damas + Debate lazer', description: '1. Montar os tabuleiros de damas.\n2. Jogar em duplas.\n3. Roda de debate: "Quem tem tempo para lazer na classe trabalhadora?". Discutir o direito ao descanso.' } 
   }},
   { date: '25/05', type: 'class', activities: { 
     '802': { title: 'Capoeira (História e Ginga)', description: 'Professor centraliza a turma sentada (poupa energia física), conta a história da capoeira (luta de resistência negra). Em seguida, ensina o passo básico da ginga. Sem contato físico.' }, 
     '803': { title: 'Capoeira (História e Ginga)', description: 'Professor centraliza a turma sentada (poupa energia física), conta a história da capoeira (luta de resistência negra). Em seguida, ensina o passo básico da ginga. Sem contato físico.' }, 
     '801': { title: 'Capoeira (História e Ginga)', description: 'Professor centraliza a turma sentada (poupa energia física), conta a história da capoeira (luta de resistência negra). Em seguida, ensina o passo básico da ginga. Sem contato físico.' }, 
     'AP198': { title: 'Capoeira "Pega-Pé"', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Saúde (LER/DORT)', description: DEFAULT_DESC } 
   }},
   { date: '08/06', type: 'class', activities: { 
     '802': { title: 'Capoeira (Roda e Palmas)', description: 'Turma em roda batendo palmas no ritmo. Alunos entram em duplas apenas para fazer a ginga, sem golpes. Professor apenas comanda a roda.' }, 
     '803': { title: 'Capoeira (Roda e Palmas)', description: 'Turma em roda batendo palmas no ritmo. Alunos entram em duplas apenas para fazer a ginga, sem golpes. Professor apenas comanda a roda.' }, 
     '801': { title: 'Capoeira (Roda e Palmas)', description: 'Turma em roda batendo palmas no ritmo. Alunos entram em duplas apenas para fazer a ginga, sem golpes. Professor apenas comanda a roda.' }, 
     'AP198': { title: 'Capoeira Angola', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Ginástica laboral mãos', description: DEFAULT_DESC } 
   }},
   { date: '15/06', type: 'class', activities: { 
     '802': { title: 'Brincadeira "Terra e Mar"', description: 'Fácil comando de voz. Uma linha no chão: um lado é Terra, o outro é Mar. Professor grita os comandos. Quem erra sai. Ótimo para atenção e requer zero esforço físico do professor.' }, 
     '803': { title: 'Brincadeira "Terra e Mar"', description: 'Fácil comando de voz. Uma linha no chão: um lado é Terra, o outro é Mar. Professor grita os comandos. Quem erra sai. Ótimo para atenção e requer zero esforço físico do professor.' }, 
     '801': { title: 'Brincadeira "Terra e Mar"', description: 'Fácil comando de voz. Uma linha no chão: um lado é Terra, o outro é Mar. Professor grita os comandos. Quem erra sai. Ótimo para atenção e requer zero esforço físico do professor.' }, 
     'AP198': { title: 'Construção de peteca', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Postura levantar peso', description: DEFAULT_DESC } 
   }},
   { date: '22/06', type: 'class', activities: { 
     '802': { title: 'Pega Corrente', description: 'Um aluno começa como pegador. Quem ele tocar, dá as mãos e formam uma corrente. O professor apenas supervisiona a segurança do espaço.' }, 
     '803': { title: 'Pega Corrente', description: 'Um aluno começa como pegador. Quem ele tocar, dá as mãos e formam uma corrente. O professor apenas supervisiona a segurança do espaço.' }, 
     '801': { title: 'Pega Corrente', description: 'Um aluno começa como pegador. Quem ele tocar, dá as mãos e formam uma corrente. O professor apenas supervisiona a segurança do espaço.' }, 
     'AP198': { title: 'Peteca em duplas', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Automassagem', description: DEFAULT_DESC } 
   }},
   { date: '29/06', type: 'class', activities: { 
     '802': { title: 'Bandeirinha (Rouba Bandeira)', description: 'Divisão simples de quadra. Atividade auto-gerenciável pelos alunos. Flui sozinha após as regras.' }, 
     '803': { title: 'Bandeirinha (Rouba Bandeira)', description: 'Divisão simples de quadra. Atividade auto-gerenciável pelos alunos. Flui sozinha após as regras.' }, 
     '801': { title: 'Bandeirinha (Rouba Bandeira)', description: 'Divisão simples de quadra. Atividade auto-gerenciável pelos alunos. Flui sozinha após as regras.' }, 
     'AP198': { title: 'Pega-Pega Senegalês', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Roda "Meu corpo"', description: DEFAULT_DESC } 
   }},
   { date: '06/07', subtitle: 'Encerramento 2º Trim.', type: 'class', activities: { 
     '802': { title: 'Torneio de Damas', description: 'Atividade muito focada (excelente para acalmar a turma no fim do trimestre). Alunos sentados jogando damas sob o modelo do xadrez.' }, 
     '803': { title: 'Torneio de Damas', description: 'Atividade muito focada (excelente para acalmar a turma no fim do trimestre). Alunos sentados jogando damas sob o modelo do xadrez.' }, 
     '801': { title: 'Torneio de Damas', description: 'Atividade muito focada (excelente para acalmar a turma no fim do trimestre). Alunos sentados jogando damas sob o modelo do xadrez.' }, 
     'AP198': { title: 'Elástico com cantigas', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Simulação SAMU', description: DEFAULT_DESC } 
   }},
   { date: '27/07', type: 'class', activities: { 
     '802': { title: 'Jongo (Passo e Roda)', description: 'Formar roda. Ensinar o passo básico arrastado do Jongo (origem banto) e a umbigada simbólica (sem toque). Atividade rítmica leve.' }, 
     '803': { title: 'Jongo (Passo e Roda)', description: 'Formar roda. Ensinar o passo básico arrastado do Jongo (origem banto) e a umbigada simbólica (sem toque). Atividade rítmica leve.' }, 
     '801': { title: 'Jongo (Passo e Roda)', description: 'Formar roda. Ensinar o passo básico arrastado do Jongo (origem banto) e a umbigada simbólica (sem toque). Atividade rítmica leve.' }, 
     'AP198': { title: 'Amarelinha', description: DEFAULT_DESC }, 
-    'EJANEM': { title: '1ºs Socorros: AVC', description: DEFAULT_DESC } 
   }},
   { date: '03/08', type: 'class', activities: { 
     '802': { title: 'Atletismo (Tiro Curto)', description: 'Tiros curtos de velocidade (20m). Alta queima de energia para os alunos, e você só precisa soprar o apito.' }, 
     '803': { title: 'Atletismo (Tiro Curto)', description: 'Tiros curtos de velocidade (20m). Alta queima de energia para os alunos, e você só precisa soprar o apito.' }, 
     '801': { title: 'Atletismo (Tiro Curto)', description: 'Tiros curtos de velocidade (20m). Alta queima de energia para os alunos, e você só precisa soprar o apito.' }, 
     'AP198': { title: 'Atletismo (pelota)', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Manobra Heimlich', description: DEFAULT_DESC } 
   }},
   { date: '17/08', type: 'class', activities: { 
     '802': { title: 'Roda de Passinho / Funk', description: 'Alunos formam uma roda e, um por vez, vão ao centro mostrar um passo. Professor atua como mediador.' }, 
     '803': { title: 'Roda de Passinho / Funk', description: 'Alunos formam uma roda e, um por vez, vão ao centro mostrar um passo. Professor atua como mediador.' }, 
     '801': { title: 'Roda de Passinho / Funk', description: 'Alunos formam uma roda e, um por vez, vão ao centro mostrar um passo. Professor atua como mediador.' }, 
     'AP198': { title: 'Cabo de Guerra', description: DEFAULT_DESC }, 
-    'EJANEM': { title: '1ºs Socorros: queimaduras', description: DEFAULT_DESC } 
   }},
   { date: '24/08', type: 'class', activities: { 
     '802': { title: 'Apresentação de Dança', description: 'Alunos apresentam as sequências de passinhos. Você senta, avalia e assiste.' }, 
     '803': { title: 'Apresentação de Dança', description: 'Alunos apresentam as sequências de passinhos. Você senta, avalia e assiste.' }, 
     '801': { title: 'Apresentação de Dança', description: 'Alunos apresentam as sequências de passinhos. Você senta, avalia e assiste.' }, 
     'AP198': { title: 'Coelhinho sai da Toca', description: DEFAULT_DESC }, 
-    'EJANEM': { title: '1ºs Socorros: desmaio', description: DEFAULT_DESC } 
   }},
   { date: '31/08', type: 'class', activities: { 
     '802': { title: 'Jogo Shisima (Quênia)', description: 'Desenhar a estrela de 8 pontas no chão. Jogo queniano simples, silencioso e mental. Alunos jogam sentados.' }, 
     '803': { title: 'Jogo Shisima (Quênia)', description: 'Desenhar a estrela de 8 pontas no chão. Jogo queniano simples, silencioso e mental. Alunos jogam sentados.' }, 
     '801': { title: 'Jogo Shisima (Quênia)', description: 'Desenhar a estrela de 8 pontas no chão. Jogo queniano simples, silencioso e mental. Alunos jogam sentados.' }, 
     'AP198': { title: 'Vai-e-vem', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Mapa afetivo', description: DEFAULT_DESC } 
   }},
   { date: '14/09', type: 'class', activities: { 
     '802': { title: 'Torneio de Shisima', description: 'Continuação do jogo em formato de mini-torneio. Fácil supervisão.' }, 
     '803': { title: 'Torneio de Shisima', description: 'Continuação do jogo em formato de mini-torneio. Fácil supervisão.' }, 
     '801': { title: 'Torneio de Shisima', description: 'Continuação do jogo em formato de mini-torneio. Fácil supervisão.' }, 
     'AP198': { title: 'Cinco Marias', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Projeto Vida Ativa', description: DEFAULT_DESC } 
   }},
   { date: '21/09', type: 'class', activities: { 
     '802': { title: 'Relaxamento Guiado', description: 'Turma deitada na quadra (ou sentada). Professor guia escaneamento corporal e respiração diafragmática. Excelente para baixar a frequência.' }, 
     '803': { title: 'Relaxamento Guiado', description: 'Turma deitada na quadra (ou sentada). Professor guia escaneamento corporal e respiração diafragmática. Excelente para baixar a frequência.' }, 
     '801': { title: 'Relaxamento Guiado', description: 'Turma deitada na quadra (ou sentada). Professor guia escaneamento corporal e respiração diafragmática. Excelente para baixar a frequência.' }, 
     'AP198': { title: 'Seu Mestre Mandou', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Relaxamento muscular', description: DEFAULT_DESC } 
   }},
   { date: '05/10', type: 'class', activities: { 
     '802': { title: 'Ciranda', description: 'Dança de roda clássica e inclusiva de mãos dadas. Ritmo simples que requer pouca explicação.' }, 
     '803': { title: 'Ciranda', description: 'Dança de roda clássica e inclusiva de mãos dadas. Ritmo simples que requer pouca explicação.' }, 
     '801': { title: 'Ciranda', description: 'Dança de roda clássica e inclusiva de mãos dadas. Ritmo simples que requer pouca explicação.' }, 
     'AP198': { title: 'Pular Corda', description: DEFAULT_DESC }, 
-    'EJANEM': { title: '1ºs Socorros: convulsão', description: DEFAULT_DESC } 
   }},
   { date: '19/10', type: 'class', activities: { 
     '802': { title: 'Carimba (Queimada Alvo)', description: 'Variação onde o objetivo é derrubar uma garrafa PET no campo adversário.' }, 
     '803': { title: 'Carimba (Queimada Alvo)', description: 'Variação onde o objetivo é derrubar uma garrafa PET no campo adversário.' }, 
     '801': { title: 'Carimba (Queimada Alvo)', description: 'Variação onde o objetivo é derrubar uma garrafa PET no campo adversário.' }, 
     'AP198': { title: 'Bilboquê', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Simulado socorros', description: DEFAULT_DESC } 
   }},
   { date: '26/10', subtitle: 'Novembro Negro', type: 'class', activities: { 
     '802': { title: 'Debate: L. Gama e Várzea', description: 'Roda de conversa sentada. Discutir o esporte de várzea, elitização e a resistência negra, citando o abolicionista Luiz Gama.' }, 
     '803': { title: 'Debate: L. Gama e Várzea', description: 'Roda de conversa sentada. Discutir o esporte de várzea, elitização e a resistência negra, citando o abolicionista Luiz Gama.' }, 
     '801': { title: 'Debate: L. Gama e Várzea', description: 'Roda de conversa sentada. Discutir o esporte de várzea, elitização e a resistência negra, citando o abolicionista Luiz Gama.' }, 
     'AP198': { title: 'Construção Mancala', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Luiz Gama e várzea', description: 'Debate: Luiz Gama, abolicionista, e sua relação de luta. Conexão com o futebol de várzea: como os espaços periféricos resistem à elitização do esporte.' } 
   }},
   { date: '23/11', subtitle: 'Consciência Negra', type: 'class', activities: { 
     '802': { title: '"Terra e Mar" + Quiz África', description: 'Mesma mecânica simples do Terra e Mar, mas adicionando perguntas fáceis sobre curiosidades da África.' }, 
     '803': { title: '"Terra e Mar" + Quiz África', description: 'Mesma mecânica simples do Terra e Mar, mas adicionando perguntas fáceis sobre curiosidades da África.' }, 
     '801': { title: '"Terra e Mar" + Quiz África', description: 'Mesma mecânica simples do Terra e Mar, mas adicionando perguntas fáceis sobre curiosidades da África.' }, 
     'AP198': { title: 'Vivência Mancala', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Jongo: improviso', description: DEFAULT_DESC } 
   }},
   { date: '30/11', type: 'class', activities: { 
     '802': { title: 'Brincadeira "Ampe" (Gana)', description: 'Salto em dupla projetando a perna (como pedra, papel e tesoura com os pés). Auto-gerenciável.' }, 
     '803': { title: 'Brincadeira "Ampe" (Gana)', description: 'Salto em dupla projetando a perna (como pedra, papel e tesoura com os pés). Auto-gerenciável.' }, 
     '801': { title: 'Brincadeira "Ampe" (Gana)', description: 'Salto em dupla projetando a perna (como pedra, papel e tesoura com os pés). Auto-gerenciável.' }, 
     'AP198': { title: 'Dança do Frevo', description: DEFAULT_DESC }, 
-    'EJANEM': { title: '"Feijoada Imaterial"', description: DEFAULT_DESC } 
   }},
   { date: '07/12', type: 'class', activities: { 
     '802': { title: 'Jogo "Câmbio" (Vôlei)', description: 'Vôlei onde é permitido segurar a bola antes de passar. A bola cai muito menos e exige muito menos interrupções de apito.' }, 
     '803': { title: 'Jogo "Câmbio" (Vôlei)', description: 'Vôlei onde é permitido segurar a bola antes de passar. A bola cai muito menos e exige muito menos interrupções de apito.' }, 
     '801': { title: 'Jogo "Câmbio" (Vôlei)', description: 'Vôlei onde é permitido segurar a bola antes de passar. A bola cai muito menos e exige muito menos interrupções de apito.' }, 
     'AP198': { title: 'Jogo "Gato e Rato"', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Confraternização', description: DEFAULT_DESC } 
   }},
   { date: '14/12', subtitle: 'Encerramento', type: 'class', activities: { 
     '802': { title: 'Autoavaliação e Livre', description: 'Roda final e tempo livre.' }, 
     '803': { title: 'Autoavaliação e Livre', description: 'Roda final e tempo livre.' }, 
     '801': { title: 'Autoavaliação e Livre', description: 'Roda final e tempo livre.' }, 
     'AP198': { title: 'Brincadeira livre', description: DEFAULT_DESC }, 
-    'EJANEM': { title: 'Roda de encerramento', description: DEFAULT_DESC } 
   }}
 ];
 

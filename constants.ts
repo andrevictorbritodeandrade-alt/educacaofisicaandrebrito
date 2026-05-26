@@ -8,16 +8,6 @@ export const BACKGROUND_IMAGES = [
   "https://images.unsplash.com/photo-1519315901367-f34ff9154487?q=80&w=3870&auto=format&fit=crop"  // Swimming/Sports
 ];
 
-// Helper para gerar alunos mockados (para outras turmas)
-const generateStudents = (count: number) => {
-  const names = ["Ana Silva", "Beatriz Costa", "Carlos Oliveira", "Davi Souza", "Eduardo Lima", "Fernanda Rocha", "Gabriel Alves", "Helena Dias", "Igor Martins", "Julia Pereira", "Kaique Santos", "Larissa Gomes", "Miguel Ferreira", "Nicole Ribeiro", "Otávio Castro"];
-  return Array.from({ length: count }, (_, i) => ({
-    id: i + 1,
-    name: names[i % names.length] + (i > 14 ? ` ${i}` : ''),
-    attendance: {}
-  }));
-};
-
 // Helper para formatar nomes (Capitalize)
 const formatName = (name: string) => {
   return name.toLowerCase().split(' ').map(word => {
@@ -386,16 +376,6 @@ export const initialClassData: ClassDataMap = {
     students: [],
     assignments: [{ id: "A1", title: "O Corpo na Mídia - Estereótipo vs. Realidade", discipline: "Educação Física", description: "Pesquisa sobre como corpos negros e periféricos são vistos na mídia.", totalPoints: 3, format: "Individual ou dupla", dueDate: "22/05/2026" }],
     schedule: "13:35 – 15:15",
-    days: ["Segunda"]
-  },
-  "EUCLIDES_I01": { 
-    id: "EUCLIDES_I01", 
-    name: "EJANEM I01", 
-    grade: "EJA", 
-    school: "Colégio Estadual Euclides da Cunha",
-    students: [],
-    assignments: [{ id: "A1", title: "O Corpo na Mídia - Estereótipo vs. Realidade", discipline: "Educação Física", description: "Pesquisa sobre como corpos negros e periféricos são vistos na mídia.", totalPoints: 3, format: "Individual ou dupla", dueDate: "22/05/2026" }],
-    schedule: "20:45 – 22:25",
     days: ["Segunda"]
   },
   "CIEP320_AP101": { 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ClassData, ClassDataMap, Student } from '../types';
 import { PrintPreviewModal } from './PrintPreviewModal';
+import { ClassDiaryTable } from './ClassDiaryTable';
 import { saveClassesToFirestore } from '../services/firebaseService';
 import { initialClassData } from '../constants';
 import { scanStudentList } from '../services/geminiService';
@@ -333,64 +334,50 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
   // NÍVEL 1: SELEÇÃO DE ESCOLA
   if (!selectedGrade) {
     return (
-      <div className="space-y-6 animate-fade-in max-w-2xl mx-auto py-4">
-        {/* Header Profissional (Integrado na View se não houver global) */}
-        <div className="bg-[#1a233b] text-white p-6 rounded-t-2xl flex items-center gap-4 shadow-xl border-b border-white/10">
-          <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-inner">
-            <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
+      <div className="bg-neutral-950 min-h-[500px] p-6 rounded-2xl shadow-2xl border border-white/5 animate-fade-in text-white font-sans max-w-4xl mx-auto py-8">
+        <div className="text-center mb-12">
+          <div className="inline-block p-4 bg-white/5 rounded-2xl mb-6 border border-white/10 shadow-[0_0_20px_rgba(59,130,246,0.1)]">
+            <svg className="w-12 h-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
           </div>
-          <div>
-            <h1 className="text-xl font-bold">Prof. André Brito</h1>
-            <p className="text-slate-400 text-sm">Controle de Aulas de Ed. Física</p>
-          </div>
+          <h2 className="text-4xl font-black mb-3 tracking-tighter">DIÁRIO DE CLASSE</h2>
+          <p className="text-slate-500 uppercase tracking-[0.3em] text-[10px] font-black">Selecione a Unidade Escolar</p>
         </div>
 
-        <div className="bg-slate-50 p-6 rounded-b-2xl shadow-xl min-h-[500px]">
-          <button 
-            onClick={onBack}
-            className="mb-6 px-4 py-2 border border-slate-200 text-slate-700 bg-white rounded-lg hover:bg-slate-100 hover:text-blue-600 transition-colors flex items-center gap-2 text-sm font-bold shadow-sm"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Voltar ao Menu
-          </button>
-
-          <h2 className="text-lg font-bold text-slate-700 text-center mb-8">Selecione a Escola para Chamada</h2>
-          
-          <div className="space-y-4">
-            {finalSchools.length > 0 ? finalSchools.map((school) => {
-              const schoolClasses = getClassesBySchool(school);
-              return (
-                <div 
-                  key={school}
-                  onClick={() => setSelectedGrade(school)}
-                  className="bg-white p-5 rounded-2xl border border-slate-200 flex items-center gap-5 cursor-pointer hover:border-blue-400 hover:bg-blue-50/50 transition-all group shadow-sm active:scale-[0.98]"
-                >
-                  <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center group-hover:bg-blue-100 transition-colors">
-                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-7h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-extrabold text-slate-800 leading-tight">{school}</h3>
-                    <p className="text-slate-500 text-sm font-medium">{schoolClasses.length} turmas cadastradas</p>
-                  </div>
-                  <div className="text-slate-300 group-hover:text-blue-400 transition-colors">
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+        <button 
+          onClick={onBack}
+          className="mb-10 w-full sm:w-auto px-6 h-12 flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white text-xs font-black uppercase rounded-xl hover:bg-white/10 transition-all active:scale-95 group shadow-lg"
+        >
+          <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+          Sair do Controle
+        </button>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {finalSchools.length > 0 ? finalSchools.map(school => {
+            const schoolClasses = getClassesBySchool(school);
+            return (
+              <button
+                key={school}
+                onClick={() => setSelectedGrade(school)}
+                className="group p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-blue-600 hover:border-blue-500 transition-all text-left relative overflow-hidden shadow-2xl"
+              >
+                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity">
+                  <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-2.682.565 1 1 0 00-.639.913V17a1 1 0 01-2 0v-.427a1 1 0 00-.639-.913z" /></svg>
+                </div>
+                <div className="relative z-10">
+                  <p className="text-blue-400 group-hover:text-white text-[10px] font-black mb-1 uppercase tracking-widest">Unidade Escolar</p>
+                  <h3 className="text-2xl font-black group-hover:translate-x-1 transition-transform tracking-tight">{school}</h3>
+                  <div className="mt-6 flex items-center gap-3 text-[10px] font-black text-slate-500 group-hover:text-white/70 uppercase">
+                    <span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+                    {schoolClasses.length} Turmas de Ed. Física
                   </div>
                 </div>
-              );
-            }) : (
-              <div className="text-center py-20 opacity-50">
-                <p className="text-slate-500 font-bold uppercase tracking-widest text-sm">Nenhuma escola encontrada</p>
-              </div>
-            )}
-          </div>
+              </button>
+            );
+          }) : (
+            <div className="col-span-full py-20 text-center text-slate-500 uppercase tracking-[0.4em] text-xs font-black opacity-30">
+              Nenhuma escola carregada
+            </div>
+          )}
         </div>
       </div>
     );
@@ -400,66 +387,52 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
   if (!selectedClassId) {
     const classes = getClassesBySchool(selectedGrade);
     return (
-      <div className="space-y-6 animate-fade-in max-w-4xl mx-auto py-4">
-        {/* Header similar ao Nível 1 */}
-        <div className="bg-[#1a233b] text-white p-6 rounded-t-2xl flex items-center gap-4 shadow-xl border-b border-white/10">
-          <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-inner">
-            <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
-          </div>
-          <div>
-            <h1 className="text-xl font-bold">Prof. André Brito</h1>
-            <p className="text-slate-400 text-sm">Controle de Aulas de Ed. Física</p>
+      <div className="bg-neutral-950 min-h-[500px] p-6 rounded-2xl shadow-2xl border border-white/5 animate-fade-in text-white font-sans max-w-5xl mx-auto py-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
+          <button 
+            onClick={() => setSelectedGrade(null)}
+            className="px-6 h-12 flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white text-xs font-black uppercase rounded-xl hover:bg-white/10 transition-all active:scale-95 group shadow-lg"
+          >
+            <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            Voltar
+          </button>
+          
+          <div className="flex flex-col sm:text-right">
+             <h2 className="text-3xl font-black tracking-tighter text-blue-500">{selectedGrade}</h2>
+             <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">Selecione a Turma para Chamada</p>
           </div>
         </div>
 
-        <div className="bg-slate-50 p-6 rounded-b-2xl shadow-xl min-h-[500px]">
-          <button 
-            onClick={() => setSelectedGrade(null)}
-            className="mb-6 px-4 py-2 border border-slate-200 text-slate-700 bg-white rounded-lg hover:bg-slate-100 hover:text-blue-600 transition-colors flex items-center gap-2 text-sm font-bold shadow-sm"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-            Voltar para Escolas
-          </button>
-
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 mb-8 border-l-8 border-l-blue-500 shadow-sm">
-             <div className="flex items-center gap-3 mb-1">
-               <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-               </svg>
-               <h2 className="text-xl font-extrabold text-slate-800 uppercase">{selectedGrade}</h2>
-             </div>
-             <p className="text-slate-500 text-sm font-medium ml-8">Selecione uma turma para realizar a chamada.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {classes.map(cls => (
-              <div 
-                key={cls.id}
-                onClick={() => setSelectedClassId(cls.id)}
-                className="bg-white p-6 rounded-2xl border border-slate-200 flex justify-between items-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/50 hover:shadow-md transition-all group"
-              >
-                <div>
-                  <h3 className="text-xl font-extrabold text-slate-800">Turma {cls.name}</h3>
-                  <div className="flex flex-col mt-1">
-                    <p className="text-slate-400 text-sm font-medium uppercase tracking-tight">{cls.students.length} alunos matriculados</p>
-                    {cls.schedule && (
-                      <p className="text-blue-600 text-xs font-bold mt-1">
-                        🕒 {cls.schedule}
-                      </p>
-                    )}
-                  </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+          {classes.map(cls => (
+            <button
+              key={cls.id}
+              onClick={() => setSelectedClassId(cls.id)}
+              className="p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-blue-500/50 transition-all text-left relative group overflow-hidden shadow-2xl"
+            >
+              <div className="flex flex-col relative z-10">
+                <span className="text-blue-500 text-[10px] font-black uppercase tracking-widest mb-1 italic">Realizar Chamada</span>
+                <h3 className="text-4xl font-black group-hover:translate-x-2 transition-transform tracking-tighter">
+                  {cls.name.startsWith('Turma') ? cls.name.replace('Turma ', '') : cls.name}
+                </h3>
+                
+                <div className="mt-8 flex flex-wrap gap-2">
+                   {cls.days?.map(d => (
+                     <span key={d} className="px-2 py-0.5 bg-blue-600/10 border border-blue-500/20 rounded text-[9px] font-black text-blue-400 uppercase">{d}</span>
+                   ))}
                 </div>
-                <div className="w-10 h-10 bg-slate-50 text-slate-300 rounded-xl flex items-center justify-center group-hover:bg-blue-100 group-hover:text-blue-500 transition-all">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
+                
+                <div className="mt-4 flex items-center justify-between text-xs font-bold text-slate-500 border-t border-white/5 pt-4">
+                  <span>{cls.students.length} ALUNOS</span>
+                  <span className="text-white/60 font-mono text-[10px]">{cls.schedule || '--:--'}</span>
                 </div>
               </div>
-            ))}
-          </div>
+              
+              <div className="absolute top-1/2 -right-6 -translate-y-1/2 opacity-0 group-hover:opacity-5 group-hover:right-4 transition-all">
+                <svg className="w-24 h-24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" /></svg>
+              </div>
+            </button>
+          ))}
         </div>
       </div>
     );
@@ -468,32 +441,34 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
   // NÍVEL 3: LISTA DE CHAMADA
   const currentClass = classData[selectedClassId];
   const sortedStudents = currentClass.students;
+  const isCorrectDay = currentClass.days ? currentClass.days.includes(dayOfWeek) : true;
 
   return (
     <>
-    <div className="glass-panel rounded-xl shadow-sm overflow-hidden animate-fade-in relative pb-4">
+    <div className="bg-neutral-950 min-h-screen rounded-xl shadow-2xl overflow-hidden animate-fade-in relative pb-10 text-white font-sans">
       
-      {/* Header View - Toolbar Compacta */}
-      <div className="p-3 border-b border-slate-200 flex flex-row justify-between items-center bg-slate-100">
-        <div className="flex items-center">
+      {/* Header View - Toolbar Dark Studio Style */}
+      <div className="p-4 border-b border-white/5 flex flex-wrap justify-between items-center bg-neutral-950 sticky top-0 z-20">
+        <div className="flex items-center gap-4">
           <button 
             onClick={() => setSelectedClassId(null)}
-            className="w-10 h-10 flex items-center justify-center bg-white rounded-lg shadow-sm hover:bg-slate-200 text-slate-700 transition border border-slate-200"
+            className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 text-white transition-all shadow-lg active:scale-90"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            <svg className="w-5 h-5 font-bold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
           </button>
-          <div className="ml-3 flex flex-col">
-             <div className="flex items-center gap-2">
-               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mb-0.5">Data da Chamada</p>
+          
+          <div className="flex flex-col">
+             <div className="flex items-center gap-3">
+               <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Data da Chamada</p>
                {isSaving ? (
-                 <span className="flex items-center text-[9px] font-bold text-amber-600 animate-pulse">
-                   <svg className="animate-spin h-2 w-2 mr-1" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                   SALVANDO...
+                 <span className="flex items-center text-[9px] font-black text-amber-500 animate-pulse">
+                   <svg className="animate-spin h-2.5 w-2.5 mr-1" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                   SINCRONIZANDO...
                  </span>
                ) : (
-                 <span className="flex items-center text-[9px] font-bold text-green-600">
-                   <svg className="w-2 h-2 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-                   SALVO
+                 <span className="flex items-center text-[9px] font-black text-green-500 bg-green-500/10 px-1.5 py-0.5 rounded border border-green-500/20">
+                   <svg className="w-2.5 h-2.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M5 13l4 4L19 7" /></svg>
+                   CONECTADO
                  </span>
                )}
              </div>
@@ -501,196 +476,119 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
                type="date" 
                value={selectedDate}
                onChange={(e) => setSelectedDate(e.target.value)}
-               className="text-sm font-bold text-blue-600 bg-transparent border-none p-0 focus:ring-0 cursor-pointer"
+               className="text-lg font-black text-white bg-transparent border-none p-0 focus:ring-0 cursor-pointer appearance-none"
              />
           </div>
-          {currentClass.schedule && (
-            <div className="ml-6 flex flex-col">
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mb-0.5">Horário</p>
-              <p className="text-sm font-bold text-slate-700">{currentClass.schedule}</p>
-            </div>
-          )}
-          {currentClass.days && (
-            <div className={`ml-6 flex flex-col px-3 py-1 rounded-lg ${currentClass.days.includes(dayOfWeek) ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}`}>
-              <p className={`text-[10px] font-bold uppercase tracking-wide mb-0.5 ${currentClass.days.includes(dayOfWeek) ? 'text-green-600' : 'text-red-600'}`}>
-                {currentClass.days.includes(dayOfWeek) ? '✓ Dia de Aula' : '⚠ Não é dia de aula'}
-              </p>
-              <p className="text-sm font-bold text-slate-700">{currentClass.days.join(', ')}</p>
-            </div>
-          )}
+
+          <div className="hidden md:flex flex-col border-l border-white/10 pl-6">
+            <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Horário</p>
+            <p className="text-sm font-bold text-white/90">{currentClass.schedule || 'Não definido'}</p>
+          </div>
+
+          <div className="hidden md:flex flex-col border-l border-white/10 pl-6">
+            <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Dia de Aula</p>
+            <p className={`text-sm font-black uppercase tracking-tight ${isCorrectDay ? 'text-green-500' : 'text-red-500'}`}>
+               {dayOfWeek}
+            </p>
+          </div>
         </div>
         
-        <div className="flex items-center gap-2">
-           {/* Botão Quadro de Horários */}
+        <div className="flex items-center gap-2 mt-4 sm:mt-0 flex-wrap">
            <button
              onClick={() => (window as any).setView('schedule')}
-             className="px-3 py-2 flex items-center justify-center bg-blue-500 text-white text-xs font-bold rounded-lg shadow-md hover:bg-blue-600 transition"
-             title="Quadro de Horários"
+             className="px-3 h-10 flex items-center justify-center bg-white/5 border border-white/10 text-white text-xs font-black uppercase rounded-xl hover:bg-white/10 transition-all active:scale-95"
            >
-             <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+             <svg className="w-4 h-4 mr-2 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
              Quadro
            </button>
-           {/* Botão Salvar na Nuvem */}
+
            <button
              id="save-cloud-btn"
              onClick={handleManualSave}
              disabled={isSaving}
-             className="px-4 py-2 flex items-center justify-center bg-green-600 text-white text-xs font-bold rounded-lg shadow-lg hover:bg-green-700 transition-all transform active:scale-95 disabled:opacity-70 disabled:cursor-wait"
-             title="Salvar na Nuvem"
+             className="px-4 h-10 flex items-center justify-center bg-red-600 text-white text-xs font-black uppercase rounded-xl shadow-lg hover:bg-red-700 transition-all transform active:scale-95 disabled:opacity-50"
            >
               {isSaving ? (
                 <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
               ) : (
                 <>
-                  <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                  <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
                   Salvar
                 </>
               )}
            </button>
 
-           <button
-             onClick={() => setShowPrintModal(true)}
-             className="w-10 h-10 flex items-center justify-center bg-slate-800 text-white rounded-lg shadow-md hover:bg-slate-900 transition"
-             title="Imprimir"
-           >
-             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
-           </button>
+           <div className="flex items-center gap-1.5 p-1 bg-white/5 border border-white/10 rounded-xl">
+              <button
+                onClick={() => setShowPrintModal(true)}
+                className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                title="Imprimir"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+              </button>
 
-           <button
-             onClick={() => {
-               if (window.confirm('Tem certeza que deseja restaurar a lista original desta turma? Isso apagará as presenças e alunos adicionados manualmente.')) {
-                 setClassData(prev => {
-                   const newData = { ...prev };
-                   newData[selectedClassId!] = initialClassData[selectedClassId!];
-                   return newData;
-                 });
-               }
-             }}
-             className="w-10 h-10 flex items-center justify-center bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600 transition"
-             title="Restaurar Lista Original"
-           >
-             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-           </button>
-           
-          <button 
-            onClick={() => { setNewStudentName(''); setShowAddModal(true); }}
-            className="w-10 h-10 flex items-center justify-center bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition"
-            title="Adicionar Aluno"
-          >
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
-          </button>
+              <button
+                onClick={() => {
+                  if (window.confirm('CUIDADO: Restaurar apagará todas as presenças. Continuar?')) {
+                    setClassData(prev => ({ ...prev, [selectedClassId!]: initialClassData[selectedClassId!] }));
+                  }
+                }}
+                className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-orange-500 hover:bg-orange-500/10 rounded-lg transition-all"
+                title="Sincronizar/Restaurar"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+              </button>
+              
+              <button 
+                onClick={() => { setNewStudentName(''); setShowAddModal(true); }}
+                className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-green-500 hover:bg-green-500/10 rounded-lg transition-all"
+                title="Adicionar Aluno"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" /></svg>
+              </button>
 
-          <div className="relative">
-              <input 
-                type="file" 
-                accept="image/*,application/pdf"
-                onChange={handleAIScan}
-                id="ai-scan-input"
-                className="hidden"
-                disabled={isScanning}
-              />
               <button 
                 onClick={() => document.getElementById('ai-scan-input')?.click()}
                 disabled={isScanning}
-                className={`w-10 h-10 flex items-center justify-center bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700 transition relative ${isScanning ? 'animate-pulse opacity-70' : ''}`}
-                title="Escanear Lista (IA)"
+                className={`w-8 h-8 flex items-center justify-center text-white/50 hover:text-purple-500 hover:bg-purple-500/10 rounded-lg transition-all ${isScanning ? 'animate-pulse' : ''}`}
+                title="Injetar Lista (IA)"
               >
-                {isScanning ? (
-                   <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                ) : (
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                )}
-                <div className="absolute -top-1 -right-1 bg-yellow-400 text-[8px] font-black px-1 rounded text-slate-900 border border-white">IA</div>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                </svg>
               </button>
-          </div>
+           </div>
         </div>
       </div>
 
-      {/* --- LISTA DE ALUNOS (LAYOUT UNIFICADO E RESPONSIVO) --- */}
-      <div className="space-y-3 p-3 bg-slate-50/50">
-        {sortedStudents.map((student, index) => {
-          const status = student.attendance[dateStr];
-          const stats = getStats(student);
-          const isCorrectDay = currentClass.days ? currentClass.days.includes(dayOfWeek) : true;
-          
-          return (
-            <div key={`${student.id}-${index}`} className={`bg-white p-4 rounded-xl shadow-sm border flex flex-col gap-3 transition-opacity ${!isCorrectDay ? 'opacity-75 grayscale-[0.5]' : 'border-slate-200'}`}>
-              {/* Row 1: Number, Name, Actions */}
-              <div className="flex justify-between items-center border-b border-slate-100 pb-2">
-                 <div className="flex items-center gap-3 overflow-hidden">
-                    <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center text-sm font-black text-slate-500 bg-slate-100 rounded-lg">{index + 1}</span>
-                    <h4 className="font-bold text-slate-800 text-base truncate leading-tight">{student.name}</h4>
-                 </div>
-                 
-                 {!isCorrectDay && (
-                   <span className="text-[9px] font-black bg-red-100 text-red-600 px-2 py-0.5 rounded uppercase tracking-tighter">Bloqueado</span>
-                 )}
-                 
-                 <div className="flex items-center gap-1 flex-shrink-0 ml-2">
-                    <button 
-                      onClick={() => { setNewStudentName(student.name); setShowEditModal(student); }} 
-                      className="p-1.5 text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded transition"
-                      title="Editar"
-                    >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                    </button>
-                     <button 
-                       onClick={() => setShowMoveModal(student)} 
-                       className="p-1.5 text-slate-400 hover:text-orange-500 hover:bg-orange-50 rounded transition"
-                       title="Mover"
-                     >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
-                    </button>
-                     <button 
-                       onClick={() => setShowDeleteConfirm(student)} 
-                       className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded transition"
-                       title="Excluir"
-                     >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                    </button>
-                 </div>
-              </div>
-
-              {/* Row 2: Attendance Grid (Presence/Absence) */}
-              <div className="grid grid-cols-2 gap-2 h-10 relative">
-                 {!isCorrectDay && (
-                    <div className="absolute inset-0 z-10 cursor-not-allowed" title="Apenas segundas ou sextas conforme a turma" />
-                 )}
-                 {/* Botão Presença */}
-                 <button
-                   onClick={() => isCorrectDay && handleAttendance(student.id, 'P')}
-                   disabled={!isCorrectDay}
-                   className={`rounded-lg font-black text-xs uppercase tracking-wider transition-all shadow-sm active:scale-95 flex items-center justify-center gap-1 ${
-                     status === 'P'
-                     ? 'bg-green-600 text-white shadow-green-500/30 ring-2 ring-green-600 ring-offset-1'
-                     : 'bg-slate-50 text-slate-500 hover:bg-green-100 hover:text-green-600 border border-slate-200'
-                   } ${!isCorrectDay ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
-                 >
-                   {status === 'P' && <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>}
-                   {status === 'P' ? 'Presente' : 'P'}
-                 </button>
-
-                 {/* Botão Falta */}
-                 <button
-                   onClick={() => isCorrectDay && handleAttendance(student.id, 'F')}
-                   disabled={!isCorrectDay}
-                   className={`rounded-lg font-black text-xs uppercase tracking-wider transition-all shadow-sm active:scale-95 flex items-center justify-center gap-1 ${
-                     status === 'F'
-                     ? 'bg-red-600 text-white shadow-red-500/30 ring-2 ring-red-600 ring-offset-1'
-                     : 'bg-slate-50 text-slate-500 hover:bg-red-100 hover:text-red-600 border border-slate-200'
-                   } ${!isCorrectDay ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
-                 >
-                   {status === 'F' && <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" /></svg>}
-                   {status === 'F' ? 'Faltou' : 'F'}
-                 </button>
-              </div>
-            </div>
-          );
-        })}
+      {/* --- TABELA DE CHAMADA ESTILO DIÁRIO DE CLASSE (BLACK MODE) --- */}
+      <div className="p-4 sm:p-6">
+        <div className="mb-4 flex items-center gap-2">
+            <h3 className="text-xl font-black text-white/90">Diário de Classe</h3>
+            <span className="px-2 py-0.5 bg-white/5 border border-white/10 rounded text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                Turma {currentClass.name}
+            </span>
+        </div>
+        
+        <ClassDiaryTable 
+            students={sortedStudents}
+            dateStr={dateStr}
+            onAttendance={handleAttendance}
+            onEdit={(student) => { setNewStudentName(student.name); setShowEditModal(student); }}
+            onMove={setShowMoveModal}
+            onDelete={setShowDeleteConfirm}
+            isCorrectDay={isCorrectDay}
+        />
       </div>
+      
+      {/* Hidden input for AI Scan */}
+      <input 
+        type="file" 
+        accept="image/*,application/pdf"
+        onChange={handleAIScan}
+        id="ai-scan-input"
+        className="hidden"
+      />
       
       {/* --- MODALS --- */}
       
@@ -795,6 +693,12 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
       )}
 
     </div>
+      
+      {/* Footer do Diário */}
+      <div className="px-6 py-4 border-t border-white/5 bg-neutral-950 flex justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest">
+         <span>Escola: {selectedGrade}</span>
+         <span>Total de Alunos: {sortedStudents.length}</span>
+      </div>
     </>
   );
 };

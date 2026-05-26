@@ -14,7 +14,7 @@ const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
 const appId = firebaseConfig.projectId;
 
 const CATEGORIAS = [
-  { id: '1º ANO / EJANEM', icon: Users, color: 'bg-blue-100 text-blue-800 border-blue-400' },
+  { id: '1º ANO', icon: Users, color: 'bg-blue-100 text-blue-800 border-blue-400' },
   { id: '8º ANO / AP', icon: FileText, color: 'bg-orange-100 text-orange-800 border-orange-400' }
 ];
 
@@ -91,11 +91,11 @@ export const BibliotecaEscolarView: React.FC<{ onBack: () => void }> = ({ onBack
 
   if (view === 'categoria') {
     const arquivosDaCategoria = arquivos.filter(arq => {
-        if (selectedCategory === '1º ANO / EJANEM') return arq.category === '1º ANO DO ENSINO MÉDIO' || arq.category === 'EJANEM';
+        if (selectedCategory === '1º ANO') return arq.category === '1º ANO DO ENSINO MÉDIO';
         if (selectedCategory === '8º ANO / AP') return arq.category === '8º ANO ENSINO FUNDAMENTAL' || arq.category === 'AP';
         return arq.category === selectedCategory;
     });
-    const showPreLoadedButton = selectedCategory === '1º ANO / EJANEM';
+    const showPreLoadedButton = selectedCategory === '1º ANO';
     const showAltinhaButton = selectedCategory === '8º ANO / AP';
 
     return (

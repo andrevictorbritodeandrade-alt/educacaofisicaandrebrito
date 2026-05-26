@@ -80,28 +80,5 @@ export const PE_PLAN: Record<string, AulaPlan[]> = {
         { data: '23/10', tri: '3º Tri', modulo: 'Território', titulo: 'Direito à Cidade', desc: 'Lazer e gentrificação.', resumo: COMMON_RESUMOS['Cidade'] },
         { data: '30/10', tri: '3º Tri', modulo: 'Encerramento', titulo: 'Avaliação Final', desc: 'Sistematização teórica.', resumo: COMMON_RESUMOS['Avaliação'] },
         { data: '06/11', tri: '3º Tri', modulo: 'Encerramento', titulo: 'Autoavaliação', desc: 'Roda de encerramento.', resumo: COMMON_RESUMOS['Final'] }
-    ],
-    'ejanem': [
-        { data: '18/05', tri: '2º Tri', modulo: 'Saúde Trabalhador', titulo: 'Corpo e Mídia', desc: 'Hipersexualização.', resumo: `🎯 **Objetivo:** Analisar criticamente a imagem do corpo negro na mídia.` },
-        { data: '25/05', tri: '2º Tri', modulo: 'Saúde Trabalhador', titulo: 'LER e DORT', desc: 'Prevenção ocupacional.', resumo: `🎯 **Objetivo:** Conhecimentos práticos de saúde para o trabalho.` },
-        { data: '08/06', tri: '2º Tri', modulo: 'Saúde Trabalhador', titulo: 'Ginástica Laboral', desc: 'Mãos e braços.', resumo: `🎯 **Objetivo:** Prevenção de lesões repetitivas.` },
-        { data: '15/06', tri: '2º Tri', modulo: 'Saúde Trabalhador', titulo: 'Postura e Carga', desc: 'Como levantar peso.', resumo: `🎯 **Objetivo:** Ergonomia no posto de trabalho.` },
-        { data: '22/06', tri: '2º Tri', modulo: 'Bem Estar', titulo: 'Automassagem', desc: 'Relaxamento muscular.', resumo: `🎯 **Objetivo:** Alívio de tensões do dia a dia.` },
-        { data: '29/06', tri: '2º Tri', modulo: 'Bem Estar', titulo: 'Roda: Meu Corpo', desc: 'Identidade e aceitação.', resumo: `🎯 **Objetivo:** Troca de experiências sobre envelhecimento e trabalho.` },
-        { data: '06/07', tri: '2º Tri', modulo: 'Socorros', titulo: 'Simulação SAMU', desc: 'Como pedir ajuda.', resumo: `🎯 **Objetivo:** Comunicação eficiente em crises.` },
-        { data: '27/07', tri: '2º Tri', modulo: 'Socorros', titulo: 'Socorros: AVC', desc: 'Identificar sinais.', resumo: `🎯 **Objetivo:** Rapidez no socorro de derrame.` },
-        { data: '03/08', tri: '2º Tri', modulo: 'Socorros', titulo: 'Manobra Heimlich', desc: 'Engasgos.', resumo: `🎯 **Objetivo:** Desobstrução de vias aéreas.` },
-        { data: '17/08', tri: '2º Tri', modulo: 'Socorros', titulo: 'Socorros: Queimaduras', desc: 'Emergências.', trabalho: 'passar', resumo: `🎯 **Objetivo:** Cuidados imediatos com a pele.` },
-        { data: '24/08', tri: '2º Tri', modulo: 'Socorros', titulo: 'Socorros: Desmaio', desc: 'O que fazer.', resumo: `🎯 **Objetivo:** Estabilização e ventilação.` },
-        { data: '31/08', tri: '2º Tri', modulo: 'Socorros', titulo: 'Mapa Afetivo', desc: 'Redes de apoio.', resumo: `🎯 **Objetivo:** Identificar locais de lazer e saúde.` },
-        { data: '14/09', tri: '3º Tri', modulo: 'Saúde', titulo: 'Vida Ativa', desc: 'Plano de exercícios.', trabalho: 'recolher', resumo: `🎯 **Objetivo:** Adaptar movimento à rotina pesada.` },
-        { data: '21/09', tri: '3º Tri', modulo: 'Saúde', titulo: 'Relaxamento', desc: 'Higiene do sono.', resumo: `🎯 **Objetivo:** Melhorar a qualidade do descanso.` },
-        { data: '05/10', tri: '3º Tri', modulo: 'Socorros', titulo: 'Socorros: Convulsão', desc: 'Proteção física.', resumo: `🎯 **Objetivo:** Saber lidar com crises epiléticas.` },
-        { data: '19/10', tri: '3º Tri', modulo: 'Socorros', titulo: 'Simulado Final', desc: 'Prática de socorros.', resumo: `🎯 **Objetivo:** Testar conhecimentos do tri.` },
-        { data: '26/10', tri: '3º Tri', modulo: 'História', titulo: 'Luiz Gama e Várzea', desc: 'Resistência negra.', trabalho: 'passar', resumo: `🎯 **Objetivo:** Abolicionismo e esporte popular.` },
-        { data: '23/11', tri: '3º Tri', modulo: 'Cultura', titulo: 'Jongo: Improviso', desc: 'Dança e oralidade.', resumo: `🎯 **Objetivo:** Conhecer a matriz do samba.` },
-        { data: '30/11', tri: '3º Tri', modulo: 'Cultura', titulo: 'Feijoada Imaterial', desc: 'Encontro coletivo.', trabalho: 'recolher', resumo: `🎯 **Objetivo:** Patrimônio cultural e alimentação.` },
-        { data: '07/12', tri: '3º Tri', modulo: 'Final', titulo: 'Confraternização', desc: 'Notas e feedback.', resumo: `🎯 **Objetivo:** Concluir o semestre com união.` },
-        { data: '14/12', tri: '3º Tri', modulo: 'Final', titulo: 'Roda de Fechamento', desc: 'Planos p/ futuro.', resumo: `🎯 **Objetivo:** Autoavaliação e acolhimento.` }
     ]
 };
