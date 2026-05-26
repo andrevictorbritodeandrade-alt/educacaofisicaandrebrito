@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BookOpen, Presentation, ChevronLeft, ChevronRight, Home, Info, Printer, LayoutGrid, Calendar } from 'lucide-react';
 import { PE_PLAN } from '../data/planosPE';
 import { PlanoAnualPE } from './PlanoAnualPE';
+import { ALTINHA_FUTVOLEI_SLIDES } from '../data/corpoMidiaSlides';
 
 // ================= DADOS DO CRONOGRAMA =================
 const cronograma = [
@@ -629,6 +630,28 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
         </header>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Aula Altinha e Futevolei adicionada para todas as turmas */}
+          <div className="bg-slate-800 rounded-2xl border border-blue-500 overflow-hidden flex flex-col hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all">
+              <div className="p-3 bg-blue-600 text-white font-bold text-sm flex justify-between">
+                  <span>Aula Extra</span>
+              </div>
+              <div className="p-6 flex-grow">
+                  <h3 className="text-xl font-bold text-white mb-2">Altinha & Futevôlei</h3>
+                  <p className="text-slate-400 text-sm">Da Roda para a Rede</p>
+              </div>
+              <div className="p-4 bg-slate-900">
+                  <button 
+                      onClick={() => { 
+                        setSelectedAulaData('altinha-futvolei'); 
+                        setCurrentView('player'); 
+                      }}
+                      className="w-full py-3 bg-white text-slate-900 hover:bg-slate-200 font-black rounded-lg flex items-center justify-center gap-2 transition-colors text-sm"
+                  >
+                      <Presentation size={18} /> Projetar Slides
+                  </button>
+              </div>
+          </div>
+          
           {cronograma.map((aula) => {
             const temSlides = slidesData[aula.data] !== undefined;
             
@@ -666,9 +689,8 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
 
   // --- TELA PLAYER DE SLIDES (Estilo Datashow de Alto Contraste) ---
   const SlidePlayer = () => {
-    const slides = selectedAulaData ? slidesData[selectedAulaData] : null;
+    const slides = selectedAulaData === 'altinha-futvolei' ? ALTINHA_FUTVOLEI_SLIDES : (selectedAulaData ? slidesData[selectedAulaData] : null);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [showDica, setShowDica] = useState(false);
 
     // Navegação Teclado
     useEffect(() => {

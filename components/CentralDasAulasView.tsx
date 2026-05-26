@@ -88,6 +88,20 @@ Fundamentos técnicos e filosóficos:
       { tipo: 'reflexao', titulo: 'Para pensar', texto: 'O atletismo tradicional mede o humano contra o cronômetro. Na nossa aula, a verdadeira vitória não é vencer o colega, mas bater a sua própria marca.' },
       { tipo: 'atividade', titulo: 'Na prática', texto: 'Montamos um circuito com 4 estações. Cada aluno recebe uma ficha de registro.' }
     ]
+  },
+  {
+    id: 'f2-7',
+    titulo: 'Altinha & Futevôlei',
+    subtitulo: 'Da Roda para a Rede: Uma jornada pelas areias',
+    imagem: 'https://images.unsplash.com/photo-1598467440478-f027376a43b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1280&q=80',
+    creditos: 'Esportes de Areia',
+    pdf: '/pdf/altinha_futevolei.pdf',
+    conteudo: `Apresentação sobre Altinha e Futevôlei`,
+    boxes: [
+      { tipo: 'sabia', titulo: 'Fundamentos Altinha', texto: 'Chapa (passe seguro), Peito e Cabeça (recepção), Acrobacias (salvar bolas difíceis).' },
+      { tipo: 'reflexao', titulo: 'O Desafio do Futevôlei', texto: 'Puramente competitivo (duplas). Exige os mesmos fundamentos da Altinha, mas com rede e regras de pontuação.' },
+      { tipo: 'atividade', titulo: 'Por que começar pela Altinha?', texto: 'Desenvolve intimidade com a bola, leitura de trajetória, prepara as articulações e é inclusivo.' }
+    ]
   }
 ];
 
