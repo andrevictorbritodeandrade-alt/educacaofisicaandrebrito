@@ -1,31 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from './components/Sidebar';
-import { ChessGame } from './components/ChessGame';
 import { Profile } from './components/Profile';
 import { BackgroundSlider } from './components/BackgroundSlider';
 import { DashboardView } from './components/DashboardView';
 import { StatisticsView } from './components/StatisticsView';
 import { ClassesView } from './components/ClassesView';
-import { TournamentsView } from './components/TournamentsView';
 import { EmentaView } from './components/EmentaView';
 import { PlanoDeCursoView } from './components/PlanoDeCursoView';
-import { CentralDasAulasView } from './components/CentralDasAulasView';
-import { ExercisesView } from './components/ExercisesView';
-import { NotationView } from './components/NotationView';
 import { ScheduleView } from './components/ScheduleView';
 import { GalleryView } from './components/GalleryView';
-import { LessonContentView } from './components/LessonContentView';
-import { BibliotecaEscolarView } from './components/BibliotecaEscolarView';
-import { SlideViewer } from './components/SlideViewer';
-import { RegisterActivitiesView } from './components/RegisterActivitiesView';
-import { AssignmentsView } from './components/AssignmentsView';
 import { DecolonialApp } from './components/DecolonialApp';
 import { CalendarView } from './components/CalendarView';
-import { WeatherWidget } from './components/WeatherWidget'; // Import Widget
+import { WeatherWidget } from './components/WeatherWidget';
 import { BottomNav } from './components/BottomNav';
 import { ViewState, ClassDataMap, ClassData, GalleryData } from './types';
 import { mockUserProfile, initialClassData } from './constants';
 import { initFirebase, subscribeToClasses, saveClassesToFirestore, subscribeToGallery, saveGalleryToFirestore } from './services/firebaseService';
+import { AiAssistant } from './components/AiAssistant';
 
 // --- Global Footer Component ---
 const GlobalFooter = () => (
@@ -38,7 +29,7 @@ const GlobalFooter = () => (
         Contato: andrevictorbritodeandrade@gmail.com
       </p>
       <p className="text-[10px] md:text-xs font-medium text-slate-400">
-        versão: 1.0
+        versão: 1.1
       </p>
     </div>
   </footer>
@@ -83,7 +74,7 @@ const App: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [currentView, setView] = useState<ViewState>(() => {
     const hash = window.location.hash.replace('#', '');
-    if (hash && ['home', 'statistics', 'classes', 'tournaments', 'play', 'ementa', 'plano', 'central-aulas', 'exercises', 'notation', 'profile', 'decolonial'].includes(hash)) {
+    if (hash && ['home', 'statistics', 'classes', 'ementa', 'plano', 'profile', 'decolonial'].includes(hash)) {
       return hash as ViewState;
     }
     return (localStorage.getItem('app_currentView') as ViewState) || 'home';
@@ -107,17 +98,24 @@ const App: React.FC = () => {
 
   // Sync Status State
   const [syncStatus, setSyncStatus] = useState<'synced' | 'saving' | 'error'>('synced');
+  const [isInitializing, setIsInitializing] = useState(true);
 
-  // Helper to save classes explicitly
+  // Helper to save classes explicitly with debounce-like behavior for rapid updates
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const handleSaveClasses = async (newData: ClassDataMap) => {
     setSyncStatus('saving');
-    try {
-      await saveClassesToFirestore(newData);
-      setSyncStatus('synced');
-    } catch (error) {
-      console.error("Erro ao salvar:", error);
-      setSyncStatus('error');
-    }
+    
+    if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    
+    saveTimeoutRef.current = setTimeout(async () => {
+      try {
+        await saveClassesToFirestore(newData);
+        setSyncStatus('synced');
+      } catch (error) {
+        console.error("Erro ao salvar:", error);
+        setSyncStatus('error');
+      }
+    }, 1500); // 1.5s delay to batch rapid attendance marking
   };
 
   // Helper to save gallery explicitly
@@ -201,114 +199,72 @@ const App: React.FC = () => {
     if(success) {
       // Subscribe to classes
       const unsubClasses = subscribeToClasses((firebaseClasses) => {
+        setIsInitializing(false);
         if (Object.keys(firebaseClasses).length > 0) {
           isRemoteClassUpdate.current = true;
           
           let migratedClasses = { ...firebaseClasses };
-          let needsSave = false;
+          let needsUpdateRemote = false;
 
-          // REMOVE old classes that are not in the new plan
-          if (initialClassData && Object.keys(initialClassData).length > 0) {
-            Object.keys(migratedClasses).forEach(key => {
-              if (!initialClassData[key]) {
-                delete migratedClasses[key];
-                needsSave = true;
-              }
-            });
-          }
-
-          // Migration: Update schedules, days and student rosters (preserving attendance)
+          // Merge local initial structure with remote data to ensure all classes exist
           Object.keys(initialClassData).forEach(id => {
-            if (migratedClasses[id]) {
-              let classChanged = false;
-              
-              // Update schedule/days/school if missing or different
-              if (migratedClasses[id].schedule !== initialClassData[id].schedule) {
-                migratedClasses[id].schedule = initialClassData[id].schedule;
-                classChanged = true;
-              }
-              if (JSON.stringify(migratedClasses[id].days) !== JSON.stringify(initialClassData[id].days)) {
-                migratedClasses[id].days = initialClassData[id].days;
-                classChanged = true;
-              }
-              if (migratedClasses[id].school !== initialClassData[id].school) {
-                migratedClasses[id].school = initialClassData[id].school;
-                classChanged = true;
-              }
-
-              // Merge students: prefer initialClassData as truth for names, but merge attendance.
-              // This also cleans up duplicates and mock names.
-              if (initialClassData[id].students && initialClassData[id].students.length > 0) {
-                const mockNamesList = ["Ana Silva", "Beatriz Costa", "Carlos Oliveira", "Davi Souza", "Eduardo Lima", "Fernanda Rocha", "Gabriel Alves", "Helena Dias", "Igor Martins", "Julia Pereira", "Kaique Santos", "Larissa Gomes", "Miguel Ferreira", "Nicole Ribeiro", "Otávio Castro"];
-                const mockNamesSet = new Set(mockNamesList);
-                
-                const serverStudents = migratedClasses[id].students || [];
-                const localStudents = initialClassData[id].students;
-
-                // Identify if current server list has mock names to be removed or is significantly different
-                const hasMockNames = serverStudents.some(s => mockNamesSet.has(s.name) || /\s\d+$/.test(s.name));
-                
-                if (hasMockNames) {
-                  const newStudentList: any[] = [];
-                  
-                  // 1. Reconstruct using initial students as base, preserving any remote attendance
-                  localStudents.forEach(ls => {
-                    const serverMatch = serverStudents.find(ss => ss.name === ls.name);
-                    newStudentList.push({
-                      ...ls,
-                      attendance: { ...ls.attendance, ...(serverMatch ? serverMatch.attendance : {}) }
-                    });
-                  });
-
-                  // 2. Add manual students (not in initial and NOT mock)
-                  serverStudents.forEach(ss => {
-                    const isInInitial = localStudents.some(ls => ls.name === ss.name);
-                    const isMock = mockNamesSet.has(ss.name) || /\s\d+$/.test(ss.name);
-                    if (!isInInitial && !isMock) {
-                      newStudentList.push(ss);
-                    }
-                  });
-
-                  migratedClasses[id].students = newStudentList;
-                  classChanged = true;
-                } else {
-                  // Standard merge if no mock names suspected
-                  const existingNames = new Set(serverStudents.map(s => s.name));
-                  localStudents.forEach(ls => {
-                    if (!existingNames.has(ls.name)) {
-                      serverStudents.push(ls);
-                      classChanged = true;
-                    }
-                  });
-                }
-              }
-
-              if (classChanged) needsSave = true;
-            } else {
-              // Add missing class from initial data
+            if (!migratedClasses[id]) {
               migratedClasses[id] = initialClassData[id];
-              needsSave = true;
+              needsUpdateRemote = true;
+            } else {
+              // Ensure critical fields (days, schedule) are up to date if missing
+              if (!migratedClasses[id].days || migratedClasses[id].days.length === 0) {
+                 migratedClasses[id].days = initialClassData[id].days;
+                 needsUpdateRemote = true;
+              }
+              if (!migratedClasses[id].schedule) {
+                 migratedClasses[id].schedule = initialClassData[id].schedule;
+                 needsUpdateRemote = true;
+              }
+              if (!migratedClasses[id].school) {
+                 migratedClasses[id].school = initialClassData[id].school;
+                 needsUpdateRemote = true;
+              }
             }
           });
+
+            // Explicit cleanup for CIEP198_AP101 requested by user (removing mock names)
+            if (migratedClasses["CIEP198_AP101"] && migratedClasses["CIEP198_AP101"].students) {
+              const mockNamesList = ["Ana Silva", "Beatriz Costa", "Carlos Oliveira", "Davi Souza", "Eduardo Lima", "Fernanda Rocha", "Gabriel Alves", "Helena Dias", "Igor Martins", "Julia Pereira", "Kaique Santos", "Larissa Gomes", "Miguel Ferreira", "Nicole Ribeiro", "Otávio Castro"];
+              const mockNamesSet = new Set(mockNamesList);
+              const initialCount = migratedClasses["CIEP198_AP101"].students.length;
+              
+              migratedClasses["CIEP198_AP101"].students = migratedClasses["CIEP198_AP101"].students.filter(s => {
+                const isMock = mockNamesSet.has(s.name) || /\s\d+$/.test(s.name);
+                return !isMock;
+              });
+
+              if (migratedClasses["CIEP198_AP101"].students.length !== initialCount) {
+                needsUpdateRemote = true;
+              }
+            }
+
+            // REMOVE EUCLIDES DA CUNHA (User request: "RETRE O COLEGIO EUCLIDES DA CUNHA, PQ PAREI DE DAR AULA LA!!!")
+            const initialClassCount = Object.keys(migratedClasses).length;
+            migratedClasses = Object.fromEntries(
+              Object.entries(migratedClasses).filter(([id, data]) => {
+                const isEuclides = data.school && data.school.toLowerCase().includes("euclides");
+                return !isEuclides;
+              })
+            );
+
+            if (Object.keys(migratedClasses).length !== initialClassCount) {
+              needsUpdateRemote = true;
+            }
           
-          if (needsSave) {
+            if (needsUpdateRemote) {
             saveClassesToFirestore(migratedClasses);
           }
           setClassData(migratedClasses);
         } else if (!hasLoadedClasses.current) {
-          // Se vazio no servidor, salva o inicial ou o que tem no local storage
+          // If Firestore is empty, initialize with local/blueprint data
           const stored = localStorage.getItem('app_classData');
           let dataToSave = stored ? JSON.parse(stored) : initialClassData;
-          
-          let needsSave = false;
-          // Add missing classes from initialData
-          Object.keys(initialClassData).forEach(id => {
-            if (!dataToSave[id]) {
-              dataToSave[id] = initialClassData[id];
-              needsSave = true;
-            }
-          });
-          
           saveClassesToFirestore(dataToSave);
           setClassData(dataToSave);
         }
@@ -384,7 +340,7 @@ const App: React.FC = () => {
 
   const renderView = () => {
     switch(currentView) {
-      case 'home': return <DashboardView setView={setViewWithHistory} />;
+      case 'home': return <DashboardView setView={setViewWithHistory} classData={classData} />;
       case 'statistics': return <StatisticsView classData={classData} onBack={goBack} />;
       case 'classes': return (
         <ClassesView 
@@ -396,16 +352,11 @@ const App: React.FC = () => {
           selectedClassId={selectedClassId}
           setSelectedClassId={setSelectedClassId}
           onSave={handleSaveClasses}
+          syncStatus={syncStatus}
         />
       );
-      case 'tournaments': return <TournamentsView onBack={goBack} />;
-      case 'play': return <ChessGame onBack={goBack} />;
       case 'ementa': return <EmentaView onBack={goBack} />;
       case 'plano': return <PlanoDeCursoView onBack={goBack} />;
-      case 'central-aulas': return <CentralDasAulasView onBack={goBack} />;
-      case 'exercises': return <ExercisesView onBack={goBack} />;
-      case 'notation': return <NotationView onBack={goBack} />;
-      case 'lesson-content': return <LessonContentView onBack={goBack} />;
       case 'schedule': return <ScheduleView onBack={goBack} />;
       case 'gallery': return (
         <GalleryView 
@@ -414,7 +365,6 @@ const App: React.FC = () => {
           setData={setGalleryData} 
         />
       );
-      case 'biblioteca': return <BibliotecaEscolarView onBack={goBack} />;
       case 'profile': return (
         <Profile 
           user={mockUserProfile} 
@@ -423,10 +373,9 @@ const App: React.FC = () => {
           setClassData={setClassData}
         />
       );
-          case 'assignments': return <AssignmentsView classData={classData} onBack={goBack} />;
-      case 'register-activities': return <RegisterActivitiesView classData={classData} onBack={goBack} />;
       case 'decolonial': return <DecolonialApp onBack={goBack} />;
       case 'calendar': return <CalendarView onBack={goBack} />;
+      default: return <DashboardView setView={setViewWithHistory} classData={classData} />;
     }
   };
 
@@ -438,20 +387,13 @@ const App: React.FC = () => {
         if (selectedClassId && classData[selectedClassId]) return classData[selectedClassId].name.toUpperCase();
         if (selectedGrade) return `${selectedGrade}º ANO`;
         return 'Turmas';
-      case 'tournaments': return 'Torneios';
-      case 'play': return 'Jogar Xadrez';
       case 'ementa': return 'Ementa Escolar';
       case 'plano': return 'Plano de Curso';
-      case 'central-aulas': return 'Central das Aulas';
-      case 'exercises': return 'Exercícios Táticos';
-      case 'notation': return 'Notação Algébrica';
       case 'schedule': return 'Quadro de Horários';
       case 'gallery': return 'Galeria';
-      case 'biblioteca': return 'Biblioteca Escolar';
-      case 'assignments': return 'Trabalhos';
-      case 'register-activities': return 'Registro de Atividades';
       case 'profile': return 'Perfil';
-      case 'decolonial': return 'Decolonial App';
+      case 'decolonial': return 'Gestão do Professor';
+      case 'calendar': return 'Calendário';
       default: return 'Painel';
     }
   };
@@ -465,11 +407,26 @@ const App: React.FC = () => {
 
   // ... (existing code for App)
 
+  if (isInitializing) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-slate-950 text-white font-sans p-6 text-center">
+        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+        <h1 className="text-2xl font-black uppercase tracking-tighter mb-2">Iniciando Sync de Dados</h1>
+        <p className="text-slate-400 font-medium animate-pulse">Sincronizando com a Nuvem...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col min-h-screen relative font-sans">
-      {/* Slide Viewer Global Overlay */}
+      {/* Slide Viewer Global Overlay - Placeholder for functionality */}
       {slideViewerOpen && (
-        <SlideViewer slideType={slideViewerOpen.type} onClose={() => setSlideViewerOpen(null)} />
+        <div className="fixed inset-0 z-[100] bg-black">
+           <button onClick={() => setSlideViewerOpen(null)} className="absolute top-4 right-4 text-white z-50">Fechar</button>
+           <div className="w-full h-full flex items-center justify-center text-white text-3xl font-bold">
+             Iniciando Slides: {slideViewerOpen.type}
+           </div>
+        </div>
       )}
 
       {/* Global Background */}
@@ -522,7 +479,9 @@ const App: React.FC = () => {
              {/* Main Content Area (Naturally Scrollable) */}
              <main className="flex-1 p-3 md:p-6 pb-20 md:pb-6">
                <div className="max-w-7xl mx-auto pb-6">
-                  {renderView()}
+                  {currentView === 'home' ? (
+                    <DashboardView setView={setViewWithHistory} classData={classData} />
+                  ) : renderView()}
                </div>
              </main>
 

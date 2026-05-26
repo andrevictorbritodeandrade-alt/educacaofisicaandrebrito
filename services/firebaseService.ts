@@ -1,10 +1,10 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore, doc, onSnapshot, updateDoc, setDoc, collection, writeBatch, enableIndexedDbPersistence, getDocFromServer } from 'firebase/firestore';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
-import { DashboardCardData, ClassDataMap, TournamentState, GalleryData } from '../types';
+import { DashboardCardData, ClassDataMap, GalleryData } from '../types';
 import firebaseAppletConfig from '../firebase-applet-config.json';
 
-const CONFIG_KEY = 'chess_club_firebase_config';
+const CONFIG_KEY = 'school_management_firebase_config';
 
 export const getStoredConfig = () => {
   // First try the applet config file
@@ -147,69 +147,6 @@ export const onAuthChange = (callback: (user: any) => void) => {
   return () => {};
 };
 
-// Inicializa cards padrão se não existirem
-export const seedDatabase = async () => {
-  if (!db) initFirebase();
-  if (!db) return;
-  
-  const defaultCards: DashboardCardData[] = [
-    { id: 'total_students', title: 'Total de Alunos', value: 124, type: 'number', trend: '+12% este mês', icon: 'users', lastUpdated: Date.now() },
-    { id: 'active_classes', title: 'Turmas Ativas', value: 8, type: 'number', trend: '2 manhã / 6 tarde', icon: 'book', lastUpdated: Date.now() },
-    { id: 'next_event', title: 'Próximo Torneio', value: '15 Mai - Interescolar', type: 'text', icon: 'trophy', lastUpdated: Date.now() },
-    { id: 'club_status', title: 'Status do Clube', value: 'Aberto', type: 'status', icon: 'door', lastUpdated: Date.now() },
-  ];
-
-  try {
-    const batch = writeBatch(db);
-    for (const card of defaultCards) {
-      const ref = doc(db, 'dashboard', card.id);
-      batch.set(ref, card, { merge: true });
-    }
-    await batch.commit();
-  } catch (error) {
-    handleFirestoreError(error, OperationType.WRITE, 'dashboard');
-  }
-};
-
-// Listener em tempo real Dashboard
-export const subscribeToDashboard = (callback: (data: DashboardCardData[]) => void) => {
-  if (!db) initFirebase();
-  if (!db) {
-    callback([]);
-    return () => {};
-  }
-
-  const path = 'dashboard';
-  const unsub = onSnapshot(collection(db, path), (snapshot: any) => {
-    const cards: DashboardCardData[] = [];
-    snapshot.forEach((doc: any) => {
-      cards.push(doc.data() as DashboardCardData);
-    });
-    cards.sort((a, b) => a.id.localeCompare(b.id));
-    callback(cards);
-  }, (error) => {
-    handleFirestoreError(error, OperationType.GET, path);
-  });
-
-  return unsub;
-};
-
-// Atualizar valor Dashboard
-export const updateCardValue = async (id: string, value: string | number) => {
-  if (!db) initFirebase();
-  if (!db) return;
-  const path = `dashboard/${id}`;
-  const docRef = doc(db, 'dashboard', id);
-  try {
-    await updateDoc(docRef, {
-      value: value,
-      lastUpdated: Date.now()
-    });
-  } catch (error) {
-    handleFirestoreError(error, OperationType.UPDATE, path);
-  }
-};
-
 // --- REAL-TIME CLASSES SYNC ---
 
 export const subscribeToClasses = (callback: (data: ClassDataMap) => void) => {
@@ -246,34 +183,6 @@ export const saveClassesToFirestore = async (data: ClassDataMap) => {
     await batch.commit();
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, 'classes');
-  }
-};
-
-// --- REAL-TIME TOURNAMENT SYNC ---
-
-export const subscribeToTournament = (callback: (data: TournamentState | null) => void) => {
-  if (!db) initFirebase();
-  if (!db) return () => {};
-  const path = 'tournaments/active';
-  return onSnapshot(doc(db, 'tournaments', 'active'), (doc: any) => {
-    if (doc.exists()) {
-      callback(doc.data() as TournamentState);
-    } else {
-      callback(null);
-    }
-  }, (error) => {
-    handleFirestoreError(error, OperationType.GET, path);
-  });
-};
-
-export const saveTournamentToFirestore = async (data: TournamentState) => {
-  if (!db) initFirebase();
-  if (!db) return;
-  const path = 'tournaments/active';
-  try {
-    await setDoc(doc(db, 'tournaments', 'active'), data);
-  } catch (error) {
-    handleFirestoreError(error, OperationType.WRITE, path);
   }
 };
 

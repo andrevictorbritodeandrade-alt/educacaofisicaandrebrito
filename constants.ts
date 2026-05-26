@@ -1,4 +1,4 @@
-import { ClassDataMap, ClassificationDataMap, UserProfile } from './types';
+import { ClassDataMap, UserProfile } from './types';
 
 export const BACKGROUND_IMAGES = [
   "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=3870&auto=format&fit=crop", // Gym/Fitness
@@ -489,33 +489,12 @@ export const initialClassData: ClassDataMap = {
   }
 };
 
-export const initialClassificationData: ClassificationDataMap = {
-  "611": {
-    name: "Ranking Geral",
-    students: [
-      { position: "1º", name: "Isabella Teixeira", points: "5", wins: 4, losses: 0, draws: 2 },
-      { position: "2º", name: "Davi Lucca", points: "4,5", wins: 4, losses: 0, draws: 1 },
-      { position: "3º", name: "Alice Caldeira", points: "4", wins: 3, losses: 1, draws: 2 },
-    ]
-  }
-};
-
 export const mockUserProfile: UserProfile = {
   id: "user_123",
   name: "André Brito",
   email: "andre.brito@escola.com",
-  elo: 1450,
-  gamesPlayed: 124,
-  wins: 68,
-  losses: 42,
-  draws: 14,
   joinedAt: "Fev 2024",
   avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Andre",
-  recentGames: [
-    { id: '1', date: '12/mar', opponent: 'Carlos Silva', result: 'win', moves: 24 },
-    { id: '2', date: '10/mar', opponent: 'Davi Lucca', result: 'loss', moves: 32 },
-    { id: '3', date: '08/mar', opponent: 'Ana Clara', result: 'draw', moves: 45 },
-  ],
   achievements: [
     { id: '1', title: 'Mestre da Estratégia', description: 'Venceu 50 partidas', icon: '🏆' },
     { id: '2', title: 'Foco Total', description: 'Fez 100% nas atividades', icon: '🎯' },

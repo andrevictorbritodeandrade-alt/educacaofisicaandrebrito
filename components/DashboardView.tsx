@@ -1,12 +1,35 @@
-import React from 'react';
-import { ViewState } from '../types';
+import React, { useMemo } from 'react';
+import { ViewState, ClassDataMap, ClassData } from '../types';
 
 interface DashboardViewProps {
   setView: (view: ViewState) => void;
+  classData: ClassDataMap;
 }
 
-export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
+export const DashboardView: React.FC<DashboardViewProps> = ({ setView, classData }) => {
   
+  // Quick stats calculation
+  const stats = useMemo(() => {
+    const classes = Object.values(classData) as ClassData[];
+    let totalStudents = 0;
+    let totalPresents = 0;
+    let totalPossible = 0;
+
+    classes.forEach(c => {
+      totalStudents += c.students?.length || 0;
+      c.students?.forEach(s => {
+        if (s.attendance) {
+          totalPresents += Object.values(s.attendance).filter(v => v === 'P').length;
+          totalPossible += Object.keys(s.attendance).length;
+        }
+      });
+    });
+
+    const avgAttendance = totalPossible > 0 ? Math.round((totalPresents / totalPossible) * 100) : 0;
+
+    return { totalStudents, totalClasses: classes.length, avgAttendance };
+  }, [classData]);
+
   const menuCards = [
     {
       id: 'classes',
@@ -68,6 +91,31 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setView }) => {
 
   return (
     <div className="animate-fade-in space-y-4 md:space-y-8 pb-20 mt-1 md:mt-2">
+      {/* Real-time Stats Panel */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-blue-600/20 backdrop-blur-xl border border-blue-500/30 p-4 rounded-xl flex items-center gap-4 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
+            <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-2xl shadow-lg">👥</div>
+            <div>
+              <p className="text-[10px] font-black uppercase text-blue-300 tracking-[0.2em] mb-0.5">Total de Alunos</p>
+              <p className="text-2xl font-black text-white">{stats.totalStudents}</p>
+            </div>
+          </div>
+          <div className="bg-purple-600/20 backdrop-blur-xl border border-purple-500/30 p-4 rounded-xl flex items-center gap-4 shadow-[0_0_15px_rgba(147,51,234,0.1)]">
+            <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center text-2xl shadow-lg">📊</div>
+            <div>
+              <p className="text-[10px] font-black uppercase text-purple-300 tracking-[0.2em] mb-0.5">Média de Assiduidade</p>
+              <p className="text-2xl font-black text-white">{stats.avgAttendance}%</p>
+            </div>
+          </div>
+          <div className="bg-emerald-600/20 backdrop-blur-xl border border-emerald-500/30 p-4 rounded-xl flex items-center gap-4 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+            <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center text-2xl shadow-lg">🏫</div>
+            <div>
+              <p className="text-[10px] font-black uppercase text-emerald-300 tracking-[0.2em] mb-0.5">Turmas Ativas</p>
+              <p className="text-2xl font-black text-white">{stats.totalClasses}</p>
+            </div>
+          </div>
+      </div>
+
       {/* Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {menuCards.map((card) => (

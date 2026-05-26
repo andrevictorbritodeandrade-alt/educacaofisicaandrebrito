@@ -14,7 +14,7 @@ export const AiAssistant: React.FC = () => {
     { 
       id: 'welcome', 
       role: 'model', 
-      text: 'Olá, Professor! Sou seu Grande Mestre Assistente. ♟️\n\nPosso ajudar a criar planos de aula, explicar aberturas (como a Italiana ou Espanhola), sugerir exercícios táticos ou tirar dúvidas de regras. O que vamos fazer hoje?' 
+      text: 'Olá, Professor! Sou seu Assistente de Gestão Escolar. 📚\n\nPosso ajudar com o Calendário SEEDUC-RJ 2026, planejar aulas de Educação Física, sugerir dinâmicas decoloniais ou organizar seu Diário de Classe. O que vamos fazer hoje?' 
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,19 +39,22 @@ export const AiAssistant: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
       const systemInstruction = `
-        Você é o "Grande Mestre Assistente", uma IA especialista em Xadrez e Pedagogia, assistente do Clube do Xadrez.
+        Você é o "Assistente de Gestão SEEDUC", uma IA especialista em gestão escolar, pedagogia de Educação Física e legislação educacional (Leis 10.639/03 e 11.645/08).
         
         Suas capacidades:
-        1. Conhecimento Absoluto: Você conhece todas as aberturas (Espanhola, Italiana, Siciliana, Gambitos, etc.), defesas, finais, táticas e história do xadrez.
-        2. Pedagogo: Você cria planos de aula detalhados (Objetivo, Duração, Material, Passo a Passo).
-        3. Criativo: Você inventa atividades lúdicas para crianças (ex: "Xadrez humano", "Batalha de Peões").
+        1. Calendário SEEDUC-RJ 2026: Você conhece a Resolução SEEDUC Nº 6392/2025.
+           - 1º Tri: 05/02 a 18/05. COC 1: 19-21/05.
+           - 2º Tri: 19/05 a 04/09. COC 2: 08-10/09.
+           - 3º Tri: 08/09 a 22/12. COC 3: 09-11/12.
+           - Total: 206 dias letivos.
+        2. Pedagogo Decolonial: Você cria planos de aula focados em cultura corporal, lutas e jogos de matriz africana/indígena.
+        3. Organizador: Ajuda a estruturar o Diário de Classe e relatórios de assiduidade.
         
         Diretrizes:
         - Responda sempre em Português do Brasil (PT-BR).
-        - Use formatação clara (listas, negrito para termos importantes).
-        - Seja encorajador e profissional.
-        - Se o usuário pedir uma aula, estruture com: Título, Nível, Objetivos e Desenvolvimento.
-        - Se perguntarem sobre uma abertura, explique os lances iniciais e as ideias principais.
+        - Use formatação clara (listas, negrito para datas e termos importantes).
+        - Seja encorajador, pragmático e profissional.
+        - Se o usuário pedir um plano de aula, use a estrutura de Módulos (Saúde, Território, Cultura, Lutas).
       `;
 
       // Construct history for context
@@ -111,10 +114,10 @@ export const AiAssistant: React.FC = () => {
 
   // Quick Action Chips
   const quickActions = [
-    "Criar aula sobre o Roque",
-    "Explique a Abertura Italiana",
-    "Atividade lúdica para iniciantes",
-    "Exercício de Mate em 1"
+    "Plano de Aula: Luta Africana",
+    "Datas do 2º Trimestre",
+    "Dinâmica sobre Mídia e Corpo",
+    "Resumo da Resolução 6392/2025"
   ];
 
   const handleQuickAction = (text: string) => {
@@ -152,8 +155,8 @@ export const AiAssistant: React.FC = () => {
                  🤖
                </div>
                <div>
-                 <h3 className="text-white font-bold text-sm md:text-base">Grande Mestre IA</h3>
-                 <p className="text-indigo-200 text-xs">Assistente Pedagógico</p>
+                 <h3 className="text-white font-bold text-sm md:text-base">Assistente SEEDUC</h3>
+                 <p className="text-indigo-200 text-xs">Gestão & Pedagogia</p>
                </div>
             </div>
             <button 
@@ -221,7 +224,7 @@ export const AiAssistant: React.FC = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyPress}
-                placeholder="Ex: Crie uma aula sobre Torres..."
+                placeholder="Ex: Crie uma aula sobre Shisima..."
                 className="w-full p-3 pr-10 bg-slate-100 border-0 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none text-slate-700 text-sm max-h-32 min-h-[50px] custom-scrollbar"
                 rows={1}
                 style={{ minHeight: '44px' }}

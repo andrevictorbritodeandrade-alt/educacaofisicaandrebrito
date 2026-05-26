@@ -559,7 +559,7 @@ export const PlanoAnualPE: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                       return (
                         <td key={idx} className="p-2 border-r border-gray-200 bg-slate-50 w-[220px] min-w-[220px] max-w-[220px]">
                           <div className="w-full h-24 flex items-center justify-center p-3 rounded-xl bg-slate-200/50 text-slate-500 font-black uppercase tracking-widest text-[10px] text-center border-2 border-dashed border-slate-300">
-                            {day.title}
+                            {(day as any).title}
                           </div>
                         </td>
                       );

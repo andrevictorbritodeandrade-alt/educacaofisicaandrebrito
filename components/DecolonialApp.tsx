@@ -687,8 +687,9 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
 
   // --- TELA PLAYER DE SLIDES (Estilo Datashow de Alto Contraste) ---
   const SlidePlayer = () => {
-    const slides = selectedAulaData === 'altinha-futvolei' ? ALTINHA_FUTVOLEI_SLIDES : (selectedAulaData ? slidesData[selectedAulaData] : null);
+    const slides = selectedAulaData === 'altinha-futvolei' ? ALTINHA_FUTVOLEI_SLIDES : (selectedAulaData ? (slidesData as any)[selectedAulaData] : null);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [showDica, setShowDica] = useState(false);
 
     // Navegação Teclado
     useEffect(() => {
@@ -707,31 +708,40 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
     const prevSlide = () => { setCurrentIndex((prev) => Math.max(prev - 1, 0)); setShowDica(false); };
     const handlePrint = () => { window.print(); };
 
-    const slideAtual = slides[currentIndex];
+    const slideAtual: any = slides[currentIndex];
 
     // Renderização dos Tipos de Slide Visual Limpo
     const renderSlideContent = () => {
-      switch (slideAtual.tipo) {
+      // Map legacy "tipo" to "type" from data
+      const slideType = slideAtual.type || slideAtual.tipo;
+
+      switch (slideType) {
         case 'capa':
+        case 'hero':
           return (
             <div className="w-full h-full flex flex-col items-center justify-center text-center p-6 md:p-12 bg-slate-950 min-h-[450px]">
               <h1 className="text-4xl md:text-7xl font-black text-white tracking-tighter mb-6 uppercase leading-tight">
-                {slideAtual.titulo}
+                {slideAtual.title || slideAtual.titulo}
               </h1>
               <p className="text-xl md:text-4xl font-medium text-amber-400">
-                {slideAtual.subtitulo}
+                {slideAtual.subtitle || slideAtual.subtitulo}
               </p>
             </div>
           );
         
+        case 'texto':
         case 'texto_simples':
+        case 'list':
           return (
             <div className="w-full h-full flex flex-col justify-center p-6 md:p-16 bg-[#0B1120] min-h-[450px]">
               <h2 className="text-3xl md:text-5xl font-black text-emerald-400 mb-8 border-l-8 border-emerald-500 pl-4">
-                {slideAtual.titulo}
+                {slideAtual.title || slideAtual.titulo}
               </h2>
+              {slideAtual.content && (
+                <p className="text-2xl md:text-3xl font-bold text-slate-200 mb-6">{slideAtual.content}</p>
+              )}
               <ul className="space-y-6 max-w-5xl">
-                {slideAtual.topicos?.map((topico, idx) => (
+                {(slideAtual.points || slideAtual.topicos)?.map((topico: string, idx: number) => (
                   <li key={idx} className="text-xl md:text-3xl font-bold text-slate-200 flex items-start gap-4 leading-tight">
                     <span className="text-white mt-1">»</span> {topico}
                   </li>
@@ -744,18 +754,27 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
           return (
             <div className="w-full h-full flex flex-col items-center justify-center p-6 md:p-12 text-center bg-[#0B1120] min-h-[450px]">
                <h2 className="text-4xl md:text-6xl font-black text-white leading-tight uppercase max-w-6xl">
-                 {slideAtual.texto}
+                 {slideAtual.texto || slideAtual.content}
                </h2>
-               {slideAtual.subtexto && (
+               {(slideAtual.subtexto || slideAtual.subtitle) && (
                  <p className="mt-8 text-2xl md:text-4xl text-emerald-400 font-bold border-b-4 border-emerald-400 pb-2">
-                   {slideAtual.subtexto}
+                   {slideAtual.subtexto || slideAtual.subtitle}
                  </p>
                )}
             </div>
           );
 
         default:
-          return <div className="text-white text-3xl">Erro no formato do slide</div>;
+          return (
+            <div className="w-full h-full flex flex-col items-center justify-center p-6 md:p-12 text-center bg-[#0B1120] min-h-[450px]">
+              <h2 className="text-3xl md:text-5xl font-black text-emerald-400 mb-8">
+                {slideAtual.title || slideAtual.titulo}
+              </h2>
+              <p className="text-xl md:text-3xl font-bold text-slate-200">
+                {slideAtual.content || slideAtual.texto}
+              </p>
+            </div>
+          );
       }
     };
 

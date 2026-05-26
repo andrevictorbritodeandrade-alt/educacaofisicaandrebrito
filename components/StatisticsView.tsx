@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { subscribeToDashboard, seedDatabase } from '../services/firebaseService';
 import { DashboardCardData, ClassDataMap, ClassData } from '../types';
 import { initialClassData } from '../constants';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
@@ -10,7 +9,6 @@ interface StatisticsViewProps {
 }
 
 export const StatisticsView: React.FC<StatisticsViewProps> = ({ classData, onBack }) => {
-  const [cards, setCards] = useState<DashboardCardData[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Drill Down State for History View
@@ -108,23 +106,29 @@ export const StatisticsView: React.FC<StatisticsViewProps> = ({ classData, onBac
   }, [classData]);
 
   useEffect(() => {
-    seedDatabase();
-    const unsubscribe = subscribeToDashboard((data) => {
-      setCards(data);
-      setLoading(false);
-    });
-    return () => unsubscribe();
+    setLoading(false);
   }, []);
 
-  const getIcon = (iconName?: string) => {
-    switch(iconName) {
-      case 'users': return <span className="text-2xl">👥</span>;
-      case 'book': return <span className="text-2xl">📚</span>;
-      case 'trophy': return <span className="text-2xl">🏆</span>;
-      case 'door': return <span className="text-2xl">🚪</span>;
+  const getIcon = (id: string) => {
+    switch(id) {
+      case 'total_students': return <span className="text-2xl">👥</span>;
+      case 'active_classes': return <span className="text-2xl">📚</span>;
+      case 'today_presence': return <span className="text-2xl">✅</span>;
       default: return <span className="text-2xl">📊</span>;
     }
   };
+
+  const summaryCards = [
+    { id: 'total_students', title: 'Total de Alunos', value: realStats.students, trend: 'Cadastrados no sistema' },
+    { id: 'active_classes', title: 'Turmas Ativas', value: realStats.classes, trend: 'Total de turmas' },
+    { 
+      id: 'today_presence', 
+      title: 'Presença Hoje', 
+      value: realStats.todayTotal > 0 ? `${realStats.todayAttendance} / ${realStats.todayTotal}` : 'Sem aulas', 
+      trend: `Data: ${new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}` 
+    },
+    { id: 'avg_attendance', title: 'Média Global', value: `${classStats.length > 0 ? Math.round(classStats.reduce((acc, curr) => acc + curr.avgAttendance, 0) / classStats.length) : 0}%`, trend: 'Média de todas as turmas' },
+  ];
 
   // Helper to get all unique dates for a specific class
   const getUniqueDates = (cls: ClassData) => {
@@ -595,30 +599,7 @@ export const StatisticsView: React.FC<StatisticsViewProps> = ({ classData, onBac
         <div className="text-center py-10 text-white font-medium">Carregando dados...</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {cards.map((card) => {
-            // SUBSTITUIÇÃO DINÂMICA DOS VALORES
-            let displayValue = card.value;
-            let displayTrend = card.trend;
-
-            if (card.id === 'total_students') {
-               displayValue = realStats.students;
-               displayTrend = 'Calculado em tempo real';
-            }
-            if (card.id === 'active_classes') {
-               displayValue = realStats.classes;
-               displayTrend = 'Turmas cadastradas';
-            }
-            if (card.id === 'next_event') {
-               const today = new Date();
-               const day = today.getDate().toString().padStart(2, '0');
-               const month = (today.getMonth() + 1).toString().padStart(2, '0');
-               const todayStr = `${day}/${month}`;
-               
-               displayValue = realStats.todayTotal > 0 ? `${realStats.todayAttendance} / ${realStats.todayTotal}` : 'Sem aulas';
-               displayTrend = `Presença Hoje (${todayStr})`;
-               card.title = 'Presença Hoje';
-            }
-
+          {summaryCards.map((card) => {
             return (
               <div key={card.id} className="glass-panel p-6 rounded-xl shadow-lg border border-white/50 relative hover:bg-slate-50 transition-all cursor-pointer" onClick={() => {
                 if (card.id === 'total_students') setViewMode('full_report');
@@ -626,14 +607,14 @@ export const StatisticsView: React.FC<StatisticsViewProps> = ({ classData, onBac
               }}>
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-slate-500 text-xs font-bold uppercase tracking-wider">{card.title}</h3>
-                  {getIcon(card.icon)}
+                  {getIcon(card.id)}
                 </div>
-                <p className={`text-2xl font-black text-slate-800 truncate ${card.type === 'status' ? (String(card.value).toLowerCase() === 'aberto' ? 'text-green-600' : 'text-red-500') : ''}`}>
-                  {displayValue}
+                <p className={`text-2xl font-black text-slate-800 truncate`}>
+                  {card.value}
                 </p>
-                {displayTrend && (
+                {card.trend && (
                   <div className="mt-4 flex items-center text-xs font-medium text-slate-500 bg-slate-100/50 inline-block px-2 py-1 rounded">
-                    {displayTrend}
+                    {card.trend}
                   </div>
                 )}
               </div>

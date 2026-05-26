@@ -1,6 +1,6 @@
 {
   "name": "EDUCAÇÃO FÍSICA - ANDRÉ BRITO",
-  "description": "",
+  "description": "Assistente de gestão escolar e diário de classe para o Calendário SEEDUC-RJ 2026, com foco em Educação Física e planejamento decolonial.",
   "requestFramePermissions": [
     "geolocation"
   ]

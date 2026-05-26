@@ -16,6 +16,7 @@ interface ClassesViewProps {
   selectedClassId: string | null;
   setSelectedClassId: (id: string | null) => void;
   onSave: (data: ClassDataMap) => Promise<void>;
+  syncStatus: 'synced' | 'saving' | 'error';
 }
 
 export const ClassesView: React.FC<ClassesViewProps> = ({ 
@@ -26,7 +27,8 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
   setSelectedGrade,
   selectedClassId,
   setSelectedClassId,
-  onSave
+  onSave,
+  syncStatus
 }) => {
   
   // Modals State
@@ -460,10 +462,14 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
           <div className="flex flex-col">
              <div className="flex items-center gap-3">
                <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Data da Chamada</p>
-               {isSaving ? (
-                 <span className="flex items-center text-[9px] font-black text-amber-500 animate-pulse">
+               {syncStatus === 'saving' ? (
+                 <span className="flex items-center text-[9px] font-black text-amber-500 animate-pulse bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
                    <svg className="animate-spin h-2.5 w-2.5 mr-1" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                    SINCRONIZANDO...
+                 </span>
+               ) : syncStatus === 'error' ? (
+                 <span className="flex items-center text-[9px] font-black text-red-500 bg-red-500/10 px-1.5 py-0.5 rounded border border-red-500/20">
+                   ERRO AO SINCRONIZAR
                  </span>
                ) : (
                  <span className="flex items-center text-[9px] font-black text-green-500 bg-green-500/10 px-1.5 py-0.5 rounded border border-green-500/20">
@@ -505,10 +511,10 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
            <button
              id="save-cloud-btn"
              onClick={handleManualSave}
-             disabled={isSaving}
+             disabled={syncStatus === 'saving'}
              className="px-4 h-10 flex items-center justify-center bg-red-600 text-white text-xs font-black uppercase rounded-xl shadow-lg hover:bg-red-700 transition-all transform active:scale-95 disabled:opacity-50"
            >
-              {isSaving ? (
+              {syncStatus === 'saving' ? (
                 <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
               ) : (
                 <>
