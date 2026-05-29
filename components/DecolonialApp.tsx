@@ -103,6 +103,17 @@ const slidesData: Record<string, Slide[]> = {
     },
     {
       tipo: 'texto_simples',
+      titulo: 'O que é Racismo? (Conceitos e Autores)',
+      topicos: [
+        'Silvio Almeida (Estrutural): Não é mera falha pessoal, mas um processo histórico e político enraizado no tecido social, econômico e jurídico.',
+        'Frantz Fanon (Cultural e Psíquico): Prática que desumaniza e aliena o colonizado, forçando-o a desejar e imitar os ideais coloniais e eurocêntricos.',
+        'Lélia Gonzalez (Por Denegação): O "neuroticismo" do racismo à brasileira, que simula harmonia social enquanto oculta e estigmatiza estéticas e saberes negros.',
+        'Visão Crítica: Uma engrenagem que estrutura quem tem poder de fala, espaços que ocupamos e o ideal do que é considerado belo.'
+      ],
+      dicaProfessor: 'Explique que o racismo é multidimensional. Use o quadro para esquematizar as três dimensões de Silvio Almeida: Individual, Institucional e Estrutural.'
+    },
+    {
+      tipo: 'texto_simples',
       titulo: 'Dinâmica de Hoje',
       topicos: [
         'Leitura Acadêmica Coletiva',
