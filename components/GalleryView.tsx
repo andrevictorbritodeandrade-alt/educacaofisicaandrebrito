@@ -132,17 +132,17 @@ export const GalleryView: React.FC<GalleryViewProps> = ({ onBack, data, setData 
       </div>
 
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-white/10 w-full max-w-md rounded-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-[#fdfaf6] border border-slate-300 w-full max-w-md rounded-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
             <div className="p-6 space-y-4">
-              <h3 className="text-xl font-bold text-white">Adicionar à Galeria</h3>
+              <h3 className="text-xl font-bold text-slate-800 uppercase">Adicionar à Galeria</h3>
               
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase mb-1">Título</label>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Título</label>
                   <input 
                     type="text" 
-                    className="w-full bg-slate-800 border border-white/10 rounded-lg p-3 text-white outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-white border border-slate-300 rounded-lg p-3 text-slate-800 outline-none focus:ring-2 focus:ring-sky-500"
                     placeholder="Ex: Foto da Turma 601"
                     value={newTitle}
                     onChange={e => setNewTitle(e.target.value)}
@@ -150,7 +150,7 @@ export const GalleryView: React.FC<GalleryViewProps> = ({ onBack, data, setData 
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase mb-1">Imagem</label>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Imagem</label>
                   <div className="flex flex-col space-y-2">
                     <input 
                       type="file" 
@@ -161,24 +161,24 @@ export const GalleryView: React.FC<GalleryViewProps> = ({ onBack, data, setData 
                     />
                     <label 
                       htmlFor="gallery-file-input"
-                      className="w-full bg-slate-800 border-2 border-dashed border-white/10 rounded-lg p-4 text-center cursor-pointer hover:border-blue-500/50 transition-colors"
+                      className="w-full bg-white border-2 border-dashed border-slate-300 rounded-lg p-4 text-center cursor-pointer hover:border-sky-500/50 transition-colors"
                     >
                       {newUrl ? (
-                        <div className="flex items-center justify-center space-x-2 text-green-400">
+                        <div className="flex items-center justify-center space-x-2 text-green-700">
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                           <span className="text-sm font-medium">Imagem selecionada</span>
                         </div>
                       ) : (
-                        <div className="flex flex-col items-center space-y-1 text-slate-400">
+                        <div className="flex flex-col items-center space-y-1 text-slate-505">
                           <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                           <span className="text-sm">Clique para escolher foto</span>
                         </div>
                       )}
                     </label>
-                    <div className="text-center text-slate-500 text-[10px]">OU COLE UMA URL ABAIXO</div>
+                    <div className="text-center text-slate-400 text-[10px]">OU COLE UMA URL ABAIXO</div>
                     <input 
                       type="text" 
-                      className="w-full bg-slate-800 border border-white/10 rounded-lg p-2 text-xs text-white outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-sky-500"
                       placeholder="https://exemplo.com/imagem.png"
                       value={newUrl}
                       onChange={e => setNewUrl(e.target.value)}
@@ -187,9 +187,9 @@ export const GalleryView: React.FC<GalleryViewProps> = ({ onBack, data, setData 
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase mb-1">Descrição (Opcional)</label>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Descrição (Opcional)</label>
                   <textarea 
-                    className="w-full bg-slate-800 border border-white/10 rounded-lg p-3 text-white outline-none focus:ring-2 focus:ring-blue-500 h-20 resize-none"
+                    className="w-full bg-white border border-slate-300 rounded-lg p-3 text-slate-800 outline-none focus:ring-2 focus:ring-sky-500 h-20 resize-none"
                     placeholder="Breve descrição da foto..."
                     value={newDesc}
                     onChange={e => setNewDesc(e.target.value)}
@@ -200,13 +200,13 @@ export const GalleryView: React.FC<GalleryViewProps> = ({ onBack, data, setData 
               <div className="flex gap-3 pt-2">
                 <button 
                   onClick={() => setIsAddModalOpen(false)}
-                  className="flex-1 px-4 py-3 rounded-xl font-bold text-slate-400 hover:bg-white/5 transition-colors"
+                  className="flex-1 px-4 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-200 transition-colors"
                 >
                   Cancelar
                 </button>
                 <button 
                   onClick={handleAddImage}
-                  className="flex-1 px-4 py-3 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-lg transition-colors"
+                  className="flex-1 px-4 py-3 rounded-xl font-bold bg-sky-600 text-white hover:bg-sky-700 shadow shadow-sky-600/30 transition-colors"
                 >
                   Adicionar
                 </button>

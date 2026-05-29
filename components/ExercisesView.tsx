@@ -562,15 +562,15 @@ export const ExercisesView: React.FC<ExercisesViewProps> = ({ onBack }) => {
       <div className="animate-fade-in max-w-5xl mx-auto pb-20">
         <button 
           onClick={onBack}
-          className="mb-6 px-5 py-2.5 bg-slate-900/80 backdrop-blur-md rounded-full text-white font-bold transition-all shadow-lg hover:bg-slate-800 flex items-center w-fit active:scale-95 border border-white/10"
+          className="mb-6 px-5 py-2.5 bg-white hover:bg-slate-200 border border-slate-300 text-slate-800 rounded-full font-bold transition-all shadow-md flex items-center w-fit active:scale-95"
         >
           <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
           Voltar ao Menu
         </button>
 
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-black text-white uppercase tracking-tight drop-shadow-md">Treino Tático</h2>
-          <p className="text-slate-200 mt-2 font-medium">Selecione uma categoria para praticar</p>
+          <h2 className="text-3xl font-black text-slate-800 uppercase tracking-tight">Treino Tático</h2>
+          <p className="text-slate-600 mt-2 font-medium">Selecione uma categoria para praticar</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
@@ -603,13 +603,13 @@ export const ExercisesView: React.FC<ExercisesViewProps> = ({ onBack }) => {
       <div className="flex items-center gap-4 mb-6">
         <button 
           onClick={() => setViewState('categories')}
-          className="flex items-center px-4 py-2 bg-slate-900/80 backdrop-blur rounded-full text-white font-bold transition shadow-md hover:bg-slate-800"
+          className="flex items-center px-4 py-2 bg-white hover:bg-slate-200 border border-slate-300 text-slate-800 rounded-full font-bold transition shadow-sm"
         >
           <svg className="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
           Categorias
         </button>
-        <span className="text-white/50">/</span>
-        <span className="text-white font-bold uppercase tracking-wider">
+        <span className="text-slate-400">/</span>
+        <span className="text-slate-800 font-bold uppercase tracking-wider">
           {categories.find(c => c.id === selectedCategory)?.title}
         </span>
       </div>

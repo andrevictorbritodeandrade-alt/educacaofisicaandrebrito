@@ -89,15 +89,15 @@ export const EmentaPrintModal: React.FC<EmentaPrintModalProps> = ({ isOpen, onCl
        <div className="flex flex-col h-full w-full max-w-4xl bg-white rounded-xl overflow-hidden shadow-2xl">
           
           {/* Header Toolbar */}
-          <div className="bg-slate-900 text-white p-4 flex justify-between items-center shadow-md z-10 shrink-0">
+          <div className="bg-[#f4ece0] text-slate-800 p-4 flex justify-between items-center shadow-md z-10 shrink-0 border-b border-slate-300">
              <div>
-               <h2 className="text-xl font-bold">Imprimir Plano de Curso</h2>
-               <p className="text-xs text-slate-400">Layout Retrato (A4)</p>
+               <h2 className="text-xl font-bold uppercase font-sans">Imprimir Plano de Curso</h2>
+               <p className="text-xs text-slate-500">Layout Retrato (A4)</p>
              </div>
              <div className="flex space-x-3">
                <button 
                  onClick={onClose} 
-                 className="px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition"
+                 className="px-4 py-2 text-slate-600 hover:text-slate-900 hover:bg-slate-200 rounded-lg transition"
                >
                  Cancelar
                </button>

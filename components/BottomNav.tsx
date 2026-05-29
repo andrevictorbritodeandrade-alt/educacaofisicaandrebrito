@@ -7,11 +7,11 @@ interface BottomNavProps {
 
 export const BottomNav: React.FC<BottomNavProps> = ({ currentView, setView }) => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-xl border-t border-white/10 h-16 flex items-center justify-around px-4 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] md:hidden">
+    <div className="fixed bottom-0 left-0 right-0 bg-[#f4ece0] border-t border-slate-300 h-16 flex items-center justify-around px-4 z-40 shadow-[0_-5px_15px_rgba(0,0,0,0.05)] md:hidden">
       <button 
         onClick={() => setView('schedule')}
         className={`flex flex-col items-center justify-center gap-1 flex-1 py-1 transition-all ${
-          currentView === 'schedule' ? 'text-blue-500' : 'text-slate-600'
+          currentView === 'schedule' ? 'text-sky-600' : 'text-slate-500'
         }`}
       >
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -23,7 +23,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ currentView, setView }) =>
       <button 
         onClick={() => setView('classes')}
         className={`flex flex-col items-center justify-center gap-1 flex-1 py-1 transition-all rounded-xl ${
-          currentView === 'classes' ? 'bg-white/5 text-blue-500 shadow-inner' : 'text-slate-600'
+          currentView === 'classes' ? 'bg-slate-300/50 text-sky-600 shadow-inner' : 'text-slate-500'
         }`}
       >
         <div className="relative">

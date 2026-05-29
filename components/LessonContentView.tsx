@@ -448,9 +448,9 @@ export const LessonContentView: React.FC<LessonContentViewProps> = ({ onBack }) 
               onChange={(e) => setFilterClass(e.target.value)}
               className="bg-transparent border-none text-slate-700 text-xs font-bold uppercase tracking-widest block w-full outline-none cursor-pointer"
             >
-              <option value="ALL">Todas as Turmas</option>
+              <option key="all-classes-opt" value="ALL">Todas as Turmas</option>
               {currentClasses.map(c => (
-                <option key={c.id} value={c.id}>{c.name}</option>
+                <option key={`class-filter-opt-${c.id}`} value={c.id}>{c.name}</option>
               ))}
             </select>
           </div>

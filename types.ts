@@ -1,5 +1,5 @@
 
-export type ViewState = 'home' | 'statistics' | 'classes' | 'profile' | 'ementa' | 'plano' | 'lesson-content' | 'schedule' | 'gallery' | 'assignments' | 'biblioteca' | 'register-activities' | 'decolonial' | 'calendar';
+export type ViewState = 'home' | 'statistics' | 'classes' | 'profile' | 'ementa' | 'plano' | 'lesson-content' | 'schedule' | 'gallery' | 'assignments' | 'biblioteca' | 'register-activities' | 'decolonial' | 'calendar' | 'daily-activities';
 
 export interface UserProfile {
   id: string;
@@ -34,6 +34,14 @@ export interface Assignment {
   dueDate: string;
 }
 
+export interface DailyActivity {
+  id: string;
+  date: string; // ISO string
+  plannedActivity: string;
+  actualActivity: string;
+  observations: string;
+}
+
 export interface ClassData {
   id: string;
   name: string;
@@ -41,6 +49,7 @@ export interface ClassData {
   school: string; 
   students: Student[];
   assignments?: Assignment[];
+  dailyActivities?: DailyActivity[];
   schedule?: string;
   days?: string[];
 }

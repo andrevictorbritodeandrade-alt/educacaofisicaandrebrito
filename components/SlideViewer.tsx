@@ -27,7 +27,7 @@ export const SlideViewer: React.FC<{ onClose: () => void, slideType?: 'corpo-mid
       <div className="shrink-0 flex justify-between items-center p-4 bg-[#b3e5fc] border-b border-[#81d4fa]">
         <h1 className="text-xl font-bold font-sans tracking-wider uppercase">{slideType === 'altinha-futvolei' ? 'Altinha & Futevôlei' : 'Debate: Corpo e Mídia'}</h1>
         <div className="flex items-center gap-4">
-            <span className="font-mono text-lg">slide {currentSlide + 1} / {slides.length}</span>
+            <span className="font-bold text-lg">slide {currentSlide + 1} / {slides.length}</span>
             <button onClick={onClose} className="p-2 hover:bg-[#81d4fa] rounded-full"><X/></button>
         </div>
       </div>

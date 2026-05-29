@@ -1,123 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { BookOpen, Presentation, ChevronLeft, ChevronRight, Home, Info, Printer, LayoutGrid, Calendar } from 'lucide-react';
+import { motion } from 'motion/react';
+import { 
+  BookOpen, Presentation, ChevronLeft, ChevronRight, Home, 
+  Info, Printer, LayoutGrid, Calendar, Activity, Shield, 
+  Zap, Search, CheckCircle2 
+} from 'lucide-react';
 import { PE_PLAN } from '../data/planosPE';
 import { PlanoAnualPE } from './PlanoAnualPE';
-import { ALTINHA_FUTVOLEI_SLIDES } from '../data/corpoMidiaSlides';
+import { ALTINHA_FUTVOLEI_SLIDES, SLIDES_3TRI } from '../data/corpoMidiaSlides';
 
 // ================= DADOS DO CRONOGRAMA =================
-const cronograma = [
-  // ================= 2º TRIMESTRE =================
-  { 
-    data: '22/05', tri: '2º Tri', modulo: 'Módulo 1: Mídia e Racismo Invisível', titulo: 'Intro / Cultura Corporal', desc: 'O corpo na sociedade. Introdução à Decolonialidade.', trabalho: null, status: 'eja_concluido',
-    resumo: `🎯 **Objetivo da Aula:** Apresentar a disciplina e introduzir a base legal (Leis 10.639/03 e 11.645/08).\n\n🗣️ **O que falar/Dinâmica:**\n• Fazer a introdução da disciplina.\n• Apresentar o conceito de "Decolonização": explicar que vamos aprender a questionar a história contada apenas pelo ponto de vista do colonizador europeu.\n• Chegar na "ponta do iceberg" do racismo invisível nas mídias e no dia a dia.\n\n📜 **Amparo Legal:** Cumprimento do estudo da matriz formadora da sociedade brasileira (Art. 26-A, Lei 10.639/03).` 
-  },
-  { 
-    data: '29/05', tri: '2º Tri', modulo: 'Módulo 1: Mídia e Racismo Invisível', titulo: 'O Racismo Invisível', desc: 'O Padrão Estético e o apagamento. (Leitura de Artigo)', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Experiência acadêmica: leitura de artigo curto e debate sobre racismo velado.\n\n🗣️ **O que falar/Dinâmica:**\n• Levar cópias de um artigo curto (ex: coluna da Djamila Ribeiro ou um texto simples sobre "Branquitude na Mídia").\n• Leitura coletiva em sala.\n• Debate: Como o racismo invisível opera na escolha de atores para novelas, na publicidade e nos padrões do Instagram? Filtros de embelezamento são neutros?\n\n📜 **Amparo Legal:** Desconstrução de estereótipos prejudiciais e análise crítica da mídia.` 
-  },
-  { 
-    data: '05/06', tri: '2º Tri', modulo: 'Módulo 1: Mídia e Racismo Invisível', titulo: 'Racismo Recreativo', desc: 'O humor que oprime: Adilson Moreira e a piada "inofensiva".', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Introduzir o conceito de "Racismo Recreativo" (Adilson Moreira).\n\n🗣️ **O que falar/Dinâmica:**\n• Explicar que o racismo também age através do "humor".\n• A piada não é inofensiva: ela serve para manter minorias em posição de inferioridade sem que o opressor seja cobrado ("era só brincadeira").\n• Dar exemplos de programas de humor antigos e o bullying escolar disfarçado de brincadeira.` 
-  },
-  { 
-    data: '12/06', tri: '2º Tri', modulo: 'Módulo 2: O Racismo Estrutural', titulo: 'Fanon: Preto vs Negro', desc: 'Seminário de Leitura: "Pele Negra, Máscaras Brancas".', trabalho: 'passar', status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Diferenciar raça e identidade política e entender os danos psicológicos.\n\n🗣️ **O que falar/Dinâmica:**\n• Diferença pedagógica: "Preto" (cor) vs "Negro" (identidade política).\n• Ler um trecho de Frantz Fanon. Falar sobre a alienação colonial.\n\n⚠️ **LEMBRETE:** Passar o Trabalho Trimestral hoje (Colagem e reflexão sobre mídia e padrões)!` 
-  },
-  { 
-    data: '19/06', tri: '2º Tri', modulo: 'Módulo 2: O Racismo Estrutural', titulo: 'Cida Bento e a Branquitude', desc: 'O Racismo Estrutural nas instituições e no poder.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Explicar o Racismo Estrutural como um sistema de manutenção de privilégios.\n\n🗣️ **O que falar/Dinâmica:**\n• Apresentar o "Pacto Narcísico da Branquitude" (Cida Bento).\n• Mostrar como a estrutura da sociedade (leis, empresas, escolas) é feita para beneficiar o padrão eurocêntrico e excluir corpos negros e indígenas dos espaços de poder.\n\n📜 **Amparo Legal:** Compreensão das relações étnico-raciais para a formação de cidadãos atuantes.` 
-  },
-  { 
-    data: '26/06', tri: '2º Tri', modulo: 'Módulo 2: O Racismo Estrutural', titulo: 'Avaliação 1 (Parcial)', desc: 'Produção em sala: Fichamento ou Mapa Mental.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Avaliação formativa baseada nas leituras do trimestre.\n\n🗣️ **O que fazer em sala:**\n• Como na faculdade, pedir um "fichamento" ou mapa mental no caderno das ideias principais dos textos lidos e discutidos (Fanon, Racismo Recreativo, Cida Bento).\n• Passar vistando e dando a nota formativa.` 
-  },
-  { 
-    data: '03/07', tri: '2º Tri', modulo: 'Módulo 3: Decolonialidade e Origens', titulo: 'Decolonialidade', desc: 'Questionando a "descoberta" e a história oficial.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Mergulhar no conceito de decolonialidade através dos Povos Originários.\n\n🗣️ **O que falar/Dinâmica:**\n• O Brasil foi "descoberto" ou "invadido"? O que é uma visão decolonial της história?\n• O genocídio indígena justificado pelo "progresso" e pela "civilização".\n\n📜 **Amparo Legal:** Cumprimento da **Lei 11.645/08** (História e Cultura Indígena).` 
-  },
-  { 
-    data: '10/07', tri: '2º Tri', modulo: 'Módulo 3: Decolonialidade e Origens', titulo: 'Ailton Krenak', desc: 'Leitura: "Ideias para adiar o fim do mundo".', trabalho: 'recolher', status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Trazer a perspectiva filosófica indígena contemporânea.\n\n🗣️ **O que falar/Dinâmica:**\n• Leitura e debate de trechos de Ailton Krenak.\n• A visão capitalista (território é recurso) vs A visão indígena (o humano é o rio, a montanha).\n\n📥 **LEMBRETE:** Recolher o Trabalho Trimestral hoje!` 
-  },
-  { 
-    data: '31/07', tri: '2º Tri', modulo: 'Módulo 3: Decolonialidade e Origens', titulo: 'Direito à Cidade', desc: 'Acesso desigual a parques e praças. Centro x Periferia.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Analisar a geografia do lazer em Maricá sob a ótica racial.\n\n🗣️ **O que falar:**\n• Onde estão as melhores quadras e parques? \n• Como a segregação socioespacial afeta predominantemente a população negra e parda. O Direito à Cidade negado.` 
-  },
-  { 
-    data: '07/08', tri: '2º Tri', modulo: 'Módulo 4: Fechamento', titulo: 'Corpos Históricos e Luta', desc: 'A resistência indígena e negra. A capoeira e o quilombo.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Conectar as lutas pelo território.\n\n🗣️ **O que falar/Dinâmica:**\n• O Quilombo e as Aldeias como formas de organização de geografia de resistência.\n• A criminalização do corpo negro em movimento (a proibição histórica da Capoeira).` 
-  },
-  { 
-    data: '14/08', tri: '2º Tri', modulo: 'Módulo 4: Fechamento', titulo: 'Preparação P/ Debate', desc: 'Divisão de grupos e estruturação de argumentos.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Organizar a turma para a avaliação final do trimestre (modelo de seminário universitário).\n\n🗣️ **O que fazer:**\n• Passar o tema do debate: "Como as mídias e a estrutura urbana perpetuam o racismo (invisível e estrutural) e o apagamento dos povos originários?"\n• Ajudar os grupos a separarem os argumentos dos textos lidos.` 
-  },
-  { 
-    data: '21/08', tri: '2º Tri', modulo: 'Módulo 4: Fechamento', titulo: 'Avaliação 2', desc: 'Debate Final Acadêmico.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Realizar o debate avaliativo.\n\n🗣️ **O que fazer:**\n• Professor como mediador.\n• Avaliar o uso dos conceitos (Racismo Recreativo, Estrutural, Decolonialidade) no debate.\n• A avaliação oral atende a diferentes necessidades de aprendizagem.` 
-  },
-  { 
-    data: '28/08', tri: '2º Tri', modulo: 'Módulo 4: Fechamento', titulo: 'Devolutiva', desc: 'Notas finais e feedback coletivo.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Transparência com os alunos.\n\n🗣️ **O que fazer:**\n• Entregar as médias.\n• Comentários sobre a evolução da turma na leitura de textos acadêmicos.` 
-  },
-  { 
-    data: '04/09', tri: '2º Tri', modulo: 'Módulo 4: Fechamento', titulo: 'Encerramento', desc: 'Fechamento de Diário e Recuperação.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Burocracia final do trimestre.\n\n🗣️ **O que fazer:**\n• Atividade de recuperação paralela (ex: redação sobre Racismo Recreativo) para quem não atingiu a média.` 
-  },
-  
-  // ================= 3º TRIMESTRE =================
-  { 
-    data: '11/09', tri: '3º Tri', modulo: 'Módulo 1: O Corpo Trabalhador', titulo: 'Marx e a Exploração', desc: 'Seminário de Leitura: Alienação e o corpo.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Introduzir a visão de Karl Marx sobre a exploração física e mental.\n\n🗣️ **O que falar/Dinâmica:**\n• Leitura de um texto curto ou excerto sobre alienação e a mercantilização do corpo humano sob o capitalismo.\n• Diferença entre o desgaste do trabalho braçal (base da pirâmide, maioria negra) e o trabalho intelectual.` 
-  },
-  { 
-    data: '18/09', tri: '3º Tri', modulo: 'Módulo 1: O Corpo Trabalhador', titulo: 'Uberização e o Corpo', desc: 'A rotina dos entregadores e a geografia da exploração.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Atualizar Marx para o século 21.\n\n🗣️ **O que falar:**\n• A uberização do trabalho: longas jornadas, mortes no trânsito.\n• Quem são os rostos por trás dos capacetes de Ifood? (Jovens negros periféricos).\n• A geografia da exploração: sair da periferia de moto para servir o centro rico.` 
-  },
-  { 
-    data: '25/09', tri: '3º Tri', modulo: 'Módulo 1: O Corpo Trabalhador', titulo: 'Corpo e Deficiência', desc: 'Acessibilidade urbana, barreiras e o capacitismo.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Atender à Semana Estadual da Educação Paralímpica explorando a interseccionalidade.\n\n🗣️ **O que falar:**\n• O direito à cidade para pessoas com deficiência. \n• O conceito de Capacitismo: o preconceito e a discriminação estrutural contra Pessoas com Deficiência.` 
-  },
-  { 
-    data: '02/10', tri: '3º Tri', modulo: 'Módulo 2: Geopolítica no Esporte', titulo: 'Esporte no Tabuleiro', desc: 'A lógica do Xadrez global e o "Soft Power".', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Usar o Xadrez e a Geografia para explicar o power geopolítico.\n\n🗣️ **O que falar:**\n• A lógica do xadrez: controle do centro vs margens do tabuleiro.\n• Países centrais usam Olimpíadas/Esporte (Soft Power) para mostrar superioridade ao "Sul Global".` 
-  },
-  { 
-    data: '09/10', tri: '3º Tri', modulo: 'Módulo 2: Geopolítica no Esporte', titulo: 'A Hipocrisia da Bola', desc: 'Geopolítica, sanções esportivas e o Imperialismo.', trabalho: 'passar', status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Discutir o racismo geopolítico através do esporte.\n\n🗣️ **O que falar/Dinâmica:**\n• Leitura de artigo de opinião sobre geopolítica esportiva.\n• Rússia banida, mas EUA e Israel competem e sediam eventos. Por que o Ocidente dita a regra? O Imperialismo nas federações (FIFA/COI).\n\n⚠️ **LEMBRETE:** Passar o Trabalho Trimestral sobre este tema hoje!` 
-  },
-  { 
-    data: '16/10', tri: '3º Tri', modulo: 'Módulo 2: Geopolítica no Esporte', titulo: 'Semana Cultural (Prep)', desc: 'Dividir turmas para os projetos interescolares.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Preparações práticas para a Semana Cultural Interescolar.\n\n🗣️ **O que fazer:**\n• Organizar a sala para as atividades propostas pela SEEDUC.` 
-  },
-  { 
-    data: '23/10', tri: '3º Tri', modulo: 'Módulo 2: Geopolítica no Esporte', titulo: 'Avaliação 1', desc: 'Apresentações da Semana Cultural Interescolar.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Avaliar a participação na Semana Cultural.\n\n🗣️ **O que fazer:**\n• Acompanhar e dar nota para os alunos durante os projetos.` 
-  },
-  { 
-    data: '30/10', tri: '3º Tri', modulo: 'Módulo 3: Resistência e Cura', titulo: 'Soberania Africana', desc: 'Ibrahim Traoré, Pan-Africanismo e a África real.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Apresentar a geopolítica contemporânea africana de resistência.\n\n🗣️ **O que falar/Dinâmica:**\n• Quebrar o estereótipo da África miserável. A riqueza de seus recursos.\n• Ibrahim Traoré (Burkina Faso) e a expulsão do imperialismo francês.\n\n📜 **Amparo Legal:** Lei 10.639: "Estudo da História da África Contemporânea".` 
-  },
-  { 
-    data: '06/11', tri: '3º Tri', modulo: 'Módulo 3: Resistência e Cura', titulo: 'A Escrevivência', desc: 'Conceição Evaristo. Literatura como mapa do território.', trabalho: 'recolher', status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Conectar território e literatura negra urbana.\n\n🗣️ **O que falar/Dinâmica:**\n• Leitura de um texto/poema curto de Conceição Evaristo.\n• O conceito de "Escrevivência". Mulheres negras descrevendo a geografia da favela e a resistência.\n\n📥 **LEMBRETE:** Recolher o Trabalho Trimestral hoje!` 
-  },
-  { 
-    data: '13/11', tri: '3º Tri', modulo: 'Módulo 3: Resistência e Cura', titulo: 'Aquilombamento', desc: 'Esporte e artes urbanas (Slam) como espaços de cura.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Focar na cura, na rede de apoio e no Novembro Negro.\n\n🗣️ **O que falar:**\n• O Aquilombamento moderno: como os projetos comunitários (capoeira, times de várzea, Slam em Maricá) servem como refúgios para a saúde mental e proteção do corpo negro.` 
-  },
-  { 
-    data: '27/11', tri: '3º Tri', modulo: 'Módulo 3: Resistência e Cura', titulo: 'Avaliação 2', desc: 'Seminário Visual Final: "Meu Corpo, Minha Voz".', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Última avaliação integrando os conceitos do ano.\n\n🗣️ **O que fazer:**\n• Apresentação de um "Manifesto" visual ou oral resumindo as leituras acadêmicas e discussões do ano (Racismo, Imperialismo, Decolonialidade).` 
-  },
-  { 
-    data: '04/12', tri: '3º Tri', modulo: 'Módulo 3: Resistência e Cura', titulo: 'Fechamento 2', desc: 'Correção, médias e fechamento de diários.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Transparência e burocracia final.\n\n🗣️ **O que fazer:**\n• Dar as médias anuais.\n• Fechar o diário online da SEEDUC.` 
-  },
-  { 
-    data: '18/12', tri: '3º Tri', modulo: 'Módulo 3: Resistência e Cura', titulo: 'Despedida', desc: 'Último dia. Plantão para dependência.', trabalho: null, status: 'pendente',
-    resumo: `🎯 **Objetivo da Aula:** Fim de ciclo.\n\n🗣️ **O que fazer:**\n• Plantão final.` 
-  }
-];
+const cronograma = PE_PLAN['ilgch'] || [];
 
 // ================= DADOS DOS SLIDES DA AULA =================
 interface Slide {
@@ -132,6 +25,16 @@ interface Slide {
 }
 
 const slidesData: Record<string, Slide[]> = {
+  // AULAS 3º TRIMESTRE
+  '04/09': SLIDES_3TRI['Gênero, Sociedade e Esporte'].map(s => ({...s, tipo: s.type || 'texto'})),
+  '11/09': SLIDES_3TRI['O Apagamento Invisível'].map(s => ({...s, tipo: s.type || 'texto'})),
+  '18/09': SLIDES_3TRI['Divisão Sexista do Corpo'].map(s => ({...s, tipo: s.type || 'texto'})),
+  '02/10': SLIDES_3TRI['Hipersexualização e Espetáculo'].map(s => ({...s, tipo: s.type || 'texto'})),
+  '09/10': SLIDES_3TRI['Equidade Salarial no Esporte'].map(s => ({...s, tipo: s.type || 'texto'})),
+  '16/10': SLIDES_3TRI['As Pioneiras Olímpicas'].map(s => ({...s, tipo: s.type || 'texto'})),
+  '06/11': SLIDES_3TRI['Debate Integrador'].map(s => ({...s, tipo: s.type || 'texto'})),
+  '13/11': SLIDES_3TRI['Síntese Final'].map(s => ({...s, tipo: s.type || 'texto'})),
+
   // AULA 1: INTRO / CULTURA CORPORAL
   '22/05': [
     {
@@ -220,83 +123,154 @@ interface DecolonialAppProps {
 export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
   const [currentView, setCurrentView] = useState('menu');
   const [selectedAulaData, setSelectedAulaData] = useState<string | null>(null);
-  const [planningSubView, setPlanningSubView] = useState<null | '8ano' | 'ap' | 'gestao'>(null);
-  const [selectedAulaPlan, setSelectedAulaPlan] = useState<typeof cronograma[0] | null>(null);
+  const [planningSubView, setPlanningSubView] = useState<null | '8ano' | 'ap' | 'ap_sexta' | 'gestao'>(null);
+  const [selectedAulaPlan, setSelectedAulaPlan] = useState<any>(null);
 
   // --- TELA DE MENU ---
   const renderMenu = () => (
-    <div className="min-h-[500px] flex flex-col items-center justify-center p-6 text-white font-sans relative">
-      <button 
-        onClick={onBack} 
-        className="absolute top-2 left-2 flex items-center gap-2 text-slate-300 hover:text-white font-bold transition-colors bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-2 rounded-lg border border-white/20 shadow-lg text-sm"
+    <div className="relative min-h-[calc(100vh-100px)] -mx-3 md:-mx-6 -mt-3 md:-mt-6 overflow-hidden flex flex-col font-sans">
+      {/* Premium Atmospheric Background */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center brightness-[0.5]"
+        style={{ backgroundImage: "url('/src/assets/images/gestao_bg_premium_1779985655734.png')" }}
       >
-        <ChevronLeft size={16} /> Painel Principal
-      </button>
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]"></div>
+      </div>
 
-      <div className="max-w-4xl w-full text-center mt-12 md:mt-4">
-        <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4 text-emerald-400 uppercase drop-shadow-lg">
-          Gestão do Professor
-        </h1>
-        <p className="text-lg md:text-xl text-slate-300 mb-12 font-medium">Prof. André Brito</p>
+      {/* Glass Dock / Status Bar at top */}
+      <div className="relative z-20 flex justify-center mt-4">
+        <div className="bg-black/40 backdrop-blur-xl border border-white/10 px-6 py-2 rounded-full flex items-center gap-6 shadow-2xl">
+          <div className="flex gap-4 border-r border-white/10 pr-6 mr-1">
+            <Activity size={14} className="text-white/40" />
+            <Shield size={14} className="text-white/40" />
+            <Zap size={14} className="text-emerald-500 animate-pulse" />
+          </div>
+          <div className="flex gap-4">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+            <div className="w-1.5 h-1.5 rounded-full bg-white/20"></div>
+            <div className="w-1.5 h-1.5 rounded-full bg-white/20"></div>
+          </div>
+        </div>
+      </div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          <button 
-            onClick={() => setCurrentView('planejamento')}
-            className="flex flex-col items-center justify-center p-8 bg-slate-800/80 backdrop-blur-lg rounded-2xl border border-slate-700 hover:border-emerald-400 hover:-translate-y-1 transition-all shadow-xl group"
+      <div className="relative z-10 flex-grow flex flex-col items-center justify-center p-6 pb-24">
+        <button 
+          onClick={onBack} 
+          className="absolute top-4 left-4 md:top-8 md:left-8 flex items-center gap-2 text-white/70 hover:text-white font-bold transition-all bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl border border-white/10 shadow-2xl text-xs backdrop-blur-md uppercase tracking-widest"
+        >
+          <ChevronLeft size={16} /> Painel Principal
+        </button>
+
+        <div className="max-w-7xl w-full text-center mb-10 md:mb-16">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-5xl md:text-7xl font-black tracking-tighter mb-2 text-emerald-500 uppercase"
+            style={{ textShadow: '-2px -2px 0 #fff, 0 -2px 0 #fff, 2px -2px 0 #fff, 2px 0 0 #fff, 2px 2px 0 #fff, 0 2px 0 #fff, -2px 2px 0 #fff, -2px 0 0 #fff, 0 0 10px rgba(255,255,255,0.4)' }}
           >
-            <div className="w-16 h-16 bg-slate-900 text-emerald-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <BookOpen size={30} />
-            </div>
-            <h2 className="text-2xl font-black mb-1">Planejamento</h2>
-            <p className="text-slate-400 text-sm text-center">Cronograma oficial e resumos.</p>
-          </button>
-
-          <button 
-            onClick={() => setCurrentView('plano_anual_pe')}
-            className="flex flex-col items-center justify-center p-8 bg-slate-800/80 backdrop-blur-lg rounded-2xl border border-slate-700 hover:border-indigo-400 hover:-translate-y-1 transition-all shadow-xl group"
+            Gestão do Professor
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-xs md:text-sm text-white/50 font-black uppercase tracking-[0.5em]"
           >
-            <div className="w-16 h-16 bg-slate-900 text-indigo-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <Calendar size={30} />
-            </div>
-            <h2 className="text-2xl font-black mb-1">Plano Anual</h2>
-            <p className="text-slate-400 text-sm text-center">Gestão completa das aulas de PE.</p>
-          </button>
+            Prof. André Brito
+          </motion.p>
+        </div>
 
-          <button 
-            onClick={() => setCurrentView('repositorio_aulas')}
-            className="flex flex-col items-center justify-center p-8 bg-slate-800/80 backdrop-blur-lg rounded-2xl border border-slate-700 hover:border-blue-400 hover:-translate-y-1 transition-all shadow-xl group"
-          >
-            <div className="w-16 h-16 bg-slate-900 text-blue-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <Presentation size={30} />
-            </div>
-            <h2 className="text-2xl font-black mb-1">Aulas (Datashow)</h2>
-            <p className="text-slate-400 text-sm text-center">Slides para apresentação.</p>
-          </button>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full max-w-6xl">
+          {[
+            {
+              id: 'planejamento',
+              title: 'PLANEJAMENTO',
+              subtitle: 'Cronograma oficial e resumos.',
+              image: '/src/assets/images/planejamento_card_premium_1779985671332.png',
+              action: () => setCurrentView('planejamento'),
+              delay: 0.3
+            },
+            {
+              id: 'plano_anual',
+              title: 'PLANO ANUAL',
+              subtitle: 'Gestão completa das aulas de PE.',
+              image: '/src/assets/images/plano_anual_card_premium_1779985689437.png',
+              action: () => setCurrentView('plano_anual_pe'),
+              delay: 0.4
+            },
+            {
+              id: 'aulas',
+              title: 'AULAS (Datashow)',
+              subtitle: 'Slides para apresentação.',
+              image: '/src/assets/images/aulas_datashow_card_premium_1779985704354.png',
+              action: () => setCurrentView('repositorio_aulas'),
+              delay: 0.5
+            }
+          ].map((card) => (
+            <motion.div 
+              key={card.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: card.delay, duration: 0.6 }}
+              onClick={card.action}
+              className="group relative aspect-[4/3] rounded-[2rem] overflow-hidden cursor-pointer shadow-2xl border border-white/5 hover:border-emerald-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-emerald-500/10"
+            >
+              {/* Card Illustration */}
+              <div className="absolute inset-0 z-0">
+                <img 
+                  src={card.image} 
+                  alt={card.title} 
+                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90 group-hover:opacity-70 transition-opacity"></div>
+              </div>
+
+              {/* Status Badge */}
+              <div className="absolute top-6 right-6 z-20">
+                <div className="bg-emerald-500/20 backdrop-blur-md border border-emerald-500/30 p-1.5 rounded-full">
+                  <CheckCircle2 size={16} className="text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
+                </div>
+              </div>
+
+              {/* Content Overlay */}
+              <div className="absolute inset-x-0 bottom-0 p-8 z-10">
+                <h3 className="text-2xl md:text-3xl font-black text-white mb-2 leading-none tracking-tighter uppercase group-hover:text-emerald-400 transition-colors">
+                  {card.title}
+                </h3>
+                <p className="text-xs font-bold text-white/40 uppercase tracking-widest group-hover:text-white/70 transition-colors">
+                  {card.subtitle}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </div>
   );
 
   const renderPlanejamentoMenu = () => (
-    <div className="p-8 md:p-12 font-sans bg-slate-900 rounded-3xl min-h-[500px] flex flex-col items-center justify-center">
-      <button onClick={() => { setCurrentView('menu'); setPlanningSubView(null); }} className="mb-8 self-start flex items-center gap-2 text-slate-400 hover:text-white font-bold transition-colors">
+    <div className="p-8 md:p-12 font-sans bg-white/70 backdrop-blur-md rounded-3xl min-h-[500px] border border-slate-300 flex flex-col items-center justify-center">
+      <button onClick={() => { setCurrentView('menu'); setPlanningSubView(null); }} className="mb-8 self-start flex items-center gap-2 text-slate-600 hover:text-slate-900 font-bold transition-colors">
         <ChevronLeft size={20} /> Voltar ao Menu Decolonial
       </button>
 
-      <h2 className="text-3xl md:text-5xl font-black text-white mb-12 uppercase tracking-tighter">Escolha a Turma</h2>
+      <h2 className="text-3xl md:text-5xl font-black text-slate-800 mb-12 uppercase tracking-tighter">Escolha a Turma</h2>
       
-      <div className="grid md:grid-cols-4 gap-6 w-full max-w-5xl">
+      <div className="grid md:grid-cols-2 gap-6 w-full max-w-5xl">
         {[
-          {id: '8ano', label: '8º Ano'},
-          {id: 'ap', label: 'AP'},
-          {id: 'gestao', label: 'Gestão do Professor - ILGCH'}
-        ].map((turma) => (
+          { id: '8ano', label: '801 - 802 - 803', sub: 'Cordelia Paiva - 2ª feiras' },
+          { id: 'ap', label: 'AP 101', sub: 'CIEP 198 - 2ª feiras' },
+          { id: 'ap_sexta', label: 'AP 101 e 301', sub: 'CIEP 320 - 6ª feiras' },
+          { id: 'gestao', label: 'ILGCH 1001 - 1003 - 1007', sub: 'CIEP 476 - 6ª feiras' }
+        ].map((turma, idx) => (
           <button 
-            key={turma.id}
-            onClick={() => setPlanningSubView(turma.id as '8ano' | 'ap' | 'gestao')}
-            className="p-8 bg-slate-800 rounded-2xl border border-slate-700 hover:border-emerald-400 transition-all text-white font-black text-xl"
+            key={idx}
+            onClick={() => setPlanningSubView(turma.id as any)}
+            className="p-8 bg-white hover:bg-slate-100 transition-all text-slate-800 rounded-2xl border border-slate-300 hover:border-emerald-500 shadow-sm flex flex-col items-center gap-2 group"
           >
-            {turma.label}
+            <span className="font-black text-xl group-hover:text-emerald-600 transition-colors uppercase tracking-tighter">{turma.label}</span>
+            <span className="text-sm font-bold text-slate-500">{turma.sub}</span>
           </button>
         ))}
       </div>
@@ -308,22 +282,18 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
     // Para classes (8ano/ejanem), usamos os fields do PE_PLAN, para ILGCH usamos os do cronograma.
     const isPassar = aula.trabalho === 'passar';
     const isRecolher = aula.trabalho === 'recolher';
-    const isConcluido = aula.status === 'eja_concluido';
+    const isConcluido = aula.status === 'eja_concluido' || aula.status === 'concluido';
+    const hasDestaque = aula.destaque;
     
     let baseCardClasses = `flex flex-col bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1 relative cursor-pointer group `;
     
-    if (isPassar) baseCardClasses += ` ring-4 ring-amber-300 ring-offset-1`;
+    if (hasDestaque) baseCardClasses += ` ring-4 ring-amber-400 ring-offset-2 z-10 scale-[1.02] shadow-xl`;
+    else if (isPassar) baseCardClasses += ` ring-4 ring-amber-300 ring-offset-1`;
     else if (isRecolher) baseCardClasses += ` ring-4 ring-emerald-400 ring-offset-1`;
 
     return (
       <div key={index} onClick={() => setSelectedAulaPlan(aula)} className={baseCardClasses} title="Clique para ver o roteiro da aula">
         
-        {isConcluido && (
-          <div className="absolute top-0 right-0 m-2 z-10 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded shadow">
-            ✅ EJA OK | Falta 1001
-          </div>
-        )}
-
         <div className={`px-4 py-3 flex justify-between items-center ${corHeader} text-white`}>
           <span className="font-extrabold tracking-wide">Aula {index + 1}</span>
           <span className="flex items-center gap-1 font-bold bg-white/20 px-2 py-1 rounded-md text-sm backdrop-blur-sm shadow-sm">
@@ -457,20 +427,51 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
     );
   };
 
-  const renderPlanejamentoClasses = (turma: '8ano' | 'ap') => {
+  const renderPlanejamentoClasses = (turma: '8ano' | 'ap' | 'ap_sexta') => {
     const planos = PE_PLAN[turma] || [];
+    const tri1 = planos.filter(aula => aula.tri === '1º Tri');
     const tri2 = planos.filter(aula => aula.tri === '2º Tri');
     const tri3 = planos.filter(aula => aula.tri === '3º Tri');
     
+    let title = 'Planejamento: 8º Ano';
+    if (turma === 'ap') title = 'Planejamento: AP (Segundas)';
+    if (turma === 'ap_sexta') title = 'Planejamento: AP (Sextas)';
+
     return (
       <div className="p-4 md:p-8 font-sans text-slate-800 relative bg-slate-50 rounded-2xl shadow-2xl">
         <button onClick={() => setPlanningSubView(null)} className="mb-6 flex items-center gap-2 text-slate-600 hover:text-slate-900 font-bold bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200">
            <ChevronLeft size={20} /> Voltar para Seleção de Turma
         </button>
-        <h2 className="text-4xl font-black text-slate-900 mb-2 uppercase tracking-tighter">Planejamento: {turma === '8ano' ? '8º Ano' : 'AP'}</h2>
+        <h2 className="text-4xl font-black text-slate-900 mb-2 uppercase tracking-tighter">{title}</h2>
+        {turma === '8ano' && (
+          <div className="mb-8 p-5 bg-amber-50 border-l-4 border-amber-500 rounded-r-2xl shadow-sm border border-amber-100">
+            <p className="text-sm font-black text-amber-900 mb-1 uppercase tracking-widest flex items-center gap-2">
+              <Info size={16} /> ADAPTAÇÃO DE ESPAÇO FÍSICO
+            </p>
+            <p className="text-sm text-amber-800 leading-relaxed font-medium">
+              As aulas do 8º ano foram adaptadas para o formato teórico/dentro de sala por falta de espaço físico na escola. 
+              O deslocamento para a quadra da praça pública próxima não será realizado com turmas superiores a 30 alunos sem acompanhamento extra, 
+              visando a segurança dos estudantes e a responsabilidade docente em via pública.
+            </p>
+          </div>
+        )}
         <p className="text-slate-500 mb-12 font-medium">Cronograma de Educação Física e Cultura Corporal</p>
         
         <div className={`space-y-12 ${selectedAulaPlan ? 'blur-sm pointer-events-none' : ''} transition-all duration-300`}>
+          {tri1.length > 0 && (
+            <section>
+              <div className="flex items-center gap-4 mb-8">
+                <div className="h-10 w-3 bg-blue-500 rounded-full shadow-lg"></div>
+                <h2 className="text-3xl font-black text-slate-800 tracking-tight">1º Trimestre (Final)</h2>
+                <div className="flex-grow border-t-2 border-slate-200 border-dashed ml-4"></div>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {tri1.map((aula, idx) => renderCard(aula, idx, 'bg-blue-500', 'bg-blue-50 text-blue-800 border border-blue-200', turma))}
+              </div>
+            </section>
+          )}
+
           <section>
             <div className="flex items-center gap-4 mb-8">
               <div className="h-10 w-3 bg-blue-600 rounded-full shadow-lg"></div>
@@ -479,7 +480,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {tri2.map((aula, idx) => renderCard(aula, idx, 'bg-blue-600', 'bg-blue-50 text-blue-800 border border-blue-200', turma))}
+              {tri2.map((aula, idx) => renderCard(aula, idx + (tri1.length), 'bg-blue-600', 'bg-blue-50 text-blue-800 border border-blue-200', turma))}
             </div>
           </section>
           
@@ -511,7 +512,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
         {renderAulaModal()}
         {!planningSubView && renderPlanejamentoMenu()}
         {planningSubView === 'gestao' && renderPlanejamentoGestao()}
-        {(planningSubView === '8ano' || planningSubView === 'ap') && renderPlanejamentoClasses(planningSubView)}
+        {(planningSubView === '8ano' || planningSubView === 'ap' || planningSubView === 'ap_sexta') && renderPlanejamentoClasses(planningSubView)}
       </div>
     );
   };
@@ -587,25 +588,27 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
 
   // --- TELA SELEÇÃO AULAS ---
   const renderAulasMenu = () => (
-    <div className="p-8 md:p-12 font-sans bg-slate-900 rounded-3xl min-h-[500px] flex flex-col items-center justify-center">
-      <button onClick={() => setCurrentView('menu')} className="mb-8 self-start flex items-center gap-2 text-slate-400 hover:text-white font-bold transition-colors">
+    <div className="p-8 md:p-12 font-sans bg-white/70 backdrop-blur-md rounded-3xl min-h-[500px] border border-slate-300 flex flex-col items-center justify-center">
+      <button onClick={() => setCurrentView('menu')} className="mb-8 self-start flex items-center gap-2 text-slate-600 hover:text-slate-900 font-bold transition-colors">
         <ChevronLeft size={20} /> Voltar ao Menu Decolonial
       </button>
 
-      <h2 className="text-3xl md:text-5xl font-black text-white mb-12 uppercase tracking-tighter">Escolha a Turma</h2>
+      <h2 className="text-3xl md:text-5xl font-black text-slate-800 mb-12 uppercase tracking-tighter">Escolha a Turma</h2>
       
-      <div className="grid md:grid-cols-4 gap-6 w-full max-w-5xl">
+      <div className="grid md:grid-cols-2 gap-6 w-full max-w-5xl">
         {[
-          {id: '8ano', label: '8º Ano'},
-          {id: 'ap', label: 'AP'},
-          {id: 'gestao', label: 'Gestão do Professor - ILGCH'}
-        ].map((turma) => (
+          { id: '8ano', label: '801 - 802 - 803', sub: 'Cordelia Paiva - 2ª feiras' },
+          { id: 'ap', label: 'AP 101', sub: 'CIEP 198 - 2ª feiras' },
+          { id: 'ap_sexta', label: 'AP 101 e 301', sub: 'CIEP 320 - 6ª feiras' },
+          { id: 'gestao', label: 'ILGCH 1001 - 1003 - 1007', sub: 'CIEP 476 - 6ª feiras' }
+        ].map((turma, idx) => (
           <button 
-            key={turma.id}
-            onClick={() => { setPlanningSubView(turma.id as '8ano' | 'ap' | 'gestao'); setCurrentView('repositorio_aulas_lista'); }}
-            className="p-8 bg-slate-800 rounded-2xl border border-slate-700 hover:border-blue-400 transition-all text-white font-black text-xl"
+            key={idx}
+            onClick={() => { setPlanningSubView(turma.id as any); setCurrentView('repositorio_aulas_lista'); }}
+            className="p-8 bg-white hover:bg-slate-100 transition-all text-slate-800 rounded-2xl border border-slate-300 hover:border-blue-500 shadow-sm flex flex-col items-center gap-2 group"
           >
-            {turma.label}
+            <span className="font-black text-xl group-hover:text-blue-600 transition-colors uppercase tracking-tighter">{turma.label}</span>
+            <span className="text-sm font-bold text-slate-500">{turma.sub}</span>
           </button>
         ))}
       </div>
@@ -614,36 +617,36 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
 
   // --- TELA REPOSITÓRIO DE AULAS (Menu de Slides) ---
   const renderRepositorioAulas = () => (
-    <div className="p-6 md:p-12 font-sans bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl">
+    <div className="p-6 md:p-12 font-sans bg-white/70 backdrop-blur-md rounded-2xl border border-slate-300 shadow-xl">
       <div className="max-w-5xl mx-auto">
-        <button onClick={() => { setCurrentView('planejamento'); setPlanningSubView(null); }} className="mb-8 flex items-center gap-2 text-slate-400 hover:text-white font-bold transition-colors">
+        <button onClick={() => { setCurrentView('planejamento'); setPlanningSubView(null); }} className="mb-8 flex items-center gap-2 text-slate-600 hover:text-slate-900 font-bold transition-colors">
           <ChevronLeft size={20} /> Voltar para Seleção de Turma
         </button>
 
         <header className="mb-12">
-          <h2 className="text-3xl md:text-4xl font-black text-white flex items-center gap-4">
-            <LayoutGrid className="text-blue-500" size={36} /> Aulas Prontas ({planningSubView})
+          <h2 className="text-3xl md:text-4xl font-black text-slate-800 flex items-center gap-4 uppercase">
+            <LayoutGrid className="text-blue-600" size={36} /> Aulas Prontas ({planningSubView})
           </h2>
-          <p className="text-slate-400 mt-2">Escolha a aula de hoje para abrir os slides.</p>
+          <p className="text-slate-600 mt-2">Escolha a aula de hoje para abrir os slides.</p>
         </header>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Aula Altinha e Futevolei adicionada para todas as turmas */}
-          <div className="bg-slate-800 rounded-2xl border border-blue-500 overflow-hidden flex flex-col hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all">
-              <div className="p-3 bg-blue-600 text-white font-bold text-sm flex justify-between">
+          <div className="bg-white rounded-2xl border border-slate-300 overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-all">
+              <div className="p-3 bg-blue-600 text-white font-bold text-sm flex justify-between uppercase">
                   <span>Aula Extra</span>
               </div>
               <div className="p-6 flex-grow">
-                  <h3 className="text-xl font-bold text-white mb-2">Altinha & Futevôlei</h3>
-                  <p className="text-slate-400 text-sm">Da Roda para a Rede</p>
+                  <h3 className="text-xl font-bold text-slate-800 mb-2 uppercase">Altinha & Futevôlei</h3>
+                  <p className="text-slate-600 text-sm">Da Roda para a Rede</p>
               </div>
-              <div className="p-4 bg-slate-900">
+              <div className="p-4 bg-[#f4ece0] border-t border-slate-200">
                   <button 
                       onClick={() => { 
                         setSelectedAulaData('altinha-futvolei'); 
                         setCurrentView('player'); 
                       }}
-                      className="w-full py-3 bg-white text-slate-900 hover:bg-slate-200 font-black rounded-lg flex items-center justify-center gap-2 transition-colors text-sm"
+                      className="w-full py-3 bg-sky-600 text-white hover:bg-sky-700 font-black rounded-lg flex items-center justify-center gap-2 transition-colors text-sm"
                   >
                       <Presentation size={18} /> Projetar Slides
                   </button>
@@ -654,25 +657,25 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
             const temSlides = slidesData[aula.data] !== undefined;
             
             return (
-              <div key={aula.data} className={`bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden flex flex-col ${temSlides ? 'hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all' : 'opacity-60'}`}>
-                <div className={`p-3 ${temSlides ? 'bg-blue-600' : 'bg-slate-700'} text-white font-bold text-sm flex justify-between`}>
+              <div key={aula.data} className={`bg-white rounded-2xl border border-slate-300 overflow-hidden flex flex-col ${temSlides ? 'hover:shadow-md transition-all' : 'opacity-60'}`}>
+                <div className={`p-3 ${temSlides ? 'bg-blue-600' : 'bg-slate-305'} text-white font-bold text-sm flex justify-between uppercase`}>
                   <span>{aula.tri}</span>
                   <span>{aula.data}</span>
                 </div>
                 <div className="p-6 flex-grow">
-                  <h3 className="text-xl font-bold text-white mb-2">{aula.titulo}</h3>
-                  <p className="text-slate-400 text-sm">{aula.modulo}</p>
+                  <h3 className="text-xl font-bold text-slate-800 mb-2 uppercase">{aula.titulo}</h3>
+                  <p className="text-slate-600 text-sm">{aula.modulo}</p>
                 </div>
-                <div className="p-4 bg-slate-900">
+                <div className="p-4 bg-[#f4ece0] border-t border-slate-200">
                   {temSlides ? (
                     <button 
                       onClick={() => { setSelectedAulaData(aula.data); setCurrentView('player'); }}
-                      className="w-full py-3 bg-white text-slate-900 hover:bg-slate-200 font-black rounded-lg flex items-center justify-center gap-2 transition-colors text-sm"
+                      className="w-full py-3 bg-sky-600 text-white hover:bg-sky-700 font-black rounded-lg flex items-center justify-center gap-2 transition-colors text-sm"
                     >
                       <Presentation size={18} /> Projetar Slides
                     </button>
                   ) : (
-                    <button disabled className="w-full py-3 bg-slate-800 text-slate-500 font-bold rounded-lg cursor-not-allowed text-sm">
+                    <button disabled className="w-full py-3 bg-slate-200 text-slate-500 font-bold rounded-lg cursor-not-allowed text-sm uppercase">
                       Ainda não criado
                     </button>
                   )}
@@ -810,7 +813,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
         </div>
 
         {/* Controles Base e Dica */}
-        <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end z-50 no-print">
+        <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end z-[9999] no-print">
           <div className="max-w-xl">
             <button 
               onClick={() => setShowDica(!showDica)}

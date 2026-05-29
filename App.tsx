@@ -13,6 +13,10 @@ import { DecolonialApp } from './components/DecolonialApp';
 import { CalendarView } from './components/CalendarView';
 import { WeatherWidget } from './components/WeatherWidget';
 import { BottomNav } from './components/BottomNav';
+import { DailyActivityLogView } from './components/DailyActivityLogView';
+import { PortalView } from './components/PortalView';
+import { ProfessorLoginView } from './components/ProfessorLoginView';
+import { AlunosView } from './components/AlunosView';
 import { ViewState, ClassDataMap, ClassData, GalleryData } from './types';
 import { mockUserProfile, initialClassData } from './constants';
 import { initFirebase, subscribeToClasses, saveClassesToFirestore, subscribeToGallery, saveGalleryToFirestore } from './services/firebaseService';
@@ -20,15 +24,15 @@ import { AiAssistant } from './components/AiAssistant';
 
 // --- Global Footer Component ---
 const GlobalFooter = () => (
-  <footer className="w-full py-6 text-center relative z-50 shrink-0 mt-auto bg-black/30 backdrop-blur-md border-t border-white/10">
+  <footer className="w-full py-6 text-center relative z-50 shrink-0 mt-auto bg-[#fdfaf6]/80 backdrop-blur-md border-t border-slate-300">
     <div className="container mx-auto px-4 flex flex-col items-center gap-1">
-        <p className="text-[10px] md:text-xs font-bold text-white drop-shadow-md">
+        <p className="text-[10px] md:text-xs font-bold text-slate-800">
           Desenvolvido por: André Victor Brito de Andrade • CREF 039443 G/RJ
         </p>
-      <p className="text-[10px] md:text-xs font-medium text-slate-300">
+      <p className="text-[10px] md:text-xs font-medium text-slate-600">
         Contato: andrevictorbritodeandrade@gmail.com
       </p>
-      <p className="text-[10px] md:text-xs font-medium text-slate-400">
+      <p className="text-[10px] md:text-xs font-medium text-slate-500">
         versão: 1.1
       </p>
     </div>
@@ -39,31 +43,27 @@ const GlobalFooter = () => (
 const SyncStatusIndicator = ({ status }: { status: 'synced' | 'saving' | 'error' }) => {
   if (status === 'saving') {
     return (
-      <div className="flex items-center gap-1.5 bg-blue-600/20 px-2 py-1 rounded-full border border-blue-500/30">
-        <svg className="animate-spin h-3 w-3 text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <span className="text-[10px] font-bold text-blue-200 uppercase tracking-wider">Salvando...</span>
+      <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/10 shadow-xl">
+        <div className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+        </div>
+        <span className="text-[9px] font-black text-white/70 uppercase tracking-widest">Salvando Dados</span>
       </div>
     );
   }
   if (status === 'error') {
     return (
-      <div className="flex items-center gap-1.5 bg-red-600/20 px-2 py-1 rounded-full border border-red-500/30">
-        <svg className="h-3 w-3 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span className="text-[10px] font-bold text-red-200 uppercase tracking-wider">Erro ao Salvar</span>
+      <div className="flex items-center gap-2 bg-red-500/20 px-3 py-1.5 rounded-full border border-red-500/30">
+        <span className="h-2 w-2 bg-red-500 rounded-full"></span>
+        <span className="text-[9px] font-black text-red-200 uppercase tracking-widest">Erro de Sync</span>
       </div>
     );
   }
   return (
-    <div className="flex items-center gap-1.5 bg-green-600/20 px-2 py-1 rounded-full border border-green-500/30 transition-all duration-500">
-      <svg className="h-3 w-3 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-      </svg>
-      <span className="text-[10px] font-bold text-green-200 uppercase tracking-wider">Sincronizado</span>
+    <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+      <span className="h-2 w-2 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+      <span className="text-[9px] font-black text-white/50 uppercase tracking-widest">Sincronizado</span>
     </div>
   );
 };
@@ -72,7 +72,11 @@ const SyncStatusIndicator = ({ status }: { status: 'synced' | 'saving' | 'error'
 
 const App: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [accessLevel, setAccessLevel] = useState<'portal' | 'alunos' | 'professor_login' | 'professor'>(() => {
+    return (localStorage.getItem('app_accessLevel') as any) || 'portal';
+  });
   const [currentView, setView] = useState<ViewState>(() => {
+
     const hash = window.location.hash.replace('#', '');
     if (hash && ['home', 'statistics', 'classes', 'ementa', 'plano', 'profile', 'decolonial'].includes(hash)) {
       return hash as ViewState;
@@ -80,10 +84,34 @@ const App: React.FC = () => {
     return (localStorage.getItem('app_currentView') as ViewState) || 'home';
   });
   
+  useEffect(() => {
+    localStorage.setItem('app_accessLevel', accessLevel);
+  }, [accessLevel]);
+
   // Shared State
   const [classData, setClassData] = useState<ClassDataMap>(() => {
     const stored = localStorage.getItem('app_classData');
-    return stored ? JSON.parse(stored) : initialClassData;
+    const base = stored ? JSON.parse(stored) : { ...initialClassData };
+    
+    // Ensure all initial daily activities are merged so the user has the pre-filled Cordelia Paiva activities immediately
+    Object.keys(initialClassData).forEach(id => {
+      if (!base[id]) {
+        base[id] = initialClassData[id];
+      } else {
+        if (initialClassData[id].dailyActivities && initialClassData[id].dailyActivities!.length > 0) {
+          if (!base[id].dailyActivities) {
+            base[id].dailyActivities = [];
+          }
+          const existingIds = new Set(base[id].dailyActivities!.map((a: any) => a.id));
+          initialClassData[id].dailyActivities!.forEach((act: any) => {
+            if (!existingIds.has(act.id)) {
+              base[id].dailyActivities!.push(act);
+            }
+          });
+        }
+      }
+    });
+    return base;
   });
   const [galleryData, setGalleryData] = useState<GalleryData>(() => {
     const stored = localStorage.getItem('app_galleryData');
@@ -225,6 +253,19 @@ const App: React.FC = () => {
                  migratedClasses[id].school = initialClassData[id].school;
                  needsUpdateRemote = true;
               }
+              // Ensure default daily activities (like for Cordelia Paiva classes) are merged in
+              if (initialClassData[id].dailyActivities && initialClassData[id].dailyActivities!.length > 0) {
+                if (!migratedClasses[id].dailyActivities) {
+                  migratedClasses[id].dailyActivities = [];
+                }
+                const existingIds = new Set(migratedClasses[id].dailyActivities!.map(a => a.id));
+                initialClassData[id].dailyActivities!.forEach(act => {
+                  if (!existingIds.has(act.id)) {
+                    migratedClasses[id].dailyActivities!.push(act);
+                    needsUpdateRemote = true;
+                  }
+                });
+              }
             }
           });
 
@@ -244,14 +285,18 @@ const App: React.FC = () => {
               }
             }
 
-            // REMOVE EUCLIDES DA CUNHA (User request: "RETRE O COLEGIO EUCLIDES DA CUNHA, PQ PAREI DE DAR AULA LA!!!")
+            // REMOVE UNAUTHORIZED SCHOOLS (User request: Only 4 specific schools)
+            const allowedSchools = ["CIEP 476", "CIEP 320", "EE Cordelia Paiva", "CIEP 198"];
             const initialClassCount = Object.keys(migratedClasses).length;
             migratedClasses = Object.fromEntries(
               Object.entries(migratedClasses).filter(([id, data]) => {
-                const isEuclides = data.school && data.school.toLowerCase().includes("euclides");
-                return !isEuclides;
+                return data.school && allowedSchools.includes(data.school);
               })
             );
+
+            if (Object.keys(migratedClasses).length !== initialClassCount) {
+              needsUpdateRemote = true;
+            }
 
             if (Object.keys(migratedClasses).length !== initialClassCount) {
               needsUpdateRemote = true;
@@ -375,6 +420,14 @@ const App: React.FC = () => {
       );
       case 'decolonial': return <DecolonialApp onBack={goBack} />;
       case 'calendar': return <CalendarView onBack={goBack} />;
+      case 'daily-activities': return (
+        <DailyActivityLogView 
+          classData={classData} 
+          onBack={goBack} 
+          setClassData={setClassData}
+          onSave={handleSaveClasses}
+        />
+      );
       default: return <DashboardView setView={setViewWithHistory} classData={classData} />;
     }
   };
@@ -394,6 +447,7 @@ const App: React.FC = () => {
       case 'profile': return 'Perfil';
       case 'decolonial': return 'Gestão do Professor';
       case 'calendar': return 'Calendário';
+      case 'daily-activities': return 'Registro Diário';
       default: return 'Painel';
     }
   };
@@ -409,10 +463,10 @@ const App: React.FC = () => {
 
   if (isInitializing) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-slate-950 text-white font-sans p-6 text-center">
-        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-[#fdfaf6] text-slate-800 font-sans p-6 text-center">
+        <div className="w-16 h-16 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mb-6 shadow-md"></div>
         <h1 className="text-2xl font-black uppercase tracking-tighter mb-2">Iniciando Sync de Dados</h1>
-        <p className="text-slate-400 font-medium animate-pulse">Sincronizando com a Nuvem...</p>
+        <p className="text-slate-500 font-medium animate-pulse">Sincronizando com a Nuvem...</p>
       </div>
     );
   }
@@ -432,7 +486,29 @@ const App: React.FC = () => {
       {/* Global Background */}
       <BackgroundSlider />
       
+      {accessLevel === 'portal' && (
+        <PortalView onSelectAccess={(level) => setAccessLevel(level)} />
+      )}
+
+      {accessLevel === 'alunos' && (
+        <AlunosView 
+          onBack={() => setAccessLevel('portal')} 
+          classData={classData}
+        />
+      )}
+
+      {accessLevel === 'professor_login' && (
+        <ProfessorLoginView 
+          onBack={() => setAccessLevel('portal')} 
+          onSuccess={() => {
+            setAccessLevel('professor');
+            setView('home');
+          }} 
+        />
+      )}
+
       {/* Wrapper for Content + Footer */}
+      {accessLevel === 'professor' && (
       <div className="flex-1 flex flex-col z-10">
         
           <div className="flex-1 flex flex-col">
@@ -446,39 +522,36 @@ const App: React.FC = () => {
              />
 
              {/* Header */}
-             <header className="bg-neutral-950 border-b border-white/5 h-16 flex items-center px-4 sticky top-0 z-30 shadow-2xl shrink-0 transition-all duration-300 text-white">
+             <header className="bg-black/80 backdrop-blur-md border-b border-white/10 h-16 flex items-center px-4 sticky top-0 z-30 shadow-2xl shrink-0 transition-all duration-300 text-white">
                <button 
                  onClick={() => setSidebarOpen(true)}
-                 className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white focus:outline-none transition-all active:scale-90 mr-3 border border-white/10 shadow-lg"
+                 className="p-2 mr-3 rounded-xl bg-white/5 hover:bg-white/10 text-white focus:outline-none transition-all active:scale-90 border border-white/10 shadow-lg"
                >
-                 <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
                  </svg>
                </button>
                
                <div className="flex items-center gap-3">
-                 <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-inner hidden md:flex">
-                    <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
-                 </div>
                  <div className="flex flex-col justify-center">
-                   <h1 className="text-lg md:text-xl font-bold leading-tight line-clamp-1">Prof. André Brito</h1>
-                   <p className="text-[10px] md:text-xs font-medium text-slate-400 uppercase tracking-widest truncate">
-                     {currentView === 'home' ? 'Controle de Aulas de Ed. Física' : getTitle()}
+                   <h1 className="text-base md:text-lg font-black leading-tight tracking-tighter uppercase">{getTitle() === 'Início' ? 'PROF. ANDRÉ BRITO' : getTitle()}</h1>
+                   <p className="text-[9px] md:text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] truncate">
+                     {currentView === 'home' ? 'Controle de Aulas de Ed. Física' : 'MÓDULO DE GESTÃO'}
                    </p>
                  </div>
                </div>
                
-               <div className="ml-auto flex items-center gap-4">
-                  <SyncStatusIndicator status={syncStatus} />
+               <div className="ml-auto flex items-center gap-2 md:gap-5">
+                  <div className="hidden sm:block">
+                    <SyncStatusIndicator status={syncStatus} />
+                  </div>
                   <WeatherWidget />
                </div>
              </header>
 
              {/* Main Content Area (Naturally Scrollable) */}
              <main className="flex-1 p-3 md:p-6 pb-20 md:pb-6">
-               <div className="max-w-7xl mx-auto pb-6">
+               <div className="w-full pb-6">
                   {currentView === 'home' ? (
                     <DashboardView setView={setViewWithHistory} classData={classData} />
                   ) : renderView()}
@@ -492,9 +565,10 @@ const App: React.FC = () => {
              
           </div>
       </div>
+      )}
 
       {/* Global Footer (Always visible) */}
-      {!slideViewerOpen && <GlobalFooter />}
+      {!slideViewerOpen && accessLevel === 'professor' && <GlobalFooter />}
     </div>
   );
 };

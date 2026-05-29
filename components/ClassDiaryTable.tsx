@@ -40,31 +40,31 @@ export const ClassDiaryTable: React.FC<ClassDiaryTableProps> = ({
   };
 
   return (
-    <div className="overflow-x-auto bg-black text-white p-2 sm:p-4 rounded-xl border border-slate-800">
+    <div className="overflow-x-auto bg-[#fdfaf6] text-slate-800 p-2 sm:p-4 rounded-xl border border-slate-300">
       <table className="w-full text-left border-collapse min-w-[700px]">
         <thead>
-          <tr className="border-b border-white/10 text-slate-400 text-xs uppercase tracking-wider">
-            <th className="py-4 px-2 font-bold w-12 text-center">Nº</th>
-            <th className="py-4 px-4 font-bold">Nome do Aluno</th>
-            <th className="py-4 px-4 font-bold text-center">Chamada</th>
-            <th className="py-4 px-4 font-bold text-center">Total P</th>
-            <th className="py-4 px-4 font-bold text-center">% P</th>
-            <th className="py-4 px-4 font-bold text-center">Total F</th>
-            <th className="py-4 px-4 font-bold text-center">% F</th>
-            <th className="py-4 px-4 font-bold text-right">Ações</th>
+          <tr className="border-b border-slate-300 text-slate-600 text-xs uppercase tracking-wider">
+            <th className="py-4 px-2 font-black w-12 text-center uppercase-text">Nº</th>
+            <th className="py-4 px-4 font-black uppercase-text">Nome do Aluno</th>
+            <th className="py-4 px-4 font-black text-center uppercase-text">Chamada</th>
+            <th className="py-4 px-4 font-black text-center uppercase-text">Total P</th>
+            <th className="py-4 px-4 font-black text-center uppercase-text">% P</th>
+            <th className="py-4 px-4 font-black text-center uppercase-text">Total F</th>
+            <th className="py-4 px-4 font-black text-center uppercase-text">% F</th>
+            <th className="py-4 px-4 font-black text-right uppercase-text">Ações</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-white/5">
+        <tbody className="divide-y divide-slate-300">
           {students.map((student, index) => {
             const status = student.attendance[dateStr];
             const stats = getStats(student);
             
             return (
-              <tr key={student.id} className="hover:bg-white/5 transition-colors group">
-                <td className="py-4 px-2 text-center text-slate-500 font-mono text-sm">
+              <tr key={student.id} className="hover:bg-slate-200/50 transition-colors group">
+                <td className="py-4 px-2 text-center text-slate-500 font-bold text-sm">
                   {index + 1}
                 </td>
-                <td className="py-4 px-4 font-medium text-white group-hover:text-blue-400 transition-colors">
+                <td className="py-4 px-4 font-bold text-slate-800 group-hover:text-sky-600 transition-colors">
                   {student.name}
                 </td>
                 <td className="py-4 px-4">
@@ -74,8 +74,8 @@ export const ClassDiaryTable: React.FC<ClassDiaryTableProps> = ({
                       onClick={() => onAttendance(student.id, 'P')}
                       className={`w-10 h-10 rounded-lg font-black flex items-center justify-center transition-all ${
                         status === 'P'
-                        ? 'border-2 border-green-500 bg-green-500/10 text-green-500 shadow-[0_0_10px_rgba(34,197,94,0.3)]'
-                        : 'border border-slate-700 bg-slate-900 text-slate-500 hover:border-slate-500'
+                        ? 'border-2 border-green-600 bg-green-500/10 text-green-700 shadow-sm'
+                        : 'border border-slate-400 bg-white text-slate-500 hover:border-sky-500'
                       } ${!isCorrectDay ? 'opacity-30 cursor-not-allowed' : ''}`}
                     >
                       P
@@ -85,43 +85,43 @@ export const ClassDiaryTable: React.FC<ClassDiaryTableProps> = ({
                       onClick={() => onAttendance(student.id, 'F')}
                       className={`w-10 h-10 rounded-lg font-black flex items-center justify-center transition-all ${
                         status === 'F'
-                        ? 'border-2 border-red-500 bg-red-500/10 text-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]'
-                        : 'border border-slate-700 bg-slate-900 text-slate-500 hover:border-slate-500'
+                        ? 'border-2 border-red-600 bg-red-500/10 text-red-700 shadow-sm'
+                        : 'border border-slate-400 bg-white text-slate-500 hover:border-sky-500'
                       } ${!isCorrectDay ? 'opacity-30 cursor-not-allowed' : ''}`}
                     >
                       F
                     </button>
                   </div>
                 </td>
-                <td className="py-4 px-4 text-center font-bold text-green-500">
+                <td className="py-4 px-4 text-center font-black text-green-700">
                   {stats.pCount}
                 </td>
-                <td className="py-4 px-4 text-center font-mono text-sm text-green-500/80">
+                <td className="py-4 px-4 text-center font-bold text-sm text-green-700">
                   {stats.pPercent}
                 </td>
-                <td className="py-4 px-4 text-center font-bold text-red-500">
+                <td className="py-4 px-4 text-center font-black text-red-700">
                   {stats.fCount}
                 </td>
-                <td className="py-4 px-4 text-center font-mono text-sm text-red-500/80">
+                <td className="py-4 px-4 text-center font-bold text-sm text-red-700">
                   {stats.fPercent}
                 </td>
                 <td className="py-4 px-4 text-right">
                   <div className="flex items-center justify-end gap-2 text-slate-500">
                     <button 
                       onClick={() => onEdit(student)}
-                      className="p-1.5 hover:text-blue-400 hover:bg-blue-400/10 rounded transition-colors"
+                      className="p-1.5 hover:text-sky-600 hover:bg-sky-200 rounded transition-colors"
                     >
                       <Pencil size={16} />
                     </button>
                     <button 
                       onClick={() => onMove(student)}
-                      className="p-1.5 hover:text-orange-400 hover:bg-orange-400/10 rounded transition-colors"
+                      className="p-1.5 hover:text-orange-500 hover:bg-orange-200 rounded transition-colors"
                     >
                       <ArrowLeftRight size={16} />
                     </button>
                     <button 
                       onClick={() => onDelete(student)}
-                      className="p-1.5 hover:text-red-400 hover:bg-red-400/10 rounded transition-colors"
+                      className="p-1.5 hover:text-red-600 hover:bg-red-200 rounded transition-colors"
                     >
                       <Trash2 size={16} />
                     </button>

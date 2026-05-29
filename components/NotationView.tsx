@@ -9,15 +9,15 @@ export const NotationView: React.FC<NotationViewProps> = ({ onBack }) => {
     <div className="animate-fade-in max-w-5xl mx-auto pb-20 space-y-8">
       <button 
         onClick={onBack}
-        className="mb-6 px-5 py-2.5 bg-slate-900/80 backdrop-blur-md rounded-full text-white font-bold transition-all shadow-lg hover:bg-slate-800 flex items-center w-fit active:scale-95 border border-white/10"
+        className="mb-6 px-5 py-2.5 bg-white hover:bg-slate-200 border border-slate-300 text-slate-800 rounded-full font-bold transition-all shadow-md flex items-center w-fit active:scale-95"
       >
         <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
         Voltar ao Menu
       </button>
 
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-black text-white uppercase tracking-tight drop-shadow-md">Notação Algébrica</h2>
-        <p className="text-slate-200 mt-2 font-medium">Tabela de Referência para Anotação de Partidas</p>
+        <h2 className="text-3xl font-black text-slate-800 uppercase tracking-tight">Notação Algébrica</h2>
+        <p className="text-slate-600 mt-2 font-medium">Tabela de Referência para Anotação de Partidas</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -93,23 +93,23 @@ export const NotationView: React.FC<NotationViewProps> = ({ onBack }) => {
            
            <div className="space-y-2">
              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100">
-               <span className="font-mono font-black text-lg text-slate-800">0-0</span>
+               <span className="font-bold text-lg text-slate-800">0-0</span>
                <span className="font-bold text-sm text-slate-600 uppercase">Roque Pequeno</span>
              </div>
              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100">
-               <span className="font-mono font-black text-lg text-slate-800">0-0-0</span>
+               <span className="font-bold text-lg text-slate-800">0-0-0</span>
                <span className="font-bold text-sm text-slate-600 uppercase">Roque Grande</span>
              </div>
              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100">
-               <span className="font-mono font-black text-lg text-red-500">x</span>
+               <span className="font-bold text-lg text-red-500">x</span>
                <span className="font-bold text-sm text-slate-600 uppercase">Captura</span>
              </div>
              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100">
-               <span className="font-mono font-black text-lg text-blue-600">+</span>
+               <span className="font-bold text-lg text-blue-600">+</span>
                <span className="font-bold text-sm text-slate-600 uppercase">Xeque</span>
              </div>
              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100">
-               <span className="font-mono font-black text-lg text-purple-600">#</span>
+               <span className="font-bold text-lg text-purple-600">#</span>
                <span className="font-bold text-sm text-slate-600 uppercase">Xeque-Mate</span>
              </div>
            </div>
@@ -131,7 +131,7 @@ export const NotationView: React.FC<NotationViewProps> = ({ onBack }) => {
                     <th className="py-2">Pretas</th>
                   </tr>
                 </thead>
-                <tbody className="font-mono text-sm md:text-base">
+                <tbody className="text-sm md:text-base font-bold">
                   <tr className="border-b border-slate-100">
                     <td className="py-2 font-bold text-slate-400">1</td>
                     <td className="py-2 font-bold text-slate-800">e4</td>

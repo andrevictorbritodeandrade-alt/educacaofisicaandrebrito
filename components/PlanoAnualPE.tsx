@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
 import { Calendar, Info, X, Filter, Users, BookOpen, ClipboardList, CheckCircle, Bell, Download, ChevronLeft } from 'lucide-react';
+import { PE_PLAN } from '../data/planosPE';
+
+// Mapeamento de IDs de turma para chaves do plano
+const CLASS_PLAN_MAP: Record<string, string> = {
+  '801': '8ano',
+  '802': '8ano',
+  '803': '8ano',
+  'AP198': 'ap',
+  'AP320': 'ap_sexta',
+  'AP301': 'ap_sexta',
+  '1001': 'ilgch',
+  '1003': 'ilgch',
+  '1007': 'ilgch',
+};
 
 // ============================================================================
 // 1. DADOS DE CONFIGURAÇÃO E CORES
@@ -565,7 +579,18 @@ export const PlanoAnualPE: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                       );
                     }
 
-                    const activity = (day.activities as any)[classInfo.id];
+                    const planKey = CLASS_PLAN_MAP[classInfo.id];
+                    const lessonIndex = planKey ? PE_PLAN[planKey]?.findIndex(a => a.data === day.date) : -1;
+                    const activityFromPlano = lessonIndex !== -1 ? PE_PLAN[planKey][lessonIndex] : null;
+                    
+                    const activity = activityFromPlano 
+                      ? { 
+                          title: `Aula ${lessonIndex + 1}: ${activityFromPlano.titulo}`, 
+                          description: activityFromPlano.desc,
+                          assignment: activityFromPlano.trabalho ? { type: activityFromPlano.trabalho } : undefined
+                        } 
+                      : (day.activities as any)?.[classInfo.id];
+
                     const isCompleted = activity ? completedClasses.includes(`${classInfo.id}-${day.date}`) : false;
 
                     return (
@@ -578,7 +603,10 @@ export const PlanoAnualPE: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                               subtitle: day.subtitle,
                               className: classInfo.name,
                               segment: classInfo.segment,
-                              activity: activity
+                              activity: {
+                                ...activity,
+                                fullData: activityFromPlano // Pass reference to full data if available
+                              }
                             })}
                             className={`relative w-full h-24 p-3 flex flex-col justify-center items-center text-center rounded-xl border-2 transition-all cursor-pointer shadow-sm
                               ${isCompleted ? 'bg-emerald-50 border-emerald-500 ring-2 ring-emerald-200 ring-offset-1' : `${classInfo.segment.color} ${classInfo.segment.hover}`} 
@@ -700,15 +728,15 @@ export const PlanoAnualPE: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 </div>
               )}
 
-              {/* Descrição Longa e Explicativa */}
-              {modalData.activity.description && modalData.activity.description !== DEFAULT_DESC && (
+              {/* Descrição Longa e Explicativa ou Resumo do Plano */}
+              {((modalData.activity.fullData?.resumo) || (modalData.activity.description && modalData.activity.description !== DEFAULT_DESC)) && (
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 text-indigo-700 font-black text-[10px] uppercase tracking-[0.2em]">
                     <ClipboardList size={18} />
-                    Roteiro e Procedimentos:
+                    {modalData.activity.fullData?.resumo ? 'Resumo da Aula e Objetivos:' : 'Roteiro e Procedimentos:'}
                   </div>
                   <div className="text-slate-700 text-base leading-relaxed bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm whitespace-pre-line font-medium">
-                    {modalData.activity.description}
+                    {modalData.activity.fullData?.resumo || modalData.activity.description}
                   </div>
                 </div>
               )}

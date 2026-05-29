@@ -292,7 +292,30 @@ export const initialClassData: ClassDataMap = {
       { id: 80130, name: "Richard Josafá V. B. T. Augusto", attendance: { "08/05": "P", "18/05": "P" } }
     ],
     schedule: "10:35 – 12:15",
-    days: ["Segunda"]
+    days: ["Segunda"],
+    dailyActivities: [
+      {
+        id: "cordelia-801-2026-05-11",
+        date: "2026-05-11T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Fique em sala para conhecer as turmas e aplicar prova de recuperação de outros professores. Nesse dia, as turmas saíram cedo",
+        observations: ""
+      },
+      {
+        id: "cordelia-801-2026-05-18",
+        date: "2026-05-18T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Comecei o conteúdo de altinha e futevôlei de maneira teórica. passei, no quadro até a página 4 dos slides.",
+        observations: ""
+      },
+      {
+        id: "cordelia-801-2026-05-25",
+        date: "2026-05-25T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Continuidade do conteúdo de altinha e futevôlei, com conteúdo teórico, no quadro, até a página 7 do slide; jogos em grupo dentro de sala",
+        observations: ""
+      }
+    ]
   },
   "802": { 
     id: "802", 
@@ -329,7 +352,30 @@ export const initialClassData: ClassDataMap = {
       { id: 802027, name: "Sophia Oliveira Ribeiro", attendance: { "11/05": "P", "18/05": "P" } }
     ],
     schedule: "07:00 – 08:40",
-    days: ["Segunda"]
+    days: ["Segunda"],
+    dailyActivities: [
+      {
+        id: "cordelia-802-2026-05-11",
+        date: "2026-05-11T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Fique em sala para conhecer as turmas e aplicar prova de recuperação de outros professores. Nesse dia, as turmas saíram cedo",
+        observations: ""
+      },
+      {
+        id: "cordelia-802-2026-05-18",
+        date: "2026-05-18T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Comecei o conteúdo de altinha e futevôlei de maneira teórica. passei, no quadro até a página 4 dos slides.",
+        observations: ""
+      },
+      {
+        id: "cordelia-802-2026-05-25",
+        date: "2026-05-25T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Continuidade do conteúdo de altinha e futevôlei, com conteúdo teórico, no quadro, até a página 7 do slide; jogos em grupo dentro de sala",
+        observations: ""
+      }
+    ]
   },
   "803": { 
     id: "803", 
@@ -366,7 +412,30 @@ export const initialClassData: ClassDataMap = {
       { id: 80327, name: "Vitor Manoel Gomes da Silva", attendance: { "08/05": "P", "18/05": "P" } }
     ],
     schedule: "08:40 – 10:20",
-    days: ["Segunda"]
+    days: ["Segunda"],
+    dailyActivities: [
+      {
+        id: "cordelia-803-2026-05-11",
+        date: "2026-05-11T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Fique em sala para conhecer as turmas e aplicar prova de recuperação de outros professores. Nesse dia, as turmas saíram cedo",
+        observations: ""
+      },
+      {
+        id: "cordelia-803-2026-05-18",
+        date: "2026-05-18T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Comecei o conteúdo de altinha e futevôlei de maneira teórica. passei, no quadro até a página 4 dos slides.",
+        observations: ""
+      },
+      {
+        id: "cordelia-803-2026-05-25",
+        date: "2026-05-25T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Continuidade do conteúdo de altinha e futevôlei, com conteúdo teórico, no quadro, até a página 7 do slide; jogos em grupo dentro de sala",
+        observations: ""
+      }
+    ]
   },
   "CIEP198_AP101": { 
     id: "CIEP198_AP101", 
@@ -376,7 +445,30 @@ export const initialClassData: ClassDataMap = {
     students: [],
     assignments: [{ id: "A1", title: "O Corpo na Mídia - Estereótipo vs. Realidade", discipline: "Educação Física", description: "Pesquisa sobre como corpos negros e periféricos são vistos na mídia.", totalPoints: 3, format: "Individual ou dupla", dueDate: "22/05/2026" }],
     schedule: "13:35 – 15:15",
-    days: ["Segunda"]
+    days: ["Segunda"],
+    dailyActivities: [
+      {
+        id: "ciep198-ap101-2026-05-11",
+        date: "2026-05-11T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Fique em sala para conhecer a turma, e trabalhei um jogo eletrônico do aplicativo Sala de Jogos, que foi o Adedonha.",
+        observations: ""
+      },
+      {
+        id: "ciep198-ap101-2026-05-18",
+        date: "2026-05-18T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Comecei o conteúdo de altinha e futevôlei de maneira teórica. passei, no quadro até a página 4 dos slides.",
+        observations: ""
+      },
+      {
+        id: "ciep198-ap101-2026-05-25",
+        date: "2026-05-25T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Não houve aula por conta do furto de cabos de energia da escola.",
+        observations: ""
+      }
+    ]
   },
   "CIEP320_AP101": { 
     id: "CIEP320_AP101", 
@@ -406,7 +498,30 @@ export const initialClassData: ClassDataMap = {
     ],
     assignments: [{ id: "A1", title: "O Corpo na Mídia - Estereótipo vs. Realidade", discipline: "Educação Física", description: "Pesquisa sobre como corpos negros e periféricos são vistos na mídia.", totalPoints: 3, format: "Individual ou dupla", dueDate: "22/05/2026" }],
     schedule: "07:00 – 08:40",
-    days: ["Sexta"]
+    days: ["Sexta"],
+    dailyActivities: [
+      {
+        id: "ciep320-ap101-2026-05-08",
+        date: "2026-05-08T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "dei aula prática de futevôlei em duplas na parte externa da quadra, em duplas.",
+        observations: ""
+      },
+      {
+        id: "ciep320-ap101-2026-05-15",
+        date: "2026-05-15T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Fique em sala para conhecer a turma.Comecei o conteúdo de altinha e futevôlei de maneira teórica. passei, no quadro até a página 4 dos slides.",
+        observations: ""
+      },
+      {
+        id: "ciep320-ap101-2026-05-22",
+        date: "2026-05-22T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Fiz aula prática com a turma, de futevôlei na quadra, com rede mais alta",
+        observations: ""
+      }
+    ]
   },
   "CIEP320_AP301": { 
     id: "CIEP320_AP301", 
@@ -430,7 +545,30 @@ export const initialClassData: ClassDataMap = {
       { id: 30114, name: "Ryan Bruno Arcanjo da Cruz", attendance: { "15/05": "P" } }
     ],
     schedule: "12:45 - 14:25",
-    days: ["Sexta"]
+    days: ["Sexta"],
+    dailyActivities: [
+      {
+        id: "ciep320-ap301-2026-05-08",
+        date: "2026-05-08T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "não houve alunos para dar aula.",
+        observations: ""
+      },
+      {
+        id: "ciep320-ap301-2026-05-15",
+        date: "2026-05-15T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Fique em sala para conhecer a turma.Comecei o conteúdo de altinha e futevôlei de maneira teórica. passei, no quadro até a página 4 dos slides.",
+        observations: ""
+      },
+      {
+        id: "ciep320-ap301-2026-05-22",
+        date: "2026-05-22T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "Fiz aula prática com a turma, de futemesa, por conta do número de alunos",
+        observations: ""
+      }
+    ]
   },
   "CIEP476_1001": { 
     id: "CIEP476_1001", 
@@ -465,7 +603,30 @@ export const initialClassData: ClassDataMap = {
     ],
     assignments: [{ id: "A1", title: "O Corpo na Mídia - Estereótipo vs. Realidade", discipline: "Educação Física", description: "Pesquisa sobre como corpos negros e periféricos são vistos na mídia.", totalPoints: 3, format: "Individual ou dupla", dueDate: "22/05/2026" }],
     schedule: "10:35 - 12:15",
-    days: ["Sexta"]
+    days: ["Sexta"],
+    dailyActivities: [
+      {
+        id: "ciep476-1001-2026-05-08",
+        date: "2026-05-08T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "somente conheci as turmas, pois foram liberados cedos por estarem em semana de recuperação",
+        observations: ""
+      },
+      {
+        id: "ciep476-1001-2026-05-15",
+        date: "2026-05-15T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "inicio do conteúdo sobre ILGCH e a proposta da disciplina",
+        observations: ""
+      },
+      {
+        id: "ciep476-1001-2026-05-22",
+        date: "2026-05-22T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "sequencia do conteúdo e do slide sobre fanon e cida bento",
+        observations: ""
+      }
+    ]
   },
   "CIEP476_1003": { 
     id: "CIEP476_1003", 
@@ -475,7 +636,30 @@ export const initialClassData: ClassDataMap = {
     students: [],
     assignments: [{ id: "A1", title: "O Corpo na Mídia - Estereótipo vs. Realidade", discipline: "Educação Física", description: "Pesquisa sobre como corpos negros e periféricos são vistos na mídia.", totalPoints: 3, format: "Individual ou dupla", dueDate: "22/05/2026" }],
     schedule: "08:40 – 10:20",
-    days: ["Sexta"]
+    days: ["Sexta"],
+    dailyActivities: [
+      {
+        id: "ciep476-1003-2026-05-08",
+        date: "2026-05-08T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "somente conheci as turmas, pois foram liberados cedos por estarem em semana de recuperação",
+        observations: ""
+      },
+      {
+        id: "ciep476-1003-2026-05-15",
+        date: "2026-05-15T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "inicio do conteúdo sobre ILGCH e a proposta da disciplina",
+        observations: ""
+      },
+      {
+        id: "ciep476-1003-2026-05-22",
+        date: "2026-05-22T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "sequencia do conteúdo e do slide sobre fanon e cida bento",
+        observations: ""
+      }
+    ]
   },
   "CIEP476_1007": { 
     id: "CIEP476_1007", 
@@ -485,7 +669,30 @@ export const initialClassData: ClassDataMap = {
     students: [],
     assignments: [{ id: "A1", title: "O Corpo na Mídia - Estereótipo vs. Realidade", discipline: "Educação Física", description: "Pesquisa sobre como corpos negros e periféricos são vistos na mídia.", totalPoints: 3, format: "Individual ou dupla", dueDate: "22/05/2026" }],
     schedule: "19:40 – 21:20",
-    days: ["Sexta"]
+    days: ["Sexta"],
+    dailyActivities: [
+      {
+        id: "ciep476-1007-2026-05-08",
+        date: "2026-05-08T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "não houve aula a noite, pois a turma tinha sido liberada",
+        observations: ""
+      },
+      {
+        id: "ciep476-1007-2026-05-15",
+        date: "2026-05-15T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "fui liberado pelo diretor da turma da noite",
+        observations: ""
+      },
+      {
+        id: "ciep476-1007-2026-05-22",
+        date: "2026-05-22T12:00:00.000Z",
+        plannedActivity: "",
+        actualActivity: "inicio do conteúdo sobre ILGCH e a proposta da disciplina",
+        observations: ""
+      }
+    ]
   }
 };
 

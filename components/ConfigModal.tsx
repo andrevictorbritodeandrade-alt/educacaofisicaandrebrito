@@ -32,9 +32,9 @@ export const ConfigModal: React.FC<ConfigModalProps> = ({ isOpen, onClose }) => 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm p-4">
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden">
-        <div className="p-6 bg-slate-900 text-white flex justify-between items-center">
+        <div className="p-6 bg-[#f4ece0] text-slate-800 border-b border-slate-300 flex justify-between items-center">
           <h2 className="text-xl font-bold">Conectar Banco de Dados</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-white">✕</button>
+          <button onClick={onClose} className="text-slate-600 hover:text-slate-900">✕</button>
         </div>
         <div className="p-6 space-y-4">
           <p className="text-sm text-slate-600">
@@ -44,7 +44,7 @@ export const ConfigModal: React.FC<ConfigModalProps> = ({ isOpen, onClose }) => 
             Dica: Certifique-se de habilitar o <strong>Firestore Database</strong> e a <strong>Authentication (Anonymous)</strong> no painel do Firebase.
           </p>
           <textarea
-            className="w-full h-48 p-4 font-mono text-xs border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full h-48 p-4 font-bold text-xs border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             placeholder='{
   "apiKey": "AIzaSy...",
   "authDomain": "seu-projeto.firebaseapp.com",

@@ -190,11 +190,11 @@ export const StatisticsView: React.FC<StatisticsViewProps> = ({ classData, onBac
           <div className="flex items-center space-x-4">
             <button 
               onClick={() => setViewMode('dashboard')}
-              className="px-4 py-2 bg-slate-900/80 text-white rounded-full shadow-lg hover:bg-slate-800 text-sm font-bold transition flex items-center"
+              className="px-4 py-2 bg-white border border-slate-300 text-slate-800 rounded-full shadow hover:bg-slate-100 text-sm font-bold transition flex items-center"
             >
               <span className="mr-2">⬅</span> Voltar
             </button>
-            <h2 className="text-2xl font-black text-white uppercase tracking-tight drop-shadow-md">Relatório Geral Consolidado</h2>
+            <h2 className="text-2xl font-black text-slate-850 uppercase tracking-tight">Relatório Geral Consolidado</h2>
           </div>
           <button 
             onClick={() => window.print()}
@@ -310,18 +310,18 @@ export const StatisticsView: React.FC<StatisticsViewProps> = ({ classData, onBac
           <div className="flex items-center space-x-4">
             <button 
               onClick={() => setViewMode(selectedGrade ? 'class_select' : 'full_report')}
-              className="px-4 py-2 bg-slate-900/80 text-white rounded-full shadow-lg hover:bg-slate-800 text-sm font-bold transition flex items-center"
+              className="px-4 py-2 bg-white border border-slate-300 text-slate-800 rounded-full shadow hover:bg-slate-100 text-sm font-bold transition flex items-center"
             >
               <span className="mr-2">⬅</span> Voltar
             </button>
             <div>
-              <h2 className="text-xl font-black text-white uppercase drop-shadow-md">Histórico: {currentClass.name}</h2>
-              <p className="text-sm text-slate-200 drop-shadow-sm">Total de Alunos: {currentClass.students?.length || 0}</p>
+              <h2 className="text-xl font-black text-slate-850 uppercase">Histórico: {currentClass.name}</h2>
+              <p className="text-sm text-slate-600">Total de Alunos: {currentClass.students?.length || 0}</p>
             </div>
           </div>
           <button 
             onClick={() => window.print()}
-            className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 text-sm font-bold transition"
+            className="px-4 py-2 bg-white border border-slate-300 text-slate-800 rounded-lg hover:bg-slate-100 text-sm font-bold shadow-sm transition"
           >
             🖨️ Imprimir Turma
           </button>
@@ -463,8 +463,8 @@ export const StatisticsView: React.FC<StatisticsViewProps> = ({ classData, onBac
   if (viewMode === 'class_select' && selectedGrade && classData) {
     const classes = (Object.values(classData) as ClassData[]).filter(c => c.school === selectedGrade);
     return (
-      <div className="space-y-6 animate-fade-in max-w-4xl mx-auto py-4">
-        <div className="bg-[#1a233b] text-white p-6 rounded-t-2xl flex items-center gap-4 shadow-xl border-b border-white/10">
+      <div className="space-y-6 animate-fade-in w-full py-4">
+        <div className="bg-[#f4ece0] text-slate-800 p-6 rounded-t-2xl flex items-center gap-4 border border-slate-300 border-b-0">
           <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center shadow-inner">
             <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -519,8 +519,8 @@ export const StatisticsView: React.FC<StatisticsViewProps> = ({ classData, onBac
   // 3. SCHOOL SELECT
   if (viewMode === 'school_select') {
     return (
-      <div className="space-y-6 animate-fade-in max-w-2xl mx-auto py-4">
-        <div className="bg-[#1a233b] text-white p-6 rounded-t-2xl flex items-center gap-4 shadow-xl border-b border-white/10">
+      <div className="space-y-6 animate-fade-in w-full py-4">
+        <div className="bg-[#f4ece0] text-slate-800 p-6 rounded-t-2xl flex items-center gap-4 border border-slate-300 border-b-0">
           <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center shadow-inner">
             <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -580,7 +580,7 @@ export const StatisticsView: React.FC<StatisticsViewProps> = ({ classData, onBac
     <div className="space-y-8 animate-fade-in">
        <button 
         onClick={onBack}
-        className="mb-4 px-5 py-2.5 bg-slate-900/80 backdrop-blur-md rounded-full text-white font-bold transition-all shadow-lg hover:bg-slate-800 flex items-center w-fit active:scale-95 border border-white/10"
+        className="mb-4 px-5 py-2.5 bg-white hover:bg-slate-200 border border-slate-300 text-slate-800 rounded-full font-bold transition-all shadow-md flex items-center w-fit active:scale-95"
       >
         <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
         Voltar ao Menu
@@ -588,15 +588,11 @@ export const StatisticsView: React.FC<StatisticsViewProps> = ({ classData, onBac
 
       {/* Header Info */}
       <div className="flex justify-between items-center mb-2">
-        <h2 className="text-sm font-semibold text-white/90 uppercase tracking-wider drop-shadow-sm">Painel Geral</h2>
-        <span className="text-[10px] font-bold text-green-600 flex items-center bg-green-100 px-3 py-1 rounded-full shadow-sm border border-green-200">
-          <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-          SINCRONIZADO COM A NUVEM
-        </span>
+        <h2 className="text-sm font-semibold text-slate-800 uppercase tracking-wider drop-shadow-sm">Painel Geral</h2>
       </div>
 
       {loading ? (
-        <div className="text-center py-10 text-white font-medium">Carregando dados...</div>
+        <div className="text-center py-10 text-slate-800 font-medium font-sans">Carregando dados...</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {summaryCards.map((card) => {
