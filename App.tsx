@@ -420,6 +420,13 @@ const App: React.FC = () => {
             setAccessLevel('portal');
             setView('home');
           }}
+          onNavigateToStudents={() => setView('alunos-view')}
+        />
+      );
+      case 'alunos-view': return (
+        <AlunosView 
+          onBack={goBack} 
+          classData={classData}
         />
       );
       case 'decolonial': return <DecolonialApp onBack={goBack} />;

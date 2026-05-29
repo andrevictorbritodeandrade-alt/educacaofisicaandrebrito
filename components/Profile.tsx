@@ -7,6 +7,7 @@ interface ProfileProps {
   classData: ClassDataMap;
   setClassData: (data: ClassDataMap) => void;
   onLogout?: () => void;
+  onNavigateToStudents?: () => void;
 }
 
 export const Profile: React.FC<ProfileProps> = ({ 
@@ -14,7 +15,8 @@ export const Profile: React.FC<ProfileProps> = ({
   onBack, 
   classData, 
   setClassData,
-  onLogout
+  onLogout,
+  onNavigateToStudents
 }) => {
   return (
     <div className="space-y-8 animate-fade-in">
@@ -44,6 +46,17 @@ export const Profile: React.FC<ProfileProps> = ({
               <button className="px-4 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition shadow-sm">
                 Editar Perfil
               </button>
+              {onNavigateToStudents && (
+                <button 
+                  onClick={onNavigateToStudents}
+                  className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition shadow-md active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer hover:shadow-lg"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                  Perfil Alunos
+                </button>
+              )}
               {onLogout && (
                 <button 
                   onClick={onLogout}

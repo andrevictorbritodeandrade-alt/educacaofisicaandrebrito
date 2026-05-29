@@ -46,9 +46,9 @@ const slidesData: Record<string, Slide[]> = {
     },
     {
       tipo: 'texto_simples',
-      titulo: 'ILGCH: Itinerário de Linguagens e Ciências Humanas',
+      titulo: 'ILGCH - Decolonização de corpos, estética, mídia e espaços',
       topicos: [
-        'ILGCH: Itinerário de Linguagens e Ciências Humanas',
+        'ILGCH - Decolonização de corpos, estética, mídia e espaços',
         'Cultura Corporal: Tudo o que move e expressa o humano',
         'Todo corpo é um Marcador, todo corpo é um Mapa',
         'Corpos falam: no andar, no vestir, no expressar',
