@@ -111,6 +111,45 @@ const slidesData: Record<string, Slide[]> = {
         'Produção em sala'
       ],
       dicaProfessor: 'Explicar a dinâmica de "seminário" da aula.'
+    },
+    {
+      tipo: 'texto_simples',
+      titulo: 'Racismo Estético e a Mídia',
+      topicos: [
+        'Como a publicidade molda o desejo',
+        'O custo da "beleza ocidental"',
+        'Invisibilização de corpos negros',
+        'A estética como ferramenta de poder'
+      ],
+      dicaProfessor: 'Inicie debate sobre propagandas de cosméticos e a falta de diversidade nos filtros.'
+    },
+    {
+      tipo: 'texto_simples',
+      titulo: 'Colorismo e as Nuances da Aceitação',
+      topicos: [
+        'A escala de tom de pele e a aceitação social',
+        'O quanto a mídia tolera traços negróides',
+        'A miscigenação usada para silenciar debates raciais',
+        'Como o privilégio se distribui conforme a pigmentação'
+      ],
+      dicaProfessor: 'Explique o conceito de colorismo. Como traços e tons de pele influenciam o quanto um indivíduo preto é aceito nos espaços de prestígio.'
+    },
+    {
+      tipo: 'texto_simples',
+      titulo: 'Algoritmos, Filtros e o "Branqueamento Digital"',
+      topicos: [
+        'A tecnologia imitando os preconceitos do mundo real',
+        'Filtros de redes sociais que afinam narizes e clareiam peles',
+        'Como a inteligência artificial reproduz padrões eurocêntricos',
+        'O impacto psicológico da despersonalização identitária na juventude'
+      ],
+      dicaProfessor: 'Fale sobre como os filtros do Instagram, TikTok e Snapchat padronizam as estéticas de acordo com traços muito específicos (eurocêntricos).'
+    },
+    {
+      tipo: 'destaque_centro',
+      texto: 'O RACISMO TAMBÉM É VISUAL.',
+      subtexto: 'Descolonizar o olhar é urgente.',
+      dicaProfessor: 'Conclua a aula enfatizando que o combate ao racismo passa pela valorização de todas as estéticas.'
     }
   ]
 };
@@ -782,7 +821,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
     };
 
     return (
-      <div className="fixed inset-0 bg-slate-950 z-50 flex flex-col font-sans">
+      <div className="fixed inset-0 bg-slate-950 z-[99999] flex flex-col font-sans">
         
         {/* CSS para Impressão */}
         <style dangerouslySetInnerHTML={{__html: `
@@ -793,7 +832,7 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
         `}} />
 
         {/* Header do Player */}
-        <div className="h-16 flex justify-between items-center px-6 absolute top-0 w-full z-50 bg-black/50 backdrop-blur no-print">
+        <div className="h-16 flex justify-between items-center px-6 absolute top-0 w-full z-[100000] bg-black/50 backdrop-blur no-print">
           <div className="flex gap-4">
             <button onClick={() => setCurrentView('repositorio_aulas_lista')} className="text-white bg-white/20 hover:bg-white/30 px-4 py-2 rounded font-bold text-sm">
               Voltar
@@ -812,12 +851,31 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
           {renderSlideContent()}
         </div>
 
+        {/* Setas Laterais Flutuantes (Estilo Datashow/Apresentador profissional) */}
+        <button 
+          onClick={prevSlide} 
+          disabled={currentIndex === 0} 
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 md:w-20 md:h-20 bg-slate-900/60 hover:bg-emerald-600/90 text-white rounded-full flex items-center justify-center disabled:opacity-10 transition-all border border-slate-700/50 shadow-2xl z-[100000] no-print cursor-pointer"
+          title="Slide Anterior (Tecla Seta Esquerda)"
+        >
+          <ChevronLeft size={36} className="md:w-12 md:h-12" />
+        </button>
+
+        <button 
+          onClick={nextSlide} 
+          disabled={currentIndex === slides.length - 1} 
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 md:w-20 md:h-20 bg-slate-900/60 hover:bg-emerald-600/90 text-white rounded-full flex items-center justify-center disabled:opacity-10 transition-all border border-slate-700/50 shadow-2xl z-[100000] no-print cursor-pointer"
+          title="Próximo Slide (Tecla Seta Direita)"
+        >
+          <ChevronRight size={36} className="md:w-12 md:h-12" />
+        </button>
+
         {/* Controles Base e Dica */}
-        <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end z-[9999] no-print">
+        <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end z-[100000] no-print">
           <div className="max-w-xl">
             <button 
               onClick={() => setShowDica(!showDica)}
-              className="flex items-center gap-2 text-slate-300 hover:text-white bg-slate-800/85 px-4 py-2 rounded-lg font-bold text-xs mb-2 backdrop-blur border border-slate-700 shadow-md"
+              className="flex items-center gap-2 text-slate-300 hover:text-white bg-slate-800/85 px-4 py-2 rounded-lg font-bold text-xs mb-2 backdrop-blur border border-slate-700 shadow-md animate-pulse cursor-pointer"
             >
               <Info size={14} /> {showDica ? 'Esconder Dica' : 'Ver Dica de Fala'}
             </button>
@@ -830,11 +888,11 @@ export const DecolonialApp: React.FC<DecolonialAppProps> = ({ onBack }) => {
           </div>
 
           <div className="flex gap-3">
-            <button onClick={prevSlide} disabled={currentIndex === 0} className="w-12 h-12 md:w-16 md:h-16 bg-slate-800 text-white rounded-full flex items-center justify-center disabled:opacity-20 hover:bg-slate-700 border border-slate-600">
-              <ChevronLeft size={24} />
+            <button onClick={prevSlide} disabled={currentIndex === 0} className="w-16 h-16 md:w-20 md:h-20 bg-emerald-600 text-white rounded-full flex items-center justify-center disabled:opacity-30 hover:bg-emerald-500 border-4 border-white shadow-xl">
+              <ChevronLeft size={32} />
             </button>
-            <button onClick={nextSlide} disabled={currentIndex === slides.length - 1} className="w-12 h-12 md:w-16 md:h-16 bg-white text-slate-900 rounded-full flex items-center justify-center disabled:opacity-20 hover:bg-slate-200">
-              <ChevronRight size={24} />
+            <button onClick={nextSlide} disabled={currentIndex === slides.length - 1} className="w-16 h-16 md:w-20 md:h-20 bg-white text-emerald-900 rounded-full flex items-center justify-center disabled:opacity-30 hover:bg-slate-200 border-4 border-white shadow-xl">
+              <ChevronRight size={32} />
             </button>
           </div>
         </div>
