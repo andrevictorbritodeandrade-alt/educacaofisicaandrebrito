@@ -416,6 +416,10 @@ const App: React.FC = () => {
           onBack={goBack} 
           classData={classData}
           setClassData={setClassData}
+          onLogout={() => {
+            setAccessLevel('portal');
+            setView('home');
+          }}
         />
       );
       case 'decolonial': return <DecolonialApp onBack={goBack} />;
