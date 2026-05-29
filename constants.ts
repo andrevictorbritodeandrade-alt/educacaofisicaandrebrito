@@ -497,7 +497,11 @@ export const initialClassData: ClassDataMap = {
       { id: 10112, name: "Yuri Ryan Jesus Nascimento", attendance: { "15/05": "P", "08/05": "P" } },
       { id: 10124, name: "Eduardo da Silva Coelho", attendance: { "15/05": "P", "08/05": "P" } },
       { id: 10125, name: "Murilo Marcos", attendance: { "15/05": "P", "08/05": "P" } },
-      { id: 10126, name: "Caito da Silva", attendance: { "15/05": "P", "08/05": "P" } }
+      { id: 10126, name: "Caito da Silva", attendance: { "15/05": "P", "08/05": "P" } },
+      { id: 10127, name: "Keven Oliveira dos Santos", attendance: { "15/05": "P", "08/05": "P" } },
+      { id: 10128, name: "Ester Sines Magela", attendance: { "15/05": "P", "08/05": "P" } },
+      { id: 10129, name: "Jeferson de Freitas Filho", attendance: { "15/05": "P", "08/05": "P" } },
+      { id: 10130, name: "Maria Thayriny de Souza de Lima", attendance: { "15/05": "P", "08/05": "P" } }
     ],
     assignments: [{ id: "A1", title: "O Corpo na Mídia - Estereótipo vs. Realidade", discipline: "Educação Física", description: "Pesquisa sobre como corpos negros e periféricos são vistos na mídia.", totalPoints: 3, format: "Individual ou dupla", dueDate: "22/05/2026" }],
     schedule: "07:00 – 08:40",
