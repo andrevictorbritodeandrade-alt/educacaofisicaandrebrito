@@ -494,7 +494,10 @@ export const initialClassData: ClassDataMap = {
       { id: 10101, name: "Sophia Lourenço da Silva", attendance: { "15/05": "P", "08/05": "P" } },
       { id: 10111, name: "Walbert Leonardo Lima Novaes", attendance: { "15/05": "P", "08/05": "P" } },
       { id: 10118, name: "Yuri da Silva Ribeiro", attendance: { "15/05": "P", "08/05": "P" } },
-      { id: 10112, name: "Yuri Ryan Jesus Nascimento", attendance: { "15/05": "P", "08/05": "P" } }
+      { id: 10112, name: "Yuri Ryan Jesus Nascimento", attendance: { "15/05": "P", "08/05": "P" } },
+      { id: 10124, name: "Eduardo da Silva Coelho", attendance: { "15/05": "P", "08/05": "P" } },
+      { id: 10125, name: "Murilo Marcos", attendance: { "15/05": "P", "08/05": "P" } },
+      { id: 10126, name: "Caito da Silva", attendance: { "15/05": "P", "08/05": "P" } }
     ],
     assignments: [{ id: "A1", title: "O Corpo na Mídia - Estereótipo vs. Realidade", discipline: "Educação Física", description: "Pesquisa sobre como corpos negros e periféricos são vistos na mídia.", totalPoints: 3, format: "Individual ou dupla", dueDate: "22/05/2026" }],
     schedule: "07:00 – 08:40",
@@ -542,7 +545,10 @@ export const initialClassData: ClassDataMap = {
       { id: 30111, name: "Marcelly Gomes Serra", attendance: { "15/05": "F" } },
       { id: 30112, name: "Maria Alyndy Lopes da Cunha", attendance: { "15/05": "F" } },
       { id: 30113, name: "Rodrigo Rafael Silva de Oliveira", attendance: { "15/05": "P" } },
-      { id: 30114, name: "Ryan Bruno Arcanjo da Cruz", attendance: { "15/05": "P" } }
+      { id: 30114, name: "Ryan Bruno Arcanjo da Cruz", attendance: { "15/05": "P" } },
+      { id: 30115, name: "Eduardo da Silva Coelho", attendance: { "15/05": "P" } },
+      { id: 30116, name: "Murilo Marcos", attendance: { "15/05": "P" } },
+      { id: 30117, name: "Caito da Silva", attendance: { "15/05": "P" } }
     ],
     schedule: "12:45 - 14:25",
     days: ["Sexta"],

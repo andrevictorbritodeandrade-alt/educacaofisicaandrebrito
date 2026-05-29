@@ -75,8 +75,8 @@ export const SlideViewer: React.FC<{ onClose: () => void, slideType?: 'corpo-mid
       </div>
 
       {/* Navigation Arrows */}
-      <button onClick={prev} disabled={currentSlide === 0} className="absolute left-4 top-1/2 transform -translate-y-1/2 p-4 bg-white/50 rounded-full hover:bg-white disabled:opacity-30 z-10"><ArrowLeft size={48}/></button>
-      <button onClick={next} disabled={currentSlide === slides.length - 1} className="absolute right-4 top-1/2 transform -translate-y-1/2 p-4 bg-white/50 rounded-full hover:bg-white disabled:opacity-30 z-10"><ArrowRight size={48}/></button>
+      <button onClick={prev} disabled={currentSlide === 0} className="absolute left-4 top-1/2 transform -translate-y-1/2 p-4 bg-white/90 rounded-full hover:bg-white disabled:opacity-30 z-[100] border border-slate-300 shadow-lg"><ArrowLeft size={48}/></button>
+      <button onClick={next} disabled={currentSlide === slides.length - 1} className="absolute right-4 top-1/2 transform -translate-y-1/2 p-4 bg-white/90 rounded-full hover:bg-white disabled:opacity-30 z-[100] border border-slate-300 shadow-lg"><ArrowRight size={48}/></button>
     </div>
   );
 };
